@@ -74,6 +74,15 @@ task jacocoMerge(dependsOn: ['jacocoMergeTest']) {
     // used to run the other merge tasks
 }
 
+task stage(dependsOn: ['build', 'clean'])
+task copyToLib(type: Copy) {
+    into "$buildDir/libs"
+    from(configurations.compile)
+}
+
+stage.dependsOn(copyToLib)
+build.mustRunAfter clean
+
 subprojects {
     sonarqube {
         properties {
