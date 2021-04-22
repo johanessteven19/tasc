@@ -18,30 +18,35 @@ build:
 
 test:
   stage: test
+  services:
+    - name: postgres:13.2-alpine
+      alias: postgres
+  variables:
+    POSTGRES_DB: ci
+    POSTGRES_USER: ci_user
+    POSTGRES_PASSWORD: ci_password
+    SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ci
+    SPRING_DATASOURCE_USERNAME: ci_user
+    SPRING_DATASOURCE_PASSWORD: ci_password
   script:
     - gradle check
+      -Dspring.profiles.active=ci
     - gradle jacocoTestReport
     - gradle jacocoTestCoverageVerification
     - gradle jacocoMergeTest
+    - grep Total build/reports/jacoco/test/html/index.html
   artifacts:
-    paths:
-      - build/jacoco/allTestCoverage.exec
+    when: always
+    reports:
+      junit: practice-6/build/test-results/test/TEST-*.xml
 
 deploy:
-  image: ruby:2.4
-  variables:
-    POSTGRES_URL: $DATABASE_URL
-    POSTGRES_USERNAME: $DATABASE_USERNAME
-    POSTGRES_PWD: $DATABASE_PASSWORD
-    SERVICE_URL: $SERVICE_URL
   stage: deploy
+  image: ruby:2.7.3-buster
   before_script:
     - gem install dpl
-    - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
   script:
-    - dpl --provider=heroku --app=$HEROKU_APPNAME --api-key=$HEROKU_APIKEY
-    - export HEROKU_API_KEY=$HEROKU_APIKEY
-    - heroku run --app $HEROKU_APPNAME migrate
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
   environment:
     name: staging
     url: $HEROKU_APPHOST
