@@ -8,6 +8,10 @@ plugins {
 
 apply plugin: "jacoco"
 
+jacoco {
+    toolVersion = "0.8.6"
+}
+
 group = 'com.adpro.tasc'
 version = '1.0-SNAPSHOT'
 sourceCompatibility =  '15'
