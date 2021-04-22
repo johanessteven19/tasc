@@ -1,0 +1,62 @@
+stages:
+  - build
+  - test
+  - deploy
+  - sonar
+
+image: gradle:6.8.3-jdk15
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+build:
+  stage: build
+  script:
+    - gradle assemble
+
+test:
+  stage: test
+  script:
+    - gradle check
+    - gradle jacocoTestReport
+    - gradle jacocoTestCoverageVerification
+    - gradle jacocoMergeTest
+  artifacts:
+    paths:
+      - build/jacoco/allTestCoverage.exec
+
+deploy:
+  image: ruby:2.4
+  variables:
+    POSTGRES_URL: $POSTGRES_URL
+    POSTGRES_USERNAME: $POSTGRES_USERNAME
+    POSTGRES_PWD: $POSTGRES_PASSWORD
+    SERVICE_URL: $SERVICE_URL
+  stage: deploy
+  before_script:
+    - gem install dpl
+    - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+  script:
+    - dpl --provider=heroku --app=$HEROKU_APPNAME --api-key=$HEROKU_APIKEY
+    - export HEROKU_API_KEY=$HEROKU_APIKEY
+    - heroku run --app $HEROKU_APPNAME migrate
+  environment:
+    name: staging
+    url: $HEROKU_APPHOST
+
+sonarCheck:
+  stage: sonar
+  needs:
+    - job: test
+  script:
+    - gradle sonarqube -Dsonar.login=$SONAR_TOKEN
+
+
+cache:
+  key: "$CI_COMMIT_REF_NAME"
+  paths:
+    - $GRADLE_USER_HOME/wrapper
+    - $GRADLE_USER_HOME/caches
+

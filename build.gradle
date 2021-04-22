@@ -14,6 +14,10 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
 }
 
 repositories {
@@ -25,11 +29,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-    implementation('org.springframework.boot:spring-boot-starter-web') {
-        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-    }
+    implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
-    implementation('com.lmax.disruptor:disruptor')
+    implementation 'com.lmax:disruptor:3.4.2'
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
@@ -51,5 +53,27 @@ jacocoTestReport {
     dependsOn test
     reports {
         xml.enabled true
+    }
+}
+
+subprojects {
+    sonarqube {
+        properties {
+            property "sonar.jacoco.reportPaths", allTestCoverageFile
+        }
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "adpro-tasc"
+        property "sonar.projectKey", "adpro-tasc"
+        property "sonar.jacoco.reportPaths", allTestCoverageFile
+        property "sonar.host.url", "https://pmpl.cs.ui.ac.id/sonarqube-advprog"
+        property("sonar.coverage.exclusions",
+                [
+                        "**/*Application**'"
+                ])
+
     }
 }
