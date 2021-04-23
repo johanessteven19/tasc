@@ -43,7 +43,6 @@ test:
 
 staging:
   stage: deploy
-  image: ruby:2.7.3-buster
   before_script:
     - gem install dpl
   script:
