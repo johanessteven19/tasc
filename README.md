@@ -48,3 +48,9 @@
 
 
 ### **INSTRUCTIONS:**
+```
+1. We need JDK to be able to run the app
+2. ./gradlew build to build the project
+3. gradlew bootRun to run the web
+4. gradlew test to test the apps
+```
