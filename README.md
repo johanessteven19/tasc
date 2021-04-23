@@ -5,7 +5,7 @@ _GROUP ASSIGNMENT 1_ - _Project Setup_
 
 PIPELINE STATUS: 
 
-[![build status](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/tasc-raja-singa/badges/master/pipeline.svg)]https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/-/commits/dev/
+[![build status](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/tasc-raja-singa/badges/master/pipeline.svg)](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/-/commits/dev/)
 
 
 _Application that we are building:_
