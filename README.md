@@ -5,8 +5,20 @@
 
 ### **PIPELINE STATUS:**
 
+-gitlab.cs.ui
+
 [![build status](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/badges/master/pipeline.svg)](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/-/commits/)
 [![coverage report](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/badges/master/coverage.svg)](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/-/commits/)
+
+-gitlab dev
+
+[![build status](https://gitlab.com/achmad.afriza/tasc-raja-singa/badges/dev/pipeline.svg)](https://gitlab.com/achmad.afriza/tasc-raja-singa/-/commits/dev)
+[![coverage report](https://gitlab.com/achmad.afriza/tasc-raja-singa/badges/dev/coverage.svg)](https://gitlab.com/achmad.afriza/tasc-raja-singa/-/commits/dev)
+
+-gitlab master
+
+[![build status](https://gitlab.com/achmad.afriza/tasc-raja-singa/badges/master/pipeline.svg)](https://gitlab.com/achmad.afriza/tasc-raja-singa/-/commits/master/)
+[![coverage report](https://gitlab.com/achmad.afriza/tasc-raja-singa/badges/master/coverage.svg)](https://gitlab.com/achmad.afriza/tasc-raja-singa/-/commits/master/)
 
 ### **_Application that we are building:_**
 
