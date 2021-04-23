@@ -43,6 +43,7 @@ test:
 
 staging:
   stage: deploy
+  image: ruby:2.4
   before_script:
     - gem install dpl
   script:
