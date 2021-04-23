@@ -1,18 +1,30 @@
-**ADVANCE PROGRAMMING**
+# **ADVANCE PROGRAMMING**
 
-_GROUP ASSIGNMENT 1_ - _Project Setup_
-
-
-PIPELINE STATUS: 
-
-[HERE]
+## _GROUP ASSIGNMENT 1_ - _Project Setup_
 
 
-_Application that we are building:_
+### **PIPELINE STATUS:**
+
+-gitlab.cs.ui
+
+[![build status](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/badges/master/pipeline.svg)](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/-/commits/)
+[![coverage report](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/badges/master/coverage.svg)](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/-/commits/)
+
+-gitlab dev
+
+[![build status](https://gitlab.com/achmad.afriza/tasc-raja-singa/badges/dev/pipeline.svg)](https://gitlab.com/achmad.afriza/tasc-raja-singa/-/commits/dev)
+[![coverage report](https://gitlab.com/achmad.afriza/tasc-raja-singa/badges/dev/coverage.svg)](https://gitlab.com/achmad.afriza/tasc-raja-singa/-/commits/dev)
+
+-gitlab master
+
+[![build status](https://gitlab.com/achmad.afriza/tasc-raja-singa/badges/master/pipeline.svg)](https://gitlab.com/achmad.afriza/tasc-raja-singa/-/commits/master/)
+[![coverage report](https://gitlab.com/achmad.afriza/tasc-raja-singa/badges/master/coverage.svg)](https://gitlab.com/achmad.afriza/tasc-raja-singa/-/commits/master/)
+
+### **_Application that we are building:_**
 
 **Teaching assistant and student connector**
 
-_features of the app:_
+### **_features of the app:_**
 1. Identify different types of users (Teaching assistant, Student, Admin)
 2. Display list of courses of a student
 3. Display a student TA schedule(s)
@@ -27,7 +39,7 @@ _features of the app:_
 12. Admins can see created schedules with permission for 24 hours
 13. Students able to give/refuse admin's permission to view the schedules 
 
-**Members of the group:**
+### **Members of the group:**
 1. Achmad Afriza Wibawa ( Group Leader )
 2. Muhammad Zahran Agung Dewantoro 
 3. Johanes Steven
@@ -35,4 +47,10 @@ _features of the app:_
 5. Naufal Rafi Athallah Ramadhan
 
 
-**INSTRUCTIONS:**
+### **INSTRUCTIONS:**
+```
+1. We need JDK to be able to run the app
+2. ./gradlew build to build the project
+3. gradlew bootRun to run the web
+4. gradlew test to test the apps
+```

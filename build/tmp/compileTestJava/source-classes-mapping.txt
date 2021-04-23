@@ -1,0 +1,2 @@
+com/adpro/tasc/TestApp.java
+ com.adpro.tasc.TestApp
