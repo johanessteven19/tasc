@@ -1,4 +1,29 @@
-com/adpro/tasc/TASCApp.java
- com.adpro.tasc.TASCApp
+com/adpro/tasc/core/CourseList.java
+ com.adpro.tasc.core.CourseList
+com/adpro/tasc/core/Academic.java
+ com.adpro.tasc.core.Academic
+com/adpro/tasc/core/Appointment.java
+ com.adpro.tasc.core.Appointment
+com/adpro/tasc/core/User.java
+ com.adpro.tasc.core.User
+com/adpro/tasc/core/AppointmentRequest.java
+ com.adpro.tasc.core.AppointmentRequest
 com/adpro/tasc/controller/HelloController.java
  com.adpro.tasc.controller.HelloController
+com/adpro/tasc/core/Course.java
+ com.adpro.tasc.core.Course
+com/adpro/tasc/core/Role.java
+ com.adpro.tasc.core.Role
+ com.adpro.tasc.core.Role$1
+com/adpro/tasc/controller/AddRolesController.java
+ com.adpro.tasc.controller.AddRolesController
+com/adpro/tasc/core/Reminder.java
+ com.adpro.tasc.core.Reminder
+com/adpro/tasc/TASCApp.java
+ com.adpro.tasc.TASCApp
+com/adpro/tasc/core/Student.java
+ com.adpro.tasc.core.Student
+com/adpro/tasc/core/TeachingAssistant.java
+ com.adpro.tasc.core.TeachingAssistant
+com/adpro/tasc/core/Admin.java
+ com.adpro.tasc.core.Admin
