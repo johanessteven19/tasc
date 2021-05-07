@@ -17,9 +17,9 @@ public class ScheduleMapper implements RowMapper<Schedule> {
     @Override
     public Schedule mapRow(ResultSet rs, int rowNum) throws SQLException {
         Schedule schedule = new Schedule();
-        schedule.setId(rs.getInt("s.id"));
-        schedule.setUser(userDB.getUser(rs.getString("s.user")));
-        schedule.setAdminHasPermission(rs.getBoolean("s.admin_permission"));
+        schedule.setId(rs.getInt("schedule.id"));
+        schedule.setUser(userDB.getUser(rs.getString("schedule.user")));
+        schedule.setAdminHasPermission(rs.getBoolean("schedule.admin_permission"));
 
         return schedule;
     }

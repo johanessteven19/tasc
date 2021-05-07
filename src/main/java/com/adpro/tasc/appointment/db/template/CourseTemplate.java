@@ -23,8 +23,8 @@ public class CourseTemplate implements CourseDAO {
     public List<Course> getUserCourseList(AcademicUser user) {
         String sql = """
                 select *
-                from course_list c
-                where c.username=?
+                from course_list
+                where username=?
                 """;
 
         return template.query(sql, new CourseMapper(), user.getUserName());
@@ -54,7 +54,7 @@ public class CourseTemplate implements CourseDAO {
     public List<Course> getAllCourse() {
         String sql = """
                 select *
-                from course c
+                from course
                 """;
 
         return template.query(sql, new CourseMapper());

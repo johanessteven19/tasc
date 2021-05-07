@@ -11,11 +11,11 @@ public class SlotMapper implements RowMapper<Slot> {
     public Slot mapRow(ResultSet rs, int rowNum) throws SQLException {
         Slot slot = new Slot();
 
-        slot.setId(rs.getInt("sl.id"));
-        slot.setSchedule(rs.getInt("sl.schedule"));
-        slot.setStartTime(rs.getLong("sl.start_time"));
-        slot.setFinishTime(rs.getLong("sl.finish_time"));
-        slot.setDay(Slot.Day.valueOf(rs.getString("sl.day")));
+        slot.setId(rs.getInt("slot.id"));
+        slot.setSchedule(rs.getInt("slot.schedule"));
+        slot.setStartTime(rs.getLong("slot.start_time"));
+        slot.setFinishTime(rs.getLong("slot.finish_time"));
+        slot.setDay(Slot.Day.valueOf(rs.getString("slot.day")));
 
         return slot;
     }

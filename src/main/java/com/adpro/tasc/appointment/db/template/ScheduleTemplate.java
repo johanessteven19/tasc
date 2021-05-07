@@ -32,15 +32,15 @@ public class ScheduleTemplate implements ScheduleDAO {
     public Schedule getUserSchedule(AcademicUser user) {
         String sql = """
                 select *
-                from schedule s
-                where user=?
+                from schedule
+                where schedule.user=?
                 """;
 
         Schedule schedule = template.queryForObject(sql, new ScheduleMapper(userDB), user.getUserName());
 
         sql = """
             select *
-            from slot sl
+            from slot
             where schedule=?
             """;
         List<Slot> slots = template.query(sql, new SlotMapper(), schedule.getId());
