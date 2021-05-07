@@ -47,7 +47,7 @@ public class UserTemplate implements UserDAO {
     public List<User> getAllUser() {
         String sql = """
                 select *
-                from "user"
+                from "user" u
                 """;
 
         return template.query(sql, new UserMapper(courseDB, scheduleDB));

@@ -18,7 +18,7 @@ public class DBConfig {
     @Value("${spring.datasource.password}")
     private String databasePassword;
 
-    @Value("${spring.datasource.schema}")
+    @Value("${spring.datasource.currentSchema}")
     private String databaseSchema;
 
     @Bean
