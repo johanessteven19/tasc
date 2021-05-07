@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/main.iml" filepath="$PROJECT_DIR$/.idea/modules/main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tasc-raja-singa.iml" filepath="$PROJECT_DIR$/.idea/modules/tasc-raja-singa.iml" />
     </modules>
   </component>
 </project>
