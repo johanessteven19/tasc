@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="delegatedBuild" value="true" />
-        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-<<<<<<< HEAD
         <option name="gradleHome" value="$PROJECT_DIR$/../../../../../../../../Gradle/gradle-6.8.3" />
-=======
-        <option name="gradleHome" value="/usr/local/Cellar/gradle/6.8.3/libexec" />
->>>>>>> e5b4783de38b3cf55d531bbe1c83acfd34e52f80
-        <option name="gradleJvm" value="15" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
