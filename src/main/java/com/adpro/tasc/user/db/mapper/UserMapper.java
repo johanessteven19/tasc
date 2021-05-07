@@ -22,10 +22,10 @@ public class UserMapper implements RowMapper<User> {
     @Override
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {
         User user = new User(
-                rs.getString("u.username"),
-                rs.getString("u.full_name"),
-                rs.getString("u.password"),
-                Role.valueOf(rs.getString("u.role"))
+                rs.getString("\"user\".username"),
+                rs.getString("\"user\".full_name"),
+                rs.getString("\"user\".password"),
+                Role.valueOf(rs.getString("\"user\".role"))
         );
 
         return updateByRole(user);

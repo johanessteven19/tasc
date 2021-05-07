@@ -36,7 +36,7 @@ public class UserTemplate implements UserDAO {
     public User getUser(String username) {
         String sql = """
             select *
-            from "user" u 
+            from "user"
             where username = ?
         """;
 
@@ -47,7 +47,7 @@ public class UserTemplate implements UserDAO {
     public List<User> getAllUser() {
         String sql = """
                 select *
-                from "user" u
+                from "user"
                 """;
 
         return template.query(sql, new UserMapper(courseDB, scheduleDB));

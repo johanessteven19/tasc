@@ -32,7 +32,7 @@ public class AppointmentTemplate implements AppointmentDAO {
     public List<AppointmentRequest> getAllAppointment() {
         String sql = """
                 select *
-                from appointment_request ar
+                from appointment_request
                 """;
 
         return template.query(sql, new AppointmentMapper(userDB));
@@ -42,7 +42,7 @@ public class AppointmentTemplate implements AppointmentDAO {
     public List<AppointmentRequest> getAppointmentByCourse(Course course) {
         String sql = """
                 select *
-                from appointment_request ar
+                from appointment_request
                 where course=?
                 """;
 
@@ -53,7 +53,7 @@ public class AppointmentTemplate implements AppointmentDAO {
     public List<AppointmentRequest> getAppointmentByUser(User user) {
         String sql = """
                 select *
-                from appointment_request ar
+                from appointment_request
                 where student=?
                 """;
 
@@ -61,7 +61,7 @@ public class AppointmentTemplate implements AppointmentDAO {
         if(requests.isEmpty()) {
             sql = """
             select *
-            from appointment_request ar
+            from appointment_request
             where ta=?
             """;
 
