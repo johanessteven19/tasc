@@ -29,7 +29,7 @@ public class AddRolesController {
     }
 
     @PostMapping(value = "/add-roles/ta")
-    public String registerTA(Model model, @RequestParam ("userName") String userName, @RequestParam("fullName") String fullName, @RequestParam("password") String password) {
+    public String registerTA(Model model, @RequestParam ("userNameTA") String userName, @RequestParam("fullNameTA") String fullName, @RequestParam("passwordTA") String password) {
         model.addAttribute("user", new AcademicUser(userName, fullName, password, Role.TEACHING_ASSISTANT));
         return "redirect:/add-roles";
     }
