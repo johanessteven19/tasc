@@ -1,2 +1,4 @@
 com/adpro/tasc/TestApp.java
  com.adpro.tasc.TestApp
+com/adpro/tasc/user/db/UserTest.java
+ com.adpro.tasc.user.db.UserTest
