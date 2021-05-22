@@ -11,9 +11,9 @@ public class SeeAppointmentController {
     @Autowired
     private UserDAO userDAO;
 
-    @GetMapping("/see-appointment")
-    public String seeAppointment(Model model) {
-        model.addAttribute("userList", userDAO.getAllUser());
-        return "SeeAppointment";
-    }
+//    @GetMapping("/see-appointment")
+//    public String seeAppointment(Model model) {
+//        model.addAttribute("userList", userDAO.getAllUser());
+//        return "SeeAppointment";
+//    }
 }
