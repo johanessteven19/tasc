@@ -35,35 +35,24 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>  </td>
-                <td>  </td>
-                <td>  </td>
-                <td>
-                    <form th:action="@{/home}">
-                        <button type="submit" class="btn btn-outline-dark">Student</button>
-                    </form>
-                    <form th:action="@{/home}">
-                        <button onclick="myFunction()" class="btn btn-outline-dark">Teaching Assistant</button>
-                    </form>
-                </td>
-            </tr>
-            <tr th:each="user :${userList}">
+            <tr th:each="user, index :${userList}">
                 <td th:text="${user.userName}"> </td>
                 <td th:text="${user.fullName}"></td>
                 <td th:text="${user.role}"></td>
                 <!-- Assign role button here-->
                 <td>
                     <form th:action="@{/add-roles/student}" th:object="${user}" method="post">
-                        <input id = "userName" name = "userName" type = "hidden" value = "${user.userName}"/>
-                        <input id = "fullName" name = "fullName" type = "hidden" value = "${user.fullName}"/>
-                        <input id = "password" name = "password" type = "hidden" value = "${user.password}"/>
+                        <input id = "index" name = "index" type = "hidden" th:value = "${index.index}"/>
+                        <input id = "userName" name = "userName" type = "hidden" th:value = "${user.userName}"/>
+                        <input id = "fullName" name = "fullName" type = "hidden" th:value = "${user.fullName}"/>
+                        <input id = "password" name = "password" type = "hidden" th:value = "${user.password}"/>
                         <button type="submit" class="btn btn-outline-dark" value="STUDENT">Student</button>
                     </form>
                     <form th:action="@{/add-roles/ta}" th:object="${user}" method="post">
-                        <input id = "userNameTA" name = "userNameTA" type = "hidden" value = "${user.userName}"/>
-                        <input id = "fullNameTA" name = "fullNameTA" type = "hidden" value = "${user.fullName}"/>
-                        <input id = "passwordTA" name = "passwordTA" type = "hidden" value = "${user.password}"/>
+                        <input id = "indexTA" name = "indexTA" type = "hidden" th:value = "${index.index}"/>
+                        <input id = "userNameTA" name = "userNameTA" type = "hidden" th:value = "${user.userName}"/>
+                        <input id = "fullNameTA" name = "fullNameTA" type = "hidden" th:value = "${user.fullName}"/>
+                        <input id = "passwordTA" name = "passwordTA" type = "hidden" th:value = "${user.password}"/>
                     <button type="submit" class="btn btn-outline-dark" value="TEACHING_ASSISTANT">Teaching Assistant</button>
                     </form>
                 </td>
