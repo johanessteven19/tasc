@@ -1,0 +1,107 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'org.sonarqube' version '2.7'
+    id 'jacoco'
+}
+
+apply plugin: "jacoco"
+
+jacoco {
+    toolVersion = "0.8.6"
+}
+
+group = 'com.adpro.tasc'
+version = '1.0-SNAPSHOT'
+sourceCompatibility =  '15'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
+
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-log4j2')
+    implementation 'com.lmax:disruptor:3.4.2'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.postgresql:postgresql'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.enabled true
+    }
+}
+
+
+def allTestCoverageFile = "$buildDir/jacoco/allTestCoverage.exec"
+
+task jacocoMergeTest(type: JacocoMerge) {
+    destinationFile = file(allTestCoverageFile)
+    executionData = project.fileTree(dir: '.', include:'**/build/jacoco/test.exec')
+}
+
+task jacocoMerge(dependsOn: ['jacocoMergeTest']) {
+    // used to run the other merge tasks
+}
+
+task stage(dependsOn: ['build', 'clean'])
+task copyToLib(type: Copy) {
+    into "$buildDir/libs"
+    from(configurations.compile)
+}
+
+stage.dependsOn(copyToLib)
+build.mustRunAfter clean
+
+subprojects {
+    sonarqube {
+        properties {
+            property "sonar.jacoco.reportPaths", allTestCoverageFile
+        }
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "adpro-tasc"
+        property "sonar.projectKey", "adpro-tasc"
+        property "sonar.jacoco.reportPaths", allTestCoverageFile
+        property "sonar.host.url", "https://pmpl.cs.ui.ac.id/sonarqube-advprog"
+        property("sonar.coverage.exclusions",
+                [
+                        "**/*Application**'"
+                ])
+
+    }
+}
