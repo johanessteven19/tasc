@@ -4,7 +4,6 @@ import com.adpro.tasc.user.db.dao.UserDAO;
 import com.adpro.tasc.user.db.model.AcademicUser;
 import com.adpro.tasc.user.db.model.Role;
 import com.adpro.tasc.user.db.model.User;
-import com.adpro.tasc.user.db.template.UserTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
