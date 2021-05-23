@@ -1,6 +1,0 @@
-com/adpro/tasc/TestApp.java
- com.adpro.tasc.TestApp
-com/adpro/tasc/appointment/db/AppointmentTest.java
- com.adpro.tasc.appointment.db.AppointmentTest
-com/adpro/tasc/user/db/UserTest.java
- com.adpro.tasc.user.db.UserTest

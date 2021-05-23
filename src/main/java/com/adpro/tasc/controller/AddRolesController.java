@@ -6,6 +6,7 @@ import com.adpro.tasc.user.db.model.Role;
 import com.adpro.tasc.user.db.model.User;
 import com.adpro.tasc.user.db.template.UserTemplate;
 import com.adpro.tasc.user.db.template.UserWrapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +45,12 @@ public class AddRolesController {
 //        model.addAttribute("userList", userDAO.getAllUser());
         return "add_roles";
     }
+
+//    @GetMapping(value = "/add-roles")
+//    public String addRoles(Model model) {
+//        model.addAttribute("userList", userDAO.getAllUser());
+//        return "add_roles";
+//    }
 
     @PostMapping(value = "/add-roles/student")
     public String registerStudent(Model model, @RequestParam ("userName") String userName,
