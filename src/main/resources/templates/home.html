@@ -6,15 +6,19 @@
 </head>
 <body>
 <h1>Roles</h1>
-<form action="/add-roles">
+<form th:action="@{/add-roles}">
     <p><input type="submit" value="Set Roles" ></p>
 </form>
 <h1>See Available Appointment</h1>
-<form action="/see">
+<form th:action="@{/see-appointment}">
     <p><input type="submit" value="See Appointment" ></p>
 </form>
+<h1>See Request Appointment</h1>
+<form th:action="@{/accept_reject}">
+    <p><input type="submit" value="See Request Appointment" ></p>
+</form>
 <h3>Logout</h3>
-<form action="/">
+<form th:action="@{/}">
     <p><input type="submit" value="Logout" ></p>
 </form>
 </body>

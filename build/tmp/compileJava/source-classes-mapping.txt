@@ -49,7 +49,7 @@ com/adpro/tasc/user/db/dao/UserDAO.java
  com.adpro.tasc.user.db.dao.UserDAO
 com/adpro/tasc/appointment/db/model/Appointment.java
  com.adpro.tasc.appointment.db.model.Appointment
-com/adpro/tasc/controller/SeeAppointmentController.java
- com.adpro.tasc.controller.SeeAppointmentController
 com/adpro/tasc/controller/HelloController.java
  com.adpro.tasc.controller.HelloController
+com/adpro/tasc/controller/SeeAppointmentController.java
+ com.adpro.tasc.controller.SeeAppointmentController

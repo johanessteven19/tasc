@@ -35,6 +35,19 @@
             </tr>
             </thead>
             <tbody>
+            <tr>
+                <td>  </td>
+                <td>  </td>
+                <td>  </td>
+                <td>
+                    <form th:action="@{/home}">
+                        <button type="submit" class="btn btn-outline-dark">Student</button>
+                    </form>
+                    <form th:action="@{/home}">
+                        <button onclick="myFunction()" class="btn btn-outline-dark">Teaching Assistant</button>
+                    </form>
+                </td>
+            </tr>
             <tr th:each="user :${userList}">
                 <td th:text="${user.userName}"> </td>
                 <td th:text="${user.fullName}"></td>
@@ -58,7 +71,10 @@
             </tbody>
         </table>
     </div>
-
+    <br>
+    <form th:action="@{/home}">
+        <button type="submit" class="btn btn-outline-dark">Return</button>
+    </form>
 
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

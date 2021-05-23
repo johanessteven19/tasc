@@ -12,34 +12,32 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 </head>
+
 <body>
 <h3>See Appointment</h3>
 <table class="table table-striped" style="width:100%">
     <thead>
     <th> Student Name </th>
-    <th> TA Name </th>
     <th> Course </th>
     <th> Date </th>
     <th> Duration </th>
     </thead>
     <tbody>
     <td> Test Student </td>
-    <td> Test TA </td>
     <td> Software Engineering </td>
     <td> 5-10-2021</td>
     <td> 30 min </td>
     </tbody>
-    <tr th:each="user :${userList}">
-        <td th:text="${user.fullName}"> </td>
-        <td th:text="${user.fullName}"></td>
-        <td th:text="${user.course}"></td>
-        <td th:text="${user.date}"></td>
-        <td th:text="${user.duration}"></td>
+    <tr th:each="appoint :${newAppointment}">
+        <td th:text="${appoint.student.fullName}"> </td>
+        <td th:text="${appoint.appointment.course.name}"></td>
+        <td th:text="${appoint.appointment.date}"></td>
+        <td th:text="${appoint.requestTime}"></td>
     </tr>
 </table>
 <br>
-<form action="home">
-    <button type="submit">Return</button>
+<form th:action="@{/home}">
+    <button type="submit" class="btn btn-outline-dark">Return</button>
 </form>
 </body>
 </html>

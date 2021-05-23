@@ -17,10 +17,15 @@ public class AddRolesController {
     private UserDAO userDAO;
 
     @GetMapping(value = "/add-roles")
-    public String addRoles(Model model) {
-        model.addAttribute("userList", userDAO.getAllUser());
+    public String addRoles() {
         return "add_roles";
     }
+
+//    @GetMapping(value = "/add-roles")
+//    public String addRoles(Model model) {
+//        model.addAttribute("userList", userDAO.getAllUser());
+//        return "add_roles";
+//    }
 
     @PostMapping(value = "/add-roles/student")
     public String registerStudent(Model model, @RequestParam ("userName") String userName, @RequestParam("fullName") String fullName, @RequestParam("password") String password) {
