@@ -39,6 +39,8 @@ public class CreateScheduleController {
 
     model.addAttribute("days",days);
     model.addAttribute("slots",slots);
+    model.addAttribute("slots",scheduleDAO.addUserScheduleSlot());
+
 
 
     return "display_schedule";

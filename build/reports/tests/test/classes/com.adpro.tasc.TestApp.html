@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - TestApp</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>TestApp</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.adpro.tasc.html">com.adpro.tasc</a> &gt; TestApp</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.562s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">contextLoads()</td>
+<td class="success">0.562s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2021-05-09 22:29:47,855 Test worker ERROR Unable to locate appender &quot;LogErrorsToFile&quot; for logger config &quot;root&quot;
+2021-05-09 22:29:47,862 Test worker ERROR Unable to locate appender &quot;LogErrorsToFile&quot; for logger config &quot;com.adpro.tasc&quot;
+?[30m2021-05-09T22:29:48,107?[m ?[32mINFO  ?[m[?[1;34mTest worker?[m] ?[1;33mo.s.b.t.c.SpringBootTestContextBootstrapper?[m: Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.adpro.tasc.TestApp], using SpringBootContextLoader
+?[30m2021-05-09T22:29:48,121?[m ?[32mINFO  ?[m[?[1;34mTest worker?[m] ?[1;33mo.s.t.c.s.AbstractContextLoader?[m: Could not detect default resource locations for test class [com.adpro.tasc.TestApp]: no resource found for suffixes {-context.xml, Context.groovy}.
+?[30m2021-05-09T22:29:48,122?[m ?[32mINFO  ?[m[?[1;34mTest worker?[m] ?[1;33mo.s.t.c.s.AnnotationConfigContextLoaderUtils?[m: Could not detect default configuration classes for test class [com.adpro.tasc.TestApp]: TestApp does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+?[30m2021-05-09T22:29:48,314?[m ?[32mINFO  ?[m[?[1;34mTest worker?[m] ?[1;33mo.s.b.t.c.SpringBootTestContextBootstrapper?[m: Found @SpringBootConfiguration com.adpro.tasc.TASCApp for test class com.adpro.tasc.TestApp
+?[30m2021-05-09T22:29:48,501?[m ?[32mINFO  ?[m[?[1;34mTest worker?[m] ?[1;33mo.s.b.t.c.SpringBootTestContextBootstrapper?[m: Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+?[30m2021-05-09T22:29:48,544?[m ?[32mINFO  ?[m[?[1;34mTest worker?[m] ?[1;33mo.s.b.t.c.SpringBootTestContextBootstrapper?[m: Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@7aa37c82, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@1453dea6, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@65c301e, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@1fceb38, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@605ad0e9, org.springframework.test.context.support.DirtiesContextTestExecutionListener@6a7694aa, org.springframework.test.context.transaction.TransactionalTestExecutionListener@d4d953a, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@6b8e1a80, org.springframework.test.context.event.EventPublishingTestExecutionListener@5de55280, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@3685e52, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@62edef40, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@79acb387, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@e2a8f60, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@4f71da39, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@426bbb78]
+2021-05-09 22:29:48,913 Test worker ERROR Unable to locate appender &quot;LogErrorsToFile&quot; for logger config &quot;root&quot;
+2021-05-09 22:29:48,913 Test worker ERROR Unable to locate appender &quot;LogErrorsToFile&quot; for logger config &quot;com.adpro.tasc&quot;
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.4.4)
+
+?[30m2021-05-09T22:29:49,097?[m ?[32mINFO  ?[m[?[1;34mTest worker?[m] ?[1;33mc.a.t.TestApp?[m: Starting TestApp using Java 15.0.2 on Ahmads-MacBook-Pro.local with PID 78257 (started by alifyandra in /Users/alifyandra/Documents/SEM4/AdProg/ga/tasc-raja-singa)
+?[30m2021-05-09T22:29:49,106?[m ?[32mINFO  ?[m[?[1;34mTest worker?[m] ?[1;33mc.a.t.TestApp?[m: No active profile set, falling back to default profiles: default
+?[30m2021-05-09T22:29:51,722?[m ?[32mINFO  ?[m[?[1;34mTest worker?[m] ?[1;33mo.s.s.c.ThreadPoolTaskExecutor?[m: Initializing ExecutorService 'applicationTaskExecutor'
+?[30m2021-05-09T22:29:52,379?[m ?[32mINFO  ?[m[?[1;34mTest worker?[m] ?[1;33mo.s.b.a.e.w.EndpointLinksResolver?[m: Exposing 2 endpoint(s) beneath base path '/actuator'
+?[30m2021-05-09T22:29:52,451?[m ?[32mINFO  ?[m[?[1;34mTest worker?[m] ?[1;33mc.a.t.TestApp?[m: Started TestApp in 3.83 seconds (JVM running for 7.001)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 6.7</a> at May 9, 2021, 10:29:53 PM</p>
+</div>
+</div>
+</body>
+</html>
