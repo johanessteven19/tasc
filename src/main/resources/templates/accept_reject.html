@@ -51,7 +51,6 @@
         <td th:text="${users.requestTime}"></td>
         <td th:text="${users.status}"></td>
         <td th:text="${users.adminHasPermission}"></td>
-        <!-- Assign role button here-->
         <td>
             <form th:action="@{/accepted}" th:object="${users}" method="post">
                 <input id = "fullName" name = "fullName" type = "hidden" value = "${users.student.fullName}"/>
