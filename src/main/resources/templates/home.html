@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+
+<body>
+<h1>Create Courses</h1>
+<form th:action="@{/create-course}">
+    <p><input type="submit" value="Create Courses" ></p>
+</form>
+
+<h1>Create Schedule</h1>
+<form th:action="@{/create-schedule}">
+    <p><input type="submit" value="Create Schedule" ></p>
+</form>
+
+<h1>Roles</h1>
+<form th:action="@{/add-roles}">
+    <p><input type="submit" value="Set Roles" ></p>
+</form>
+
+<h1>See Available Appointment</h1>
+<form th:action="@{/see-appointment}">
+    <p><input type="submit" value="See Appointment" ></p>
+</form>
+
+<h1>See Request Appointment</h1>
+<form th:action="@{/accept_reject}">
+    <p><input type="submit" value="See Request Appointment" ></p>
+</form>
+
+<h3>Logout</h3>
+<form th:action="@{/}">
+    <p><input type="submit" value="Logout" ></p>
+</form>
+</body>
+</html>

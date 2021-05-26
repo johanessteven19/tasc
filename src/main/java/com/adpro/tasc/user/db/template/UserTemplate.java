@@ -36,7 +36,7 @@ public class UserTemplate implements UserDAO {
     public User getUser(String username) {
         String sql = """
             select *
-            from "user" u 
+            from "user"
             where username = ?
         """;
 

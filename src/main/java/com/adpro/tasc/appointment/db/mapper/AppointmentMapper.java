@@ -20,21 +20,21 @@ public class AppointmentMapper implements RowMapper<AppointmentRequest> {
     public AppointmentRequest mapRow(ResultSet rs, int rowNum) throws SQLException {
         AppointmentRequest request = new AppointmentRequest();
 
-        request.setId(rs.getInt("ar.id"));
-        request.setStudent(userDB.getUser(rs.getString("ar.student")));
-        request.setTa(userDB.getUser(rs.getString("ar.ta")));
-        request.setRequestTime(rs.getLong("ar.request_time"));
-        request.setStatus(AppointmentRequest.Status.valueOf(rs.getString("ar.status")));
-        request.setAdminHasPermission(rs.getBoolean("ar.admin_permission"));
+        request.setId(rs.getInt("appointment_request.id"));
+        request.setStudent(userDB.getUser(rs.getString("appointment_request.student")));
+        request.setTa(userDB.getUser(rs.getString("appointment_request.ta")));
+        request.setRequestTime(rs.getLong("appointment_request.request_time"));
+        request.setStatus(AppointmentRequest.Status.valueOf(rs.getString("appointment_request.status")));
+        request.setAdminHasPermission(rs.getBoolean("appointment_request.admin_permission"));
 
         Appointment appointment = new Appointment();
 
         Course course = new Course();
-        course.setName(rs.getString("ar.course"));
+        course.setName(rs.getString("appointment_request.course"));
         appointment.setCourse(course);
 
-        appointment.setDate(rs.getLong("ar.date"));
-        appointment.setDuration(rs.getLong("ar.duration"));
+        appointment.setDate(rs.getLong("appointment_request.date"));
+        appointment.setDuration(rs.getLong("appointment_request.duration"));
 
         request.setAppointment(appointment);
 
