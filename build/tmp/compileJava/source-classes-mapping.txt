@@ -8,13 +8,13 @@ com/adpro/tasc/user/db/model/User.java
  com.adpro.tasc.user.db.model.User
 com/adpro/tasc/appointment/db/mapper/CourseMapper.java
  com.adpro.tasc.appointment.db.mapper.CourseMapper
-com/adpro/tasc/appointment/db/model/Slot.java
- com.adpro.tasc.appointment.db.model.Slot
- com.adpro.tasc.appointment.db.model.Slot$Day
-com/adpro/tasc/appointment/db/dao/ScheduleDAO.java
- com.adpro.tasc.appointment.db.dao.ScheduleDAO
+com/adpro/tasc/controller/HelloController.java
+ com.adpro.tasc.controller.HelloController
+ com.adpro.tasc.controller.HelloController$1
 com/adpro/tasc/appointment/db/model/Schedule.java
  com.adpro.tasc.appointment.db.model.Schedule
+com/adpro/tasc/appointment/db/dao/ScheduleDAO.java
+ com.adpro.tasc.appointment.db.dao.ScheduleDAO
 com/adpro/tasc/appointment/db/template/CourseTemplate.java
  com.adpro.tasc.appointment.db.template.CourseTemplate
 com/adpro/tasc/appointment/db/dao/CourseDAO.java
@@ -25,25 +25,29 @@ com/adpro/tasc/config/DBConfig.java
  com.adpro.tasc.config.DBConfig
 com/adpro/tasc/appointment/db/mapper/ScheduleMapper.java
  com.adpro.tasc.appointment.db.mapper.ScheduleMapper
+com/adpro/tasc/appointment/db/template/SlotTemplate.java
+ com.adpro.tasc.appointment.db.template.SlotTemplate
 com/adpro/tasc/appointment/db/mapper/AppointmentMapper.java
  com.adpro.tasc.appointment.db.mapper.AppointmentMapper
 com/adpro/tasc/appointment/db/model/Course.java
  com.adpro.tasc.appointment.db.model.Course
 com/adpro/tasc/appointment/db/mapper/SlotMapper.java
  com.adpro.tasc.appointment.db.mapper.SlotMapper
+com/adpro/tasc/appointment/db/dao/SlotDAO.java
+ com.adpro.tasc.appointment.db.dao.SlotDAO
 com/adpro/tasc/appointment/db/template/AppointmentTemplate.java
  com.adpro.tasc.appointment.db.template.AppointmentTemplate
-com/adpro/tasc/repository/SlotRepository.java
- com.adpro.tasc.repository.SlotRepository
 com/adpro/tasc/controller/SeeAppointmentController.java
  com.adpro.tasc.controller.SeeAppointmentController
+com/adpro/tasc/repository/SlotRepository.java
+ com.adpro.tasc.repository.SlotRepository
 com/adpro/tasc/user/db/model/Role.java
  com.adpro.tasc.user.db.model.Role
  com.adpro.tasc.user.db.model.Role$1
-com/adpro/tasc/user/db/template/UserTemplate.java
- com.adpro.tasc.user.db.template.UserTemplate
 com/adpro/tasc/user/db/mapper/UserMapper.java
  com.adpro.tasc.user.db.mapper.UserMapper
+com/adpro/tasc/user/db/template/UserTemplate.java
+ com.adpro.tasc.user.db.template.UserTemplate
 com/adpro/tasc/appointment/db/dao/AppointmentDAO.java
  com.adpro.tasc.appointment.db.dao.AppointmentDAO
 com/adpro/tasc/controller/CreateCoursesController.java
@@ -51,14 +55,14 @@ com/adpro/tasc/controller/CreateCoursesController.java
 com/adpro/tasc/appointment/db/model/AppointmentRequest.java
  com.adpro.tasc.appointment.db.model.AppointmentRequest
  com.adpro.tasc.appointment.db.model.AppointmentRequest$Status
-com/adpro/tasc/controller/AddRolesController.java
- com.adpro.tasc.controller.AddRolesController
+com/adpro/tasc/appointment/db/model/Slot.java
+ com.adpro.tasc.appointment.db.model.Slot
+ com.adpro.tasc.appointment.db.model.Slot$Day
 com/adpro/tasc/user/db/dao/UserDAO.java
  com.adpro.tasc.user.db.dao.UserDAO
 com/adpro/tasc/appointment/db/model/Appointment.java
  com.adpro.tasc.appointment.db.model.Appointment
 com/adpro/tasc/appointment/db/template/ScheduleTemplate.java
  com.adpro.tasc.appointment.db.template.ScheduleTemplate
-com/adpro/tasc/controller/HelloController.java
- com.adpro.tasc.controller.HelloController
- com.adpro.tasc.controller.HelloController$1
+com/adpro/tasc/controller/AddRolesController.java
+ com.adpro.tasc.controller.AddRolesController
