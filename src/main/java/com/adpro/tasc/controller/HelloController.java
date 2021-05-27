@@ -38,11 +38,11 @@ public class HelloController {
                 if(password.equals(userList.get(i).getPassword())){
                     switch(userList.get(i).getRole()){
                         case ADMIN:
-                            return "homeAdmin";
+                            return "redirect:/home-admin";
                         case TEACHING_ASSISTANT:
-                            return "homeTA";
+                            return "redirect:/home-TA";
                         case STUDENT:
-                            return "homeStudent";
+                            return "redirect:/home-student";
                     }
                 }
             }
