@@ -1,7 +1,6 @@
 package com.adpro.tasc.security;
 
 import com.adpro.tasc.security.filter.ApplicationUserDetailsService;
-import com.adpro.tasc.security.filter.AuthFailHandler;
 import com.adpro.tasc.security.filter.AuthSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,13 +17,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ServiceSecurity extends WebSecurityConfigurerAdapter {
     private ApplicationUserDetailsService userDetailsService;
-    private AuthFailHandler authFailHandler;
     private AuthSuccessHandler authSuccessHandler;
-
-    @Autowired
-    public void setAuthFailHandler(AuthFailHandler authFailHandler) {
-        this.authFailHandler = authFailHandler;
-    }
 
     @Autowired
     public void setAuthSuccessHandler(AuthSuccessHandler authSuccessHandler) {
@@ -43,15 +36,13 @@ public class ServiceSecurity extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage("/")
                     .successHandler(authSuccessHandler)
-                    .failureHandler(authFailHandler)
+                    .failureForwardUrl("/")
+                    .permitAll()
                     .and()
                 .authorizeRequests()
                     .antMatchers("/").permitAll()
-                    .antMatchers("/register").permitAll()
-                    .antMatchers("/add-roles/**").hasRole("ADMIN")
-                    .antMatchers("/home-student").hasRole("STUDENT")
-                    .antMatchers("/home-admin").hasRole("ADMIN")
-                    .antMatchers("/home-TA").hasRole("TEACHING_ASSISTANT")
+                    .antMatchers("/register/**").permitAll()
+                    .antMatchers("/logout").permitAll()
                     .anyRequest().authenticated();
     }
 

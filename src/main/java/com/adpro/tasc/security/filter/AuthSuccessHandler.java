@@ -38,7 +38,6 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
             HttpServletResponse response,
             Authentication authentication
     ) throws IOException {
-
         String targetUrl = determineTargetUrl(authentication);
 
         if (response.isCommitted()) {
@@ -53,9 +52,9 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
 
     protected String determineTargetUrl(final Authentication authentication) {
         Map<Role, String> roleTargetUrlMap = new HashMap<>();
-        roleTargetUrlMap.put(Role.ADMIN, "/homeAdmin.html");
-        roleTargetUrlMap.put(Role.STUDENT, "/homeStudent.html");
-        roleTargetUrlMap.put(Role.TEACHING_ASSISTANT, "/homeTA.html");
+        roleTargetUrlMap.put(Role.ROLE_ADMIN, "/home-admin");
+        roleTargetUrlMap.put(Role.ROLE_STUDENT, "/home-student");
+        roleTargetUrlMap.put(Role.ROLE_TEACHING_ASSISTANT, "/home-TA");
 
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (final GrantedAuthority grantedAuthority : authorities) {

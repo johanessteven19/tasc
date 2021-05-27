@@ -16,32 +16,25 @@ import java.util.List;
 
 @Controller
 public class CreateCoursesController {
-  @Autowired
-  UserDAO userDAO;
+    @Autowired
+    UserDAO userDAO;
 
-  @Autowired
-  CourseDAO courseDAO;
+    @Autowired
+    CourseDAO courseDAO;
 
-  List<Course> courses = new ArrayList<>();
+    @GetMapping(value="/create-course")
+    public String createCourseForm(Model model) {
+        model.addAttribute("courses", courseDAO.getAllCourse());
+        return "create_course";
+    }
 
-  @GetMapping(value="/create-course")
-  public String createCourseForm(Model model) {
-    System.out.println();
-    model.addAttribute("courses",courseDAO.getAllCourse());
-    return "create_course";
-  }
+    @PostMapping(value="/create-course/post")
+    public String createCourse(@RequestParam("name") String name) {
+        Course newCourse = new Course();
+        newCourse.setName(name);
 
-  @PostMapping(value="/create-course/post")
-  public String createCourse(
-          @RequestParam("name") String name
-  ) {
-    System.out.println(name);
-    Course newCourse = new Course();
-    newCourse.setName(name);
+        courseDAO.createCourse(newCourse);
 
-//    courses.add(newCourse);
-    courseDAO.createCourse(newCourse);
-
-    return "redirect:/create-course";
-  }
+        return "redirect:/create-course";
+    }
 }
