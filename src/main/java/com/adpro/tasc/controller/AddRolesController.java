@@ -30,18 +30,6 @@ public class AddRolesController {
 
     @GetMapping(value = "/add-roles")
     public String addRoles(Model model) {
-
-//        User user1 = new User("Michael182", "Michael Smith", "123", null);
-//        User user2 = new User("Alfred12", "Alfred Rogers", "345", null);
-//        User user3 = new User("Jeff19", "Jeff Stirling", "333", null);
-//        userWrapper.addUser("Michael182", "Michael Smith", "123", null);
-//        userWrapper.addUser("Alfred12", "Alfred Rogers", "345", null);
-//        userWrapper.addUser("Jeff19", "Jeff Stirling", "333", null);
-//        List<User> userList = new ArrayList<>();
-//        userList.add(user1);
-//        userList.add(user2);
-//        userList.add(user3);
-//        model.addAttribute("userList", userList);
         model.addAttribute("userList", userDAO.getAllUser());
         return "add_roles";
     }
@@ -53,7 +41,6 @@ public class AddRolesController {
                                   @RequestParam("password") String password, @RequestParam("index") int index) {
         userList.set(index, new User(userName, fullName, password, Role.STUDENT));
         model.addAttribute("user", new AcademicUser(userName, fullName, password, Role.STUDENT));
-//        System.out.println(userList.get(0).getRole());
         return "redirect:/add-roles";
     }
 
@@ -61,11 +48,7 @@ public class AddRolesController {
     public String registerTA(Model model, @RequestParam ("userNameTA") String userName,
                              @RequestParam("fullNameTA") String fullName,
                              @RequestParam("passwordTA") String password, @RequestParam("indexTA") int index) {
-//        UserWrapper userWrapper = new UserWrapper();
-//        userWrapper.addUser(userName, fullName, password, Role.TEACHING_ASSISTANT);
-//        model.addAttribute("userList", userWrapper.getAllUser());
         userList.set(index, new User(userName, fullName, password, Role.TEACHING_ASSISTANT));
-//        System.out.println(userList.get(0).getRole());
         model.addAttribute("user", new AcademicUser(userName, fullName, password, Role.TEACHING_ASSISTANT));
         return "redirect:/add-roles";
     }
