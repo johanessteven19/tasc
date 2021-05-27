@@ -2,7 +2,6 @@ package com.adpro.tasc.controller;
 
 import com.adpro.tasc.appointment.db.dao.ScheduleDAO;
 import com.adpro.tasc.appointment.db.model.Slot;
-import com.adpro.tasc.repository.SlotRepository;
 import com.adpro.tasc.user.db.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
