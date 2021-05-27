@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -37,7 +36,7 @@ public class SeeAppointmentController {
     @GetMapping("/accept_reject")
     public String acceptPage(Model model) {
         AppointmentRequest test = new AppointmentRequest();
-        test.setStudent(new User("student1","student1","123", Role.STUDENT));
+        test.setStudent(new User("student1","student1","123", Role.ROLE_STUDENT));
         test.setRequestTime(20);
         test.setStatus(AppointmentRequest.Status.PENDING);
         test.setAdminHasPermission(true);

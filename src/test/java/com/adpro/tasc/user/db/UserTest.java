@@ -14,52 +14,52 @@ public class UserTest {
 
     @Test
     void testUserNameExists() throws Exception {
-        User user = new User("Test", "test", "123", Role.STUDENT);
+        User user = new User("Test", "test", "123", Role.ROLE_STUDENT);
         assertEquals("Test", user.getUserName());
     }
 
     @Test
     void testFullNameExists() throws Exception {
-        User user = new User("Test", "test", "123", Role.STUDENT);
+        User user = new User("Test", "test", "123", Role.ROLE_STUDENT);
         assertEquals("test", user.getFullName());
     }
 
     @Test
     void testPasswordExists() throws Exception {
-        User user = new User("Test", "test", "123", Role.STUDENT);
+        User user = new User("Test", "test", "123", Role.ROLE_STUDENT);
         assertEquals("123", user.getPassword());
     }
 
     @Test
     void testRoleExists() throws Exception {
-        User user = new User("Test", "test", "123", Role.STUDENT);
-        assertEquals(Role.STUDENT, user.getRole());
+        User user = new User("Test", "test", "123", Role.ROLE_STUDENT);
+        assertEquals(Role.ROLE_STUDENT, user.getRole());
     }
 
     @Test
     void testChangeUserNameWorks() throws Exception {
-        User user = new User("Test", "test", "123", Role.STUDENT);
+        User user = new User("Test", "test", "123", Role.ROLE_STUDENT);
         user.setUserName("Changed");
         assertEquals("Changed", user.getUserName());
     }
 
     @Test
     void testChangePasswordWorks() throws Exception {
-        User user = new User("Test", "test", "123", Role.STUDENT);
+        User user = new User("Test", "test", "123", Role.ROLE_STUDENT);
         user.setPassword("ChangedPass");
         assertEquals("ChangedPass", user.getPassword());
     }
 
     @Test
     void testChangeRoleWorks() throws Exception {
-        User user = new User("Test", "test", "123", Role.STUDENT);
-        user.setRole(Role.TEACHING_ASSISTANT);
-        assertEquals(Role.TEACHING_ASSISTANT, user.getRole());
+        User user = new User("Test", "test", "123", Role.ROLE_STUDENT);
+        user.setRole(Role.ROLE_TEACHING_ASSISTANT);
+        assertEquals(Role.ROLE_TEACHING_ASSISTANT, user.getRole());
     }
 
     @Test
     void testChangeFullNameWorks() throws Exception {
-        User user = new User("Test", "test", "123", Role.STUDENT);
+        User user = new User("Test", "test", "123", Role.ROLE_STUDENT);
         user.setFullName("FullName");
         assertEquals("FullName", user.getFullName());
     }
