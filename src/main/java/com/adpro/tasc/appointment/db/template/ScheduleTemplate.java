@@ -1,6 +1,7 @@
 package com.adpro.tasc.appointment.db.template;
 
 import com.adpro.tasc.appointment.db.dao.ScheduleDAO;
+import com.adpro.tasc.appointment.db.dao.SlotDAO;
 import com.adpro.tasc.appointment.db.mapper.ScheduleMapper;
 import com.adpro.tasc.appointment.db.mapper.SlotMapper;
 import com.adpro.tasc.appointment.db.model.Schedule;
@@ -17,6 +18,12 @@ import java.util.List;
 public class ScheduleTemplate implements ScheduleDAO {
     private JdbcTemplate template;
     private UserDAO userDB;
+    private SlotDAO slotDB;
+
+    @Autowired
+    public void setSlotDB(SlotDAO slotDB) {
+        this.slotDB = slotDB;
+    }
 
     @Autowired
     public void setUserDB(UserDAO userDB) {
@@ -35,38 +42,26 @@ public class ScheduleTemplate implements ScheduleDAO {
                 from schedule
                 where schedule.user=?
                 """;
-
         Schedule schedule = template.queryForObject(sql, new ScheduleMapper(userDB), user.getUserName());
 
-        sql = """
-            select *
-            from slot
-            where schedule=?
-            """;
-        List<Slot> slots = template.query(sql, new SlotMapper(), schedule.getId());
+        List<Slot> slots = slotDB.getAll(schedule);
         schedule.setAvailableSlots(slots);
 
         return schedule;
     }
 
     @Override
-    public void addUserScheduleSlot(Slot slot) {
+    public Schedule getUserScheduleByDay(AcademicUser user, Slot.Day day) {
         String sql = """
-                insert into slot (schedule, start_time, finish_time, day)
-                values (?, ?, ?, ?)
+                select *
+                from schedule
+                where schedule.user=?
                 """;
+        Schedule schedule = template.queryForObject(sql, new ScheduleMapper(userDB), user.getUserName());
 
-        template.update(sql,
-                slot.getSchedule(), slot.getStartTime(), slot.getFinishTime(), slot.getDay().toString());
-    }
+        List<Slot> slots = slotDB.getByDay(schedule, day);
+        schedule.setAvailableSlots(slots);
 
-    @Override
-    public void deleteUserScheduleSlot(Slot slot) {
-        String sql = """
-                delete from slot
-                where id=?
-                """;
-
-        template.update(sql, slot.getId());
+        return schedule;
     }
 }
