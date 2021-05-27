@@ -104,13 +104,13 @@ body {
         <div class="col-md-6">
             <div class="card">
 <!--                <form onsubmit="event.preventDefault()" class="box">-->
-                <form class="box" th:action="@{/home}">
+                <form class="box" th:action="@{/login}" method="post">
                     <h1>Login</h1>
                     <p> Please enter your login and password!</p>
-                    <input type="text" name="" placeholder="Username">
-                    <input type="password" name="" placeholder="Password">
+                    <input id ="RegUsername" type="text" name="RegUsername" placeholder="Username" th:value = "${userName}">
+                    <input id="RegPassword" type="password" name="RegPassword" placeholder="Password" th:value = "${password}">
                     <a class="forgot text-muted" href="/register">Register?</a>
-                    <input type="submit" name="" value="Login" href="/home">
+                    <input type="submit" name="" value="Login" >
                 </form>
             </div>
         </div>
