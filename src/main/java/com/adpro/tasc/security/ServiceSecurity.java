@@ -41,13 +41,17 @@ public class ServiceSecurity extends WebSecurityConfigurerAdapter {
         http
                 .cors().and()
                 .formLogin()
-                    .loginPage("/index.html")
+                    .loginPage("/")
                     .successHandler(authSuccessHandler)
                     .failureHandler(authFailHandler)
                     .and()
                 .authorizeRequests()
                     .antMatchers("/").permitAll()
                     .antMatchers("/register").permitAll()
+                    .antMatchers("/add-roles/**").hasRole("ADMIN")
+                    .antMatchers("/home-student").hasRole("STUDENT")
+                    .antMatchers("/home-admin").hasRole("ADMIN")
+                    .antMatchers("/home-TA").hasRole("TEACHING_ASSISTANT")
                     .anyRequest().authenticated();
     }
 
