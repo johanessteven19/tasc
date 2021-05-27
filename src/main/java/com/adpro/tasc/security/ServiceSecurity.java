@@ -38,6 +38,7 @@ public class ServiceSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+<<<<<<< HEAD
 //        http
 //                .cors().and()
 //                .formLogin()
@@ -49,6 +50,23 @@ public class ServiceSecurity extends WebSecurityConfigurerAdapter {
 //                    .antMatchers("/").permitAll()
 //                    .antMatchers("/register").permitAll()
 //                    .anyRequest().authenticated();
+=======
+        http
+                .cors().and()
+                .formLogin()
+                    .loginPage("/")
+                    .successHandler(authSuccessHandler)
+                    .failureHandler(authFailHandler)
+                    .and()
+                .authorizeRequests()
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/register").permitAll()
+                    .antMatchers("/add-roles/**").hasRole("ADMIN")
+                    .antMatchers("/home-student").hasRole("STUDENT")
+                    .antMatchers("/home-admin").hasRole("ADMIN")
+                    .antMatchers("/home-TA").hasRole("TEACHING_ASSISTANT")
+                    .anyRequest().authenticated();
+>>>>>>> 42e989f1940c856440315fecb8942b270af9a5e6
     }
 
     @Override

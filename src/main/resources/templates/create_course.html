@@ -26,7 +26,7 @@
             <h2>Create Course</h2>
         </div>
         <div>
-            <form method="POST">
+            <form th:action="@{/create-course/post}" method="POST">
                 <label for="name">Course Name:</label>
                 <input id="name" name="name" type="text"/>
                 <button type="submit" class="btn btn-success">Submit</button>
