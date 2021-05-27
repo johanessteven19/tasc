@@ -80,4 +80,14 @@ public class CourseTemplate implements CourseDAO {
 
         template.update(sql, course.getName());
     }
+
+    @Override
+    public void createCourse(Course course) {
+        String sql = """
+                insert into course (name)
+                values (?)
+                """;
+
+        template.update(sql,course.getName());
+    }
 }
