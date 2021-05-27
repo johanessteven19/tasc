@@ -6,7 +6,5 @@ import com.adpro.tasc.user.db.model.AcademicUser;
 
 public interface ScheduleDAO {
     Schedule getUserSchedule(AcademicUser user);
-
-    void addUserScheduleSlot(Slot slot);
-    void deleteUserScheduleSlot(Slot slot);
+    Schedule getUserScheduleByDay(AcademicUser user, Slot.Day day);
 }
