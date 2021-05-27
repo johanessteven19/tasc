@@ -38,17 +38,17 @@ public class ServiceSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .cors().and()
-                .formLogin()
-                    .loginPage("/index.html")
-                    .successHandler(authSuccessHandler)
-                    .failureHandler(authFailHandler)
-                    .and()
-                .authorizeRequests()
-                    .antMatchers("/").permitAll()
-                    .antMatchers("/register").permitAll()
-                    .anyRequest().authenticated();
+//        http
+//                .cors().and()
+//                .formLogin()
+//                    .loginPage("/index.html")
+//                    .successHandler(authSuccessHandler)
+//                    .failureHandler(authFailHandler)
+//                    .and()
+//                .authorizeRequests()
+//                    .antMatchers("/").permitAll()
+//                    .antMatchers("/register").permitAll()
+//                    .anyRequest().authenticated();
     }
 
     @Override

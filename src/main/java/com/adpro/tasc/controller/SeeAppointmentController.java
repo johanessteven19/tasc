@@ -30,7 +30,8 @@ public class SeeAppointmentController {
 
     @GetMapping("/see-appointment")
     public String seeAppointment(Model model) {
-        model.addAttribute("newAppointment", users);
+//        model.addAttribute("newAppointment", users);
+        model.addAttribute("newAppointment", appointmentDAO.getAllAppointment());
         return "SeeAppointment";
     }
 
