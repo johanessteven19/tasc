@@ -97,13 +97,13 @@ body {
         <div class="col-md-6">
             <div class="card">
 <!--                <form onsubmit="event.preventDefault()" class="box">-->
-                <form class="box" th:action="@{/home}">
+                <form class="box" th:action="@{/register/new}" th:object="${user}" method="post">
                     <h1>Register</h1>
                     <p> Register new user!</p>
-                    <input type="text" name="" placeholder="Username">
-                    <input type="password" name="" placeholder="Password">
-                    <input type="password" name="" placeholder="Retype Password">
-                    <input type="submit" name="" value="Register" href="/home">
+                    <input id ="RegUsername" type="text" name="RegUsername" placeholder="Username" th:value = "${userName}">
+                    <input id ="RegFullname" type="text" name="RegFullname" placeholder="full Name" th:value ="${fullName}">
+                    <input id="RegPassword" type="password" name="RegPassword" placeholder="Password" th:value = "${password}">
+                    <input type="submit" value="Register" href="/">
                 </form>
             </div>
         </div>
