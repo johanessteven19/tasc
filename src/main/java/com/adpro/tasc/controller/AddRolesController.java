@@ -41,25 +41,18 @@ public class AddRolesController {
 //        userList.add(user1);
 //        userList.add(user2);
 //        userList.add(user3);
-        model.addAttribute("userList", userList);
-//        model.addAttribute("userList", userDAO.getAllUser());
+//        model.addAttribute("userList", userList);
+        model.addAttribute("userList", userDAO.getAllUser());
         return "add_roles";
     }
 
-//    @GetMapping(value = "/add-roles")
-//    public String addRoles(Model model) {
-//        model.addAttribute("userList", userDAO.getAllUser());
-//        return "add_roles";
-//    }
 
     @PostMapping(value = "/add-roles/student")
     public String registerStudent(Model model, @RequestParam ("userName") String userName,
                                   @RequestParam("fullName") String fullName,
                                   @RequestParam("password") String password, @RequestParam("index") int index) {
-//        UserWrapper userWrapper = new UserWrapper();
-//        userWrapper.addUser(userName, fullName, password, Role.STUDENT);
-//        model.addAttribute("userList", userWrapper.getAllUser());
         userList.set(index, new User(userName, fullName, password, Role.STUDENT));
+        model.addAttribute("user", new AcademicUser(userName, fullName, password, Role.STUDENT));
 //        System.out.println(userList.get(0).getRole());
         return "redirect:/add-roles";
     }
@@ -73,7 +66,7 @@ public class AddRolesController {
 //        model.addAttribute("userList", userWrapper.getAllUser());
         userList.set(index, new User(userName, fullName, password, Role.TEACHING_ASSISTANT));
 //        System.out.println(userList.get(0).getRole());
-        //        model.addAttribute("user", new AcademicUser(userName, fullName, password, Role.TEACHING_ASSISTANT));
+        model.addAttribute("user", new AcademicUser(userName, fullName, password, Role.TEACHING_ASSISTANT));
         return "redirect:/add-roles";
     }
 

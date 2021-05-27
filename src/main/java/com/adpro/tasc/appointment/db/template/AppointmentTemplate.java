@@ -57,7 +57,7 @@ public class AppointmentTemplate implements AppointmentDAO {
                 where student=?
                 """;
 
-        List<AppointmentRequest> requests = template.query(sql, new AppointmentMapper(userDB));
+        List<AppointmentRequest> requests = template.query(sql, new AppointmentMapper(userDB), user.getUserName());
         if(requests.isEmpty()) {
             sql = """
             select *
@@ -65,7 +65,7 @@ public class AppointmentTemplate implements AppointmentDAO {
             where ta=?
             """;
 
-            requests = template.query(sql, new AppointmentMapper(userDB));
+            requests = template.query(sql, new AppointmentMapper(userDB), user.getUserName());
         }
 
         return requests;
