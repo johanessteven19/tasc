@@ -41,7 +41,7 @@ public class ServiceSecurity extends WebSecurityConfigurerAdapter {
                     .and()
                 .authorizeRequests()
                     .antMatchers("/").permitAll()
-                    .antMatchers("/register").permitAll()
+                    .antMatchers("/register/**").permitAll()
                     .antMatchers("/logout").permitAll()
                     .anyRequest().authenticated();
     }
