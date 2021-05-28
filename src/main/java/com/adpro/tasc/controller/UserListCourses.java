@@ -19,14 +19,10 @@ public class UserListCourses {
 
     @Autowired
     UserDAO userDAO;
-    private User[] users = {new User("Michael182", "Michael Smith", "123", null),
-            new User("Alfred12", "Alfred Rogers", "345", null),
-            new User("Jeff19", "Jeff Stirling", "333", null)};
-    List<User> userList = new ArrayList<User>(Arrays.asList(users));
 
     @GetMapping("/userlist-courses")
     public String userListCourses (Model model) {
-        model.addAttribute("userList", userList);
+//        model.addAttribute("userList", userDAO.getAllUser());
         return "userList_Courses";
     }
 }

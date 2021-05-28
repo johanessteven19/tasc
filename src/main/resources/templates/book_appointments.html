@@ -15,7 +15,13 @@
 
 </head>
 <body>
+<nav th:replace="fragments/navbar_student :: navbar"></nav>
     <div style="padding:2em">
+        <div>
+            <form th:action="@{/home-student}">
+                <button type="submit" class="btn btn-danger">Back</button>
+            </form>
+        </div>
         <div>
             <h2>
                 Book an appointment

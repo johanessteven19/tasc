@@ -107,8 +107,8 @@ body {
                 <form class="box" th:action="@{/}" method="post">
                     <h1>Login</h1>
                     <p> Please enter your login and password!</p>
-                    <input id ="username" type="text" name="username" placeholder="Username" th:value = "${userName}">
-                    <input id="password" type="password" name="password" placeholder="Password" th:value = "${password}">
+                    <input id ="username" type="text" name="username" placeholder="Username">
+                    <input id="password" type="password" name="password" placeholder="Password">
                     <a class="forgot text-muted" href="/register">Register?</a>
                     <input type="submit" name="" value="Login" >
                 </form>

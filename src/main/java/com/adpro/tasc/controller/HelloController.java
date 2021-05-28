@@ -1,6 +1,7 @@
 package com.adpro.tasc.controller;
 
 import com.adpro.tasc.user.db.dao.UserDAO;
+import com.adpro.tasc.user.db.model.Role;
 import com.adpro.tasc.user.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,12 +32,10 @@ public class HelloController {
     }
 
     @PostMapping(value = "/register/new")
-    public String registerStudent(Model model, @RequestParam("RegUsername") String userName,
-                                  @RequestParam("RegFullname") String fullName,
-                                  @RequestParam("RegPassword") String password) {
-        userDAO.createUser(new User(userName, fullName, password, null));
-
-        model.addAttribute("userlist",userDAO.getAllUser());
+    public String registerStudent(Model model, @RequestParam("username") String userName,
+                                  @RequestParam("fullname") String fullName,
+                                  @RequestParam("password") String password) {
+        userDAO.createUser(new User(userName, fullName, "{noop}"+password, Role.ROLE_ADMIN));
         return "redirect:/";
     }
 

@@ -1,3 +1,5 @@
+com/adpro/tasc/controller/BookAppointmentController.java
+ com.adpro.tasc.controller.BookAppointmentController
 com/adpro/tasc/controller/CreateScheduleController.java
  com.adpro.tasc.controller.CreateScheduleController
 com/adpro/tasc/user/db/model/AcademicUser.java
@@ -16,14 +18,12 @@ com/adpro/tasc/appointment/db/mapper/CourseMapper.java
  com.adpro.tasc.appointment.db.mapper.CourseMapper
 com/adpro/tasc/controller/HelloController.java
  com.adpro.tasc.controller.HelloController
- com.adpro.tasc.controller.HelloController$1
 com/adpro/tasc/appointment/db/model/Schedule.java
  com.adpro.tasc.appointment.db.model.Schedule
 com/adpro/tasc/appointment/db/dao/ScheduleDAO.java
  com.adpro.tasc.appointment.db.dao.ScheduleDAO
-com/adpro/tasc/appointment/db/model/Slot.java
- com.adpro.tasc.appointment.db.model.Slot
- com.adpro.tasc.appointment.db.model.Slot$Day
+com/adpro/tasc/security/ServiceSecurity.java
+ com.adpro.tasc.security.ServiceSecurity
 com/adpro/tasc/appointment/db/template/CourseTemplate.java
  com.adpro.tasc.appointment.db.template.CourseTemplate
 com/adpro/tasc/appointment/db/dao/CourseDAO.java
@@ -46,13 +46,11 @@ com/adpro/tasc/appointment/db/dao/SlotDAO.java
  com.adpro.tasc.appointment.db.dao.SlotDAO
 com/adpro/tasc/appointment/db/template/AppointmentTemplate.java
  com.adpro.tasc.appointment.db.template.AppointmentTemplate
-com/adpro/tasc/security/ServiceSecurity.java
- com.adpro.tasc.security.ServiceSecurity
-com/adpro/tasc/repository/SlotRepository.java
- com.adpro.tasc.repository.SlotRepository
+com/adpro/tasc/appointment/db/model/Slot.java
+ com.adpro.tasc.appointment.db.model.Slot
+ com.adpro.tasc.appointment.db.model.Slot$Day
 com/adpro/tasc/user/db/model/Role.java
  com.adpro.tasc.user.db.model.Role
- com.adpro.tasc.user.db.model.Role$1
 com/adpro/tasc/user/db/mapper/UserMapper.java
  com.adpro.tasc.user.db.mapper.UserMapper
 com/adpro/tasc/user/db/template/UserTemplate.java
@@ -64,15 +62,13 @@ com/adpro/tasc/controller/CreateCoursesController.java
 com/adpro/tasc/appointment/db/model/AppointmentRequest.java
  com.adpro.tasc.appointment.db.model.AppointmentRequest
  com.adpro.tasc.appointment.db.model.AppointmentRequest$Status
-com/adpro/tasc/controller/AddRolesController.java
- com.adpro.tasc.controller.AddRolesController
-com/adpro/tasc/user/db/dao/UserDAO.java
- com.adpro.tasc.user.db.dao.UserDAO
-com/adpro/tasc/security/filter/AuthFailHandler.java
- com.adpro.tasc.security.filter.AuthFailHandler
-com/adpro/tasc/appointment/db/model/Appointment.java
- com.adpro.tasc.appointment.db.model.Appointment
 com/adpro/tasc/appointment/db/template/ScheduleTemplate.java
  com.adpro.tasc.appointment.db.template.ScheduleTemplate
+com/adpro/tasc/user/db/dao/UserDAO.java
+ com.adpro.tasc.user.db.dao.UserDAO
+com/adpro/tasc/appointment/db/model/Appointment.java
+ com.adpro.tasc.appointment.db.model.Appointment
 com/adpro/tasc/controller/SeeAppointmentController.java
  com.adpro.tasc.controller.SeeAppointmentController
+com/adpro/tasc/controller/AddRolesController.java
+ com.adpro.tasc.controller.AddRolesController
