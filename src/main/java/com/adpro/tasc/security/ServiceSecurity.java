@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -39,10 +40,13 @@ public class ServiceSecurity extends WebSecurityConfigurerAdapter {
                     .failureForwardUrl("/")
                     .permitAll()
                     .and()
+                .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                    .logoutSuccessUrl("/")
+                    .permitAll()
+                    .and()
                 .authorizeRequests()
-                    .antMatchers("/").permitAll()
                     .antMatchers("/register/**").permitAll()
-                    .antMatchers("/logout").permitAll()
                     .anyRequest().authenticated();
     }
 
