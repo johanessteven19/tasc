@@ -8,6 +8,8 @@ import com.adpro.tasc.appointment.db.model.Schedule;
 import com.adpro.tasc.appointment.db.model.Slot;
 import com.adpro.tasc.user.db.dao.UserDAO;
 import com.adpro.tasc.user.db.model.AcademicUser;
+import com.adpro.tasc.user.db.model.Role;
+import com.adpro.tasc.user.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -72,5 +74,45 @@ public class ScheduleTemplate implements ScheduleDAO {
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
+    }
+
+    private void validateUser(User user) {
+        if(!Role.ROLE_TEACHING_ASSISTANT.equals(user.getRole())) {
+            throw new IllegalArgumentException("User must be Teaching Assistant");
+        }
+    }
+
+    @Override
+    public void createSchedule(Schedule schedule) {
+        validateUser(schedule.getUser());
+
+        String sql = """
+                insert into schedule ("user")
+                values (?)
+                """;
+
+        template.update(sql, schedule.getUser().getUserName());
+    }
+
+    @Override
+    public void deleteSchedule(int id) {
+        String sql = """
+                delete from schedule
+                where id=?
+                """;
+
+        template.update(sql, id);
+    }
+
+    @Override
+    public void deleteSchedule(User user) {
+        validateUser(user);
+
+        String sql = """
+                delete from schedule
+                where "user"=?
+                """;
+
+        template.update(sql, user.getUserName());
     }
 }
