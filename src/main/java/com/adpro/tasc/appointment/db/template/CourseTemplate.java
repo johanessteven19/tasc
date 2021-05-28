@@ -90,4 +90,15 @@ public class CourseTemplate implements CourseDAO {
 
         template.update(sql,course.getName());
     }
+
+    @Override
+    public Course getCourseByName(String courseName) {
+        String sql = """
+                select * 
+                from course
+                where "name"=?
+                """;
+        return template.queryForObject(sql, new CourseMapper(), courseName);
+
+    }
 }
