@@ -32,7 +32,7 @@ public class UserMapper implements RowMapper<User> {
     }
 
     private User updateByRole(User user) {
-        if(!Role.ADMIN.equals(user.getRole())) {
+        if(!Role.ROLE_ADMIN.equals(user.getRole())) {
             AcademicUser academicUser = new AcademicUser(user);
 
             academicUser.setCourses(courseDB.getUserCourseList(academicUser));
