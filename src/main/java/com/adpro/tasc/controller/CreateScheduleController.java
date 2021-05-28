@@ -8,6 +8,7 @@ import com.adpro.tasc.user.db.dao.UserDAO;
 import com.adpro.tasc.user.db.model.AcademicUser;
 import com.adpro.tasc.user.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,10 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
+@PreAuthorize("hasRole('TEACHING_ASSISTANT')")
 public class CreateScheduleController {
   @Autowired
   private ScheduleDAO scheduleDAO;
@@ -34,7 +37,6 @@ public class CreateScheduleController {
   private List<Slot> slots = new ArrayList<>();
 //  private final SlotRepository slots;
 
-
   @GetMapping(value="/create-schedule")
   public String displaySchedule(Model model, Principal principal) {
     List<String> days = Arrays.asList(daysArr);
@@ -43,13 +45,15 @@ public class CreateScheduleController {
 
     Schedule schedule = scheduleDAO.getUserSchedule((AcademicUser) currentUser);
 
-//    Slot slot1 = new Slot();
-//    slot1.setDay(Slot.Day.MONDAY);
-//    slot1.setStartTime(System.currentTimeMillis());
-//    slot1.setFinishTime(System.currentTimeMillis()+(long)100000000);
-//    slots.add(slot1);
+    if (Objects.isNull(schedule)) {
+      // Kode buat instantiate schedule 1 to 1 baru
+      Schedule newSchedule = new Schedule();
+      newSchedule.setUser(currentUser);
+      newSchedule.setAdminHasPermission(true);
 
-//    scheduleDAO.addUserScheduleSlot();
+      scheduleDAO.createSchedule(newSchedule);
+      schedule = scheduleDAO.getUserSchedule(((AcademicUser) currentUser));
+    }
 
     model.addAttribute("days",days);
     model.addAttribute("slots",schedule.getAvailableSlots());
