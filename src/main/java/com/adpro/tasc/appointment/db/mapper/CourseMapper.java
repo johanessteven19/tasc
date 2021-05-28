@@ -11,7 +11,14 @@ public class CourseMapper implements RowMapper<Course> {
     public Course mapRow(ResultSet rs, int rowNum) throws SQLException {
         Course course = new Course();
 
-        course.setName(rs.getString("name"));
+        String name;
+        try {
+            name = rs.getString("name");
+        } catch (SQLException e) {
+            name = rs.getString("course");
+        }
+
+        course.setName(name);
 
         return course;
     }
