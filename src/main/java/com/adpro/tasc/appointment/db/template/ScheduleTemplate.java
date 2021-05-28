@@ -9,6 +9,7 @@ import com.adpro.tasc.appointment.db.model.Slot;
 import com.adpro.tasc.user.db.dao.UserDAO;
 import com.adpro.tasc.user.db.model.AcademicUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -42,12 +43,16 @@ public class ScheduleTemplate implements ScheduleDAO {
                 from schedule
                 where schedule.user=?
                 """;
-        Schedule schedule = template.queryForObject(sql, new ScheduleMapper(userDB), user.getUserName());
+        try {
+            Schedule schedule = template.queryForObject(sql, new ScheduleMapper(userDB), user.getUserName());
 
-        List<Slot> slots = slotDB.getAll(schedule);
-        schedule.setAvailableSlots(slots);
+            List<Slot> slots = slotDB.getAll(schedule);
+            schedule.setAvailableSlots(slots);
 
-        return schedule;
+            return schedule;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -57,11 +62,15 @@ public class ScheduleTemplate implements ScheduleDAO {
                 from schedule
                 where schedule.user=?
                 """;
-        Schedule schedule = template.queryForObject(sql, new ScheduleMapper(userDB), user.getUserName());
+        try {
+            Schedule schedule = template.queryForObject(sql, new ScheduleMapper(userDB), user.getUserName());
 
-        List<Slot> slots = slotDB.getByDay(schedule, day);
-        schedule.setAvailableSlots(slots);
+            List<Slot> slots = slotDB.getByDay(schedule, day);
+            schedule.setAvailableSlots(slots);
 
-        return schedule;
+            return schedule;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 }
