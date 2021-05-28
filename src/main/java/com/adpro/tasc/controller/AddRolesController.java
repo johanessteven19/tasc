@@ -27,6 +27,12 @@ public class AddRolesController {
             new User("Jeff19", "Jeff Stirling", "333", null)};
     List<User> userList = new ArrayList<User>(Arrays.asList(users));
 
+<<<<<<< HEAD
+=======
+    private UserWrapper userWrapper;
+
+
+>>>>>>> 741b1e203b1bed5f2c01d68136c692fe81da25c3
     @GetMapping("/")
     public String addRoles(Model model) {
         model.addAttribute("userList", userDAO.getAllUser());
