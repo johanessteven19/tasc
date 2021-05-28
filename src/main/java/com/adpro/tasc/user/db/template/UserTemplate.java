@@ -84,7 +84,7 @@ public class UserTemplate implements UserDAO {
                 """;
 
         template.update(sql,
-                user.getUserName(), user.getFullName(), user.getRole(),
+                user.getUserName(), user.getFullName(), user.getRole().toString(),
                 username);
     }
 
