@@ -35,7 +35,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="slot: ${slots}">
-                    <td th:text="${days.get(slot.day)}"></td>
+                    <td th:text="${slot.day.toString()}"></td>
                     <td th:text="${(slot.startTime / (1000 * 60 * 60))%24}+'.'+${(slot.startTime / 60000) % 60}+' - '+${(slot.finishTime / (1000 * 60 * 60))%24}+'.'+${(slot.finishTime / 60000) % 60}"></td>
                 </tr>
                 </tbody>
