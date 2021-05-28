@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.adpro.tasc.user.db.model.Role;
 
 @Controller
 public class HelloController {
@@ -34,9 +35,10 @@ public class HelloController {
     public String registerStudent(Model model, @RequestParam("RegUsername") String userName,
                                   @RequestParam("RegFullname") String fullName,
                                   @RequestParam("RegPassword") String password) {
-        userDAO.createUser(new User(userName, fullName, password, null));
 
-        model.addAttribute("userlist",userDAO.getAllUser());
+        userDAO.createUser(new User(userName, fullName, "{noop}"+password, Role.ROLE_UNASSIGNED));
+
+
         return "redirect:/";
     }
 
