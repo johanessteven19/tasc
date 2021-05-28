@@ -5,6 +5,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/TASC.iml" filepath="$PROJECT_DIR$/.idea/modules/TASC.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/TASC.main.iml" filepath="$PROJECT_DIR$/.idea/modules/TASC.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/TASC.test.iml" filepath="$PROJECT_DIR$/.idea/modules/TASC.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.adpro.tasc.TASC.iml" filepath="$PROJECT_DIR$/.idea/modules/com.adpro.tasc.TASC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.adpro.tasc.TASC.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.adpro.tasc.TASC.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.adpro.tasc.TASC.test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.adpro.tasc.TASC.test.iml" />
     </modules>
   </component>
 </project>
