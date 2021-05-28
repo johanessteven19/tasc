@@ -24,12 +24,7 @@
         </div>
         <h3>Add Roles to User</h3>
 
-        <div sec:authorize="!isAuthenticated()">
-            <a href="/index"> Login </a>
-        </div>
-
-        <div sec:authorize="hasRole('ROLE_ADMIN')">
-
+        <div>
             <table id="userList" class="table table-striped" style="width:100%">
                 <thead class="thead-dark">
                 <tr>
