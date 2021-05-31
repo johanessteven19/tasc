@@ -1,13 +1,17 @@
 package com.adpro.tasc.appointment.db.template;
 
 import com.adpro.tasc.appointment.db.dao.ScheduleDAO;
+import com.adpro.tasc.appointment.db.dao.SlotDAO;
 import com.adpro.tasc.appointment.db.mapper.ScheduleMapper;
 import com.adpro.tasc.appointment.db.mapper.SlotMapper;
 import com.adpro.tasc.appointment.db.model.Schedule;
 import com.adpro.tasc.appointment.db.model.Slot;
 import com.adpro.tasc.user.db.dao.UserDAO;
 import com.adpro.tasc.user.db.model.AcademicUser;
+import com.adpro.tasc.user.db.model.Role;
+import com.adpro.tasc.user.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,12 @@ import java.util.List;
 public class ScheduleTemplate implements ScheduleDAO {
     private JdbcTemplate template;
     private UserDAO userDB;
+    private SlotDAO slotDB;
+
+    @Autowired
+    public void setSlotDB(SlotDAO slotDB) {
+        this.slotDB = slotDB;
+    }
 
     @Autowired
     public void setUserDB(UserDAO userDB) {
@@ -35,38 +45,74 @@ public class ScheduleTemplate implements ScheduleDAO {
                 from schedule
                 where schedule.user=?
                 """;
+        try {
+            Schedule schedule = template.queryForObject(sql, new ScheduleMapper(userDB), user.getUserName());
 
-        Schedule schedule = template.queryForObject(sql, new ScheduleMapper(userDB), user.getUserName());
+            List<Slot> slots = slotDB.getAll(schedule);
+            schedule.setAvailableSlots(slots);
 
-        sql = """
-            select *
-            from slot
-            where schedule=?
-            """;
-        List<Slot> slots = template.query(sql, new SlotMapper(), schedule.getId());
-        schedule.setAvailableSlots(slots);
-
-        return schedule;
+            return schedule;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
-    public void addUserScheduleSlot(Slot slot) {
+    public Schedule getUserScheduleByDay(AcademicUser user, Slot.Day day) {
         String sql = """
-                insert into slot (schedule, start_time, finish_time, day)
-                values (?, ?, ?, ?)
+                select *
+                from schedule
+                where schedule.user=?
+                """;
+        try {
+            Schedule schedule = template.queryForObject(sql, new ScheduleMapper(userDB), user.getUserName());
+
+            List<Slot> slots = slotDB.getByDay(schedule, day);
+            schedule.setAvailableSlots(slots);
+
+            return schedule;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private void validateUser(User user) {
+        if(!Role.ROLE_TEACHING_ASSISTANT.equals(user.getRole())) {
+            throw new IllegalArgumentException("User must be Teaching Assistant");
+        }
+    }
+
+    @Override
+    public void createSchedule(Schedule schedule) {
+        validateUser(schedule.getUser());
+
+        String sql = """
+                insert into schedule ("user")
+                values (?)
                 """;
 
-        template.update(sql,
-                slot.getSchedule(), slot.getStartTime(), slot.getFinishTime(), slot.getDay().toString());
+        template.update(sql, schedule.getUser().getUserName());
     }
 
     @Override
-    public void deleteUserScheduleSlot(Slot slot) {
+    public void deleteSchedule(int id) {
         String sql = """
-                delete from slot
+                delete from schedule
                 where id=?
                 """;
 
-        template.update(sql, slot.getId());
+        template.update(sql, id);
+    }
+
+    @Override
+    public void deleteSchedule(User user) {
+        validateUser(user);
+
+        String sql = """
+                delete from schedule
+                where "user"=?
+                """;
+
+        template.update(sql, user.getUserName());
     }
 }

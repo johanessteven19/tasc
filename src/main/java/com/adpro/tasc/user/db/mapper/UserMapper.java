@@ -22,17 +22,17 @@ public class UserMapper implements RowMapper<User> {
     @Override
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {
         User user = new User(
-                rs.getString("\"user\".username"),
-                rs.getString("\"user\".full_name"),
-                rs.getString("\"user\".password"),
-                Role.valueOf(rs.getString("\"user\".role"))
+                rs.getString("username"),
+                rs.getString("full_name"),
+                rs.getString("password"),
+                Role.valueOf(rs.getString("role"))
         );
 
         return updateByRole(user);
     }
 
     private User updateByRole(User user) {
-        if(!Role.ADMIN.equals(user.getRole())) {
+        if(!Role.ROLE_ADMIN.equals(user.getRole())) {
             AcademicUser academicUser = new AcademicUser(user);
 
             academicUser.setCourses(courseDB.getUserCourseList(academicUser));

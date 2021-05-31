@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Display Schedule</title>
+    <title>Book appointment</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -15,37 +15,26 @@
 
 </head>
 <body>
-<nav th:replace="fragments/navbar_TA :: navbar"></nav>
-    <div style="padding:2em;" >
+<nav th:replace="fragments/navbar_student :: navbar"></nav>
+    <div style="padding:2em">
         <div>
-            <form th:action="@{/home}">
+            <form th:action="@{/home-student}">
                 <button type="submit" class="btn btn-danger">Back</button>
             </form>
         </div>
         <div>
-            <h2>Your schedule</h2>
+            <h2>
+                Book an appointment
+            </h2>
         </div>
         <div>
-            <table id="scheduleList" class="table table-striped" style="width:100%">
-                <thead>
-                <tr>
-                    <th>Day</th>
-                    <th>Available Time Slot</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="slot: ${slots}">
-                    <td th:text="${slot.day.toString()}"></td>
-                    <td th:text="${(slot.startTime / (1000 * 60 * 60))%24}+'.'+${(slot.startTime / 60000) % 60}+' - '+${(slot.finishTime / (1000 * 60 * 60))%24}+'.'+${(slot.finishTime / 60000) % 60}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div>
-            <form th:action="@{/add-slot}">
-                <button type="submit" class="btn btn-success">Add new available slot</button>
-            </form>
+            <div th:each="day: ${days}">
+
+            </div>
         </div>
     </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
+
 </html>

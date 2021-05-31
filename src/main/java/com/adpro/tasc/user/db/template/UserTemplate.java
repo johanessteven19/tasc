@@ -2,8 +2,10 @@ package com.adpro.tasc.user.db.template;
 
 import com.adpro.tasc.appointment.db.dao.CourseDAO;
 import com.adpro.tasc.appointment.db.dao.ScheduleDAO;
+import com.adpro.tasc.appointment.db.model.Course;
 import com.adpro.tasc.user.db.dao.UserDAO;
 import com.adpro.tasc.user.db.mapper.UserMapper;
+import com.adpro.tasc.user.db.model.Role;
 import com.adpro.tasc.user.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -54,6 +56,19 @@ public class UserTemplate implements UserDAO {
     }
 
     @Override
+    public List<User> getTAbyCourse(Course course) {
+        String sql = """
+                select u.*
+                from course_list c
+                inner join "user" u on u.username = c.username
+                where u.role=? and c.course=?
+                """;
+
+        return template.query(sql, new UserMapper(courseDB, scheduleDB),
+                Role.ROLE_TEACHING_ASSISTANT.toString(), course.getName());
+    }
+
+    @Override
     public void createUser(User user) {
         String sql = """
                 insert into "user" (username, full_name, password, role)
@@ -61,7 +76,7 @@ public class UserTemplate implements UserDAO {
                 """;
 
         template.update(sql,
-                user.getUserName(), user.getFullName(), user.getPassword(), user.getRole());
+                user.getUserName().toString(), user.getFullName().toString(), user.getPassword().toString(), user.getRole().toString());
     }
 
     @Override
@@ -84,7 +99,7 @@ public class UserTemplate implements UserDAO {
                 """;
 
         template.update(sql,
-                user.getUserName(), user.getFullName(), user.getRole(),
+                user.getUserName(), user.getFullName(), user.getRole().toString(),
                 username);
     }
 

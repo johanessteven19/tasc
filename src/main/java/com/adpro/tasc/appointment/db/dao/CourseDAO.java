@@ -15,4 +15,8 @@ public interface CourseDAO {
     
     void updateCourse(String name, Course course);
     void deleteCourse(Course course);
+
+    Course getCourseByName(String courseName);
+
+    void createCourse(Course course);
 }

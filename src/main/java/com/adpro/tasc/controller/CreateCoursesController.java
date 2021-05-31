@@ -1,5 +1,6 @@
 package com.adpro.tasc.controller;
 
+import com.adpro.tasc.appointment.db.dao.CourseDAO;
 import com.adpro.tasc.appointment.db.model.Course;
 import com.adpro.tasc.user.db.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,27 +16,25 @@ import java.util.List;
 
 @Controller
 public class CreateCoursesController {
-  @Autowired
-  UserDAO userDAO;
-  List<Course> courses = new ArrayList<>();
+    @Autowired
+    UserDAO userDAO;
 
-  @GetMapping(value="/create-course")
-  public String createCourseForm(Model model) {
-    System.out.println();
-    model.addAttribute("courses",courses);
-    return "create_course";
-  }
+    @Autowired
+    CourseDAO courseDAO;
 
-  @PostMapping(value="/create-course")
-  public String createCourse(
-          @RequestParam("name") String name
-  ) {
-    System.out.println(name);
-    Course newCourse = new Course();
-    newCourse.setName(name);
+    @GetMapping(value="/create-course")
+    public String createCourseForm(Model model) {
+        model.addAttribute("courses", courseDAO.getAllCourse());
+        return "create_course";
+    }
 
-    courses.add(newCourse);
+    @PostMapping(value="/create-course/post")
+    public String createCourse(@RequestParam("name") String name) {
+        Course newCourse = new Course();
+        newCourse.setName(name);
 
-    return "redirect:/create-course";
-  }
+        courseDAO.createCourse(newCourse);
+
+        return "redirect:/create-course";
+    }
 }

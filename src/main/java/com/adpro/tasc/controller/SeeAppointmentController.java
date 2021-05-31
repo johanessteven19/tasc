@@ -1,5 +1,6 @@
 package com.adpro.tasc.controller;
 
+import com.adpro.tasc.appointment.db.dao.AppointmentDAO;
 import com.adpro.tasc.appointment.db.model.Appointment;
 import com.adpro.tasc.appointment.db.model.AppointmentRequest;
 import com.adpro.tasc.appointment.db.model.Course;
@@ -21,32 +22,19 @@ public class SeeAppointmentController {
 
     @Autowired
     private UserDAO userDAO;
-    private List<AppointmentRequest> users = new ArrayList<>();
+
+    @Autowired
+    private AppointmentDAO appointmentDAO;
 
     @GetMapping("/see-appointment")
     public String seeAppointment(Model model) {
-        model.addAttribute("newAppointment", users);
+        model.addAttribute("newAppointment", appointmentDAO.getAllAppointment());
         return "SeeAppointment";
     }
 
     @GetMapping("/accept_reject")
     public String acceptPage(Model model) {
-        AppointmentRequest test = new AppointmentRequest();
-        test.setStudent(new User("student1","student1","123", Role.STUDENT));
-        test.setRequestTime(20);
-        test.setStatus(AppointmentRequest.Status.PENDING);
-        test.setAdminHasPermission(true);
-
-        Appointment appointment = new Appointment();
-        Course course1 = new Course();
-        course1.setName("Softeng");
-        appointment.setCourse(course1);
-        appointment.setDuration(20);
-        appointment.setDate(System.currentTimeMillis());
-        test.setAppointment(appointment);
-        users.add(test);
-
-        model.addAttribute("userList",users);
+        model.addAttribute("newAppointment", appointmentDAO.getAllAppointment());
         return "accept_reject";
     }
 
@@ -54,7 +42,17 @@ public class SeeAppointmentController {
     public String accPage(@RequestParam("fullName") String fullName,
                           @RequestParam("course") String course,
                           @RequestParam("date") String date,
-                          @RequestParam("duration") String duration) {
+                          @RequestParam("duration") String duration,
+                          @RequestParam("indexAcc") int index) {
         return "redirect:/see-appointment";
+    }
+
+    @PostMapping("/rejected")
+    public String rejPage(@RequestParam("fullName") String fullName,
+                          @RequestParam("course") String course,
+                          @RequestParam("date") String date,
+                          @RequestParam("duration") String duration,
+                          @RequestParam("indexReject") int index) {
+        return "redirect:/accept_reject";
     }
 }
