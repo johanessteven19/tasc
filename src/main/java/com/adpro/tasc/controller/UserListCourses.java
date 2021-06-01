@@ -60,4 +60,19 @@ public class UserListCourses {
         courseDAO.addUserCourse(currentUser, course);
         return "redirect:/userlist-courses";
     }
+
+    @PostMapping("/userlist-courses/leave")
+    public String leaveCourse (@RequestParam("userName") String userName, @RequestParam("courseName") String courseName) {
+        AcademicUser currentUser = (AcademicUser) userDAO.getUser(userName);
+        List<Course> userCourseList = courseDAO.getUserCourseList(currentUser);
+
+        for (int i = 0; i < userCourseList.size(); i++) {
+            if (userCourseList.get(i).getName().equals(courseName)) {
+                courseDAO.deleteUserCourse(currentUser,userCourseList.get(i));
+                return "redirect:/userlist-courses";
+            }
+        }
+
+        return "redirect:/userlist-courses";
+    }
 }
