@@ -1,7 +1,5 @@
 package com.adpro.tasc.user.db.mapper;
 
-import com.adpro.tasc.appointment.db.dao.CourseDAO;
-import com.adpro.tasc.appointment.db.dao.ScheduleDAO;
 import com.adpro.tasc.user.db.model.Role;
 import com.adpro.tasc.user.db.model.User;
 import org.springframework.jdbc.core.RowMapper;

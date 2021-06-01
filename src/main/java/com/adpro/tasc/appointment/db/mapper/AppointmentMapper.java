@@ -3,7 +3,6 @@ package com.adpro.tasc.appointment.db.mapper;
 import com.adpro.tasc.appointment.db.model.Appointment;
 import com.adpro.tasc.appointment.db.model.AppointmentRequest;
 import com.adpro.tasc.appointment.db.model.Course;
-import com.adpro.tasc.user.db.dao.UserDAO;
 import com.adpro.tasc.user.db.model.User;
 import org.springframework.jdbc.core.RowMapper;
 
