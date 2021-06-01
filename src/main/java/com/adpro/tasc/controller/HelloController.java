@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.adpro.tasc.user.db.model.Role;
 
 @Controller
 public class HelloController {
@@ -57,5 +56,11 @@ public class HelloController {
     @GetMapping("/home-student")
     public String StudentPage() {
         return "homeStudent";
+    }
+
+    @PreAuthorize("hasRole('UNASSIGNED')")
+    @GetMapping("/waiting")
+    public String waitingPage() {
+        return "waiting";
     }
 }
