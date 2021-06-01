@@ -30,18 +30,34 @@ public class UserListCourses {
     @GetMapping("/userlist-courses")
     public String userListCourses (Model model, Principal principal) {
         User currentUser = userDAO.getUser(principal.getName());
+        List<Course> courseList = courseDAO.getAllCourse();
+        List<Course> userCourseList = courseDAO.getUserCourseList((AcademicUser) currentUser);
+
+        System.out.println(courseList.get(0).getName());
+        System.out.println(userCourseList.get(0).getName());
+        System.out.println(userCourseList.get(0).equals(courseList.get(0)));
+        System.out.println(userCourseList.contains(courseList.get(0)));
 
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("courseList", courseDAO.getAllCourse());
+        model.addAttribute("courseList", courseList);
+        model.addAttribute("userCourseList",userCourseList);
 
         return "userList_Courses";
     }
 
     @PostMapping("/userlist-courses/assign")
     public String assignCourse (Model model, @RequestParam("userName") String userName, @RequestParam("courseName") String courseName) {
-        AcademicUser user1 = (AcademicUser) userDAO.getUser(userName);
-        Course course1 = courseDAO.getCourseByName(courseName);
-        courseDAO.addUserCourse(user1, course1);
+        AcademicUser currentUser = (AcademicUser) userDAO.getUser(userName);
+        List<Course> userCourseList = courseDAO.getUserCourseList(currentUser);
+
+        for (int i = 0; i < userCourseList.size(); i++) {
+            if (userCourseList.get(i).getName().equals(courseName)) {
+                return "redirect:/userlist-courses";
+            }
+        }
+
+        Course course = courseDAO.getCourseByName(courseName);
+        courseDAO.addUserCourse(currentUser, course);
         return "redirect:/userlist-courses";
     }
 }
