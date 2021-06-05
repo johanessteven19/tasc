@@ -28,12 +28,12 @@ public class BookAppointmentController {
 
   }
 
-  @GetMapping("/book-appointments")
+  @GetMapping("/book-appointment/home")
   public String bookAppointmentHome(Model model, Principal principal) {
     List<Course> courseList = ((AcademicUser) userDAO.getUser(principal.getName())).getCourses();
 
 
 
-    return "book_appointments";
+    return "book_appointment/pick_course";
   }
 }

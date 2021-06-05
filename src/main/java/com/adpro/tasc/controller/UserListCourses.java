@@ -30,6 +30,8 @@ public class UserListCourses {
         List<Course> courseList = courseDAO.getAllCourse();
         List<Course> userCourseList = courseDAO.getUserCourseList((AcademicUser) currentUser);
 
+        System.out.println(currentUser.getRole());
+
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("courseList", courseList);
         model.addAttribute("userCourseList",userCourseList);
