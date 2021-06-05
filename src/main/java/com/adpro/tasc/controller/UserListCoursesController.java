@@ -16,7 +16,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-public class UserListCourses {
+public class UserListCoursesController {
 
     @Autowired
     UserDAO userDAO;

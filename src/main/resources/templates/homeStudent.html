@@ -25,6 +25,12 @@ body {
 <h1 class="text-center text-white font-weight-bold" style="padding: 30px">Hello Students!</h1>
 <div class="card-group" style="padding: 30px">
     <div class="card text-center text-white bg-dark mb-3">
+        <h5 class="card-header">Courses</h5>
+        <div class="card-body">
+            <a class="btn btn-light" href="/userlist-courses">Join Courses</a>
+        </div>
+    </div>
+    <div class="card text-center text-white bg-dark mb-3">
         <h5 class="card-header">Appointment</h5>
         <div class="card-body">
             <a class="btn btn-light" href="/see-appointment">See Appointment</a>
@@ -42,19 +48,10 @@ body {
             <a class="btn btn-light" href="#">Reminder</a>
         </div>
     </div>
-    <div class="card text-center text-white bg-dark mb-3">
-        <h5 class="card-header">Courses</h5>
-        <div class="card-body">
-            <a class="btn btn-light" href="/userlist-courses">Join Courses</a>
-        </div>
-    </div>
 </div>
-<!--<h3 class="text-white font-weight-bold" style="margin-left: 30px">Logout</h3>-->
-<!--<form th:action="@{/}">-->
-<!--    <p><input type="submit" class="btn btn-dark" style="margin-left: 35px" value="Logout" ></p>-->
-<!--</form>-->
-<form th:action="@{/home}">
-    <p><input type="submit" class="btn btn-dark" style="margin-left: 35px" value="Back" ></p>
+<h3 class="text-white font-weight-bold" style="margin-left: 30px">Logout</h3>
+<form th:action="@{/}">
+    <p><input type="submit" class="btn btn-dark" style="margin-left: 35px" value="Logout" ></p>
 </form>
 </body>
 

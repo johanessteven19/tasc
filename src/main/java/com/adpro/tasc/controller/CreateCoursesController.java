@@ -28,9 +28,7 @@ public class CreateCoursesController {
     public String createCourse(@RequestParam("name") String name) {
         Course newCourse = new Course();
         newCourse.setName(name);
-
         courseDAO.createCourse(newCourse);
-
         return "redirect:/create-course";
     }
 }
