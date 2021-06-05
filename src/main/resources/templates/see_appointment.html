@@ -14,10 +14,10 @@
 </head>
 
 <body>
-<nav th:replace="fragments/navbar_TA :: navbar"></nav>
+<nav th:replace="${currentUser.getRole().toString() == 'ROLE_ADMIN'} ? ~{fragments/navbar_admin :: navbar} : ~{fragments/navbar_TA :: navbar}"></nav>
 <div style="padding:2em">
     <div>
-        <form th:action="@{/home}">
+        <form th:action="${currentUser.getRole().toString() == 'ROLE_ADMIN'} ? @{/home-admin} : @{/home-TA}">
             <button type="submit" class="btn btn-danger">Back</button>
         </form>
     </div>
@@ -28,30 +28,21 @@
         <th> Course </th>
         <th> Date </th>
         <th> Duration </th>
+        <th> Status </th>
         <th> Delete </th>
         </thead>
         <tbody>
-        <tr>
-            <td> Test Student </td>
-            <td> Software Engineering </td>
-            <td> 5-10-2021</td>
-            <td> 30 min </td>
-            <td><input type="button" class="btn btn-danger" value="Delete Row" onclick="SomeDeleteRowFunction()"></td>
-        </tr>
         <tr th:each="appoint :${newAppointment}">
             <td th:text="${appoint.student.fullName}"> </td>
             <td th:text="${appoint.appointment.course.name}"></td>
             <td th:text="${appoint.appointment.date}"></td>
             <td th:text="${appoint.requestTime}"></td>
+            <td th:text="${appoint.status}"></td>
             <td><input type="button" class="btn btn-danger" value="Delete Row" onclick="SomeDeleteRowFunction()"></td>
         </tr>
         </tbody>
     </table>
 </div>
-<!--<br>-->
-<!--<form th:action="@{/home}">-->
-<!--    <button type="submit" class="btn btn-outline-dark">Return</button>-->
-<!--</form>-->
 <script>
     function SomeDeleteRowFunction() {
       // event.target will be the input element.

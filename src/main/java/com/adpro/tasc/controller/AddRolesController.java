@@ -3,6 +3,7 @@ package com.adpro.tasc.controller;
 import com.adpro.tasc.user.db.dao.UserDAO;
 import com.adpro.tasc.user.db.model.AcademicUser;
 import com.adpro.tasc.user.db.model.Role;
+import com.adpro.tasc.user.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
+
 @Controller
 @PreAuthorize("hasRole('ADMIN')")
 public class AddRolesController {
@@ -18,7 +21,9 @@ public class AddRolesController {
     private UserDAO userDAO;
 
     @GetMapping("/add-roles")
-    public String addRoles(Model model) {
+    public String addRoles(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
         model.addAttribute("userList", userDAO.getAllUser());
         return "add_roles";
     }

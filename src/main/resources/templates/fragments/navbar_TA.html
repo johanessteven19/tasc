@@ -42,10 +42,11 @@
                 <a class="nav-link" href="#">Reminder</a>
             </li>
         </ul>
+        <p style="margin-right: 20px">Hi, <span th:text = "${currentUser.getUserName()}"></span><p>
         <form th:action="@{/}">
             <p><input type="submit" class="form-inline my-2 my-lg-0 btn btn-dark" value="Logout" ></p>
         </form>
-    </div>
+    </p>
 </nav>
 
 </body>
