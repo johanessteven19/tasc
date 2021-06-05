@@ -29,7 +29,7 @@ public class SeeAppointmentController {
 
     @GetMapping("/accept_reject")
     public String acceptPage(Model model) {
-        model.addAttribute("newAppointment", appointmentDAO.getAllAppointment());
+        model.addAttribute("userList", appointmentDAO.getAllAppointment());
         return "accept_reject";
     }
 
