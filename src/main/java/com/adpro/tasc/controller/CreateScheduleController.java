@@ -69,13 +69,14 @@ public class CreateScheduleController {
     return "create_slot";
   }
 
-  @PostMapping(value="/add-slot")
+  @PostMapping(value="/add-slot/post")
   public String createSlot(
           @RequestParam("day") int day,
           @RequestParam("startHour") int startHour,
           @RequestParam("startMinute") int startMinute,
           @RequestParam("endHour") int endHour,
-          @RequestParam("endMinute") int endMinute
+          @RequestParam("endMinute") int endMinute,
+          Principal principal
           )
   {
     System.out.println(day+" "+startHour+ " " + startMinute);
@@ -90,6 +91,10 @@ public class CreateScheduleController {
     slot1.setDay(Slot.Day.valueOf(daysArr[day]));
     slot1.setStartTime(epochStart);
     slot1.setFinishTime(epochEnd);
+
+    User currentUser = userDAO.getUser(principal.getName());
+    Schedule schedule = scheduleDAO.getUserSchedule((AcademicUser) currentUser);
+    slot1.setSchedule(schedule.getId());
 
 //    slots.add(slot1);
 
