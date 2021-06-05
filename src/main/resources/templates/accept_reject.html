@@ -25,6 +25,7 @@
     <table class="table table-striped" style="width:100%">
         <thead class="thead-dark">
         <tr>
+            <th>User Name</th>
             <th>Full Name</th>
             <th>Course</th>
             <th>Date</th>
@@ -37,6 +38,7 @@
         </thead>
         <tbody>
         <tr>
+            <td> teststudent </td>
             <td> Test Student </td>
             <td> Software Engineering </td>
             <td> 5-10-2021</td>
@@ -53,7 +55,8 @@
             </td>
             <td><input type="button" class="btn btn-danger" value="Delete Row" onclick="SomeDeleteRowFunction()"></td>
         </tr>
-        <tr th:each="users, index :${userList}">
+        <tr th:each="users :${userList}">
+            <td th:text="${users.student.userName}"> </td>
             <td th:text="${users.student.fullName}"> </td>
             <td th:text="${users.appointment.course.name}"></td>
             <td th:text="${users.appointment.date}"></td>
@@ -61,17 +64,21 @@
             <td th:text="${users.status}"></td>
             <td th:text="${users.adminHasPermission}"></td>
             <td>
-                <form th:action="@{/accepted}" th:object="${users}" method="post">
-                    <input id = "indexAcc" name = "indexAcc" type = "hidden" th:value = "${index.index}"/>
-                    <input id = "fullName" name = "fullName" type = "hidden" value = "${users.student.fullName}"/>
-                    <input id = "course" name = "course" type = "hidden" value = "${users.appointment.course.name}"/>
-                    <input id = "date" name = "date" type = "hidden" value = "${users.appointment.date}"/>
-                    <input id = "duration" name = "duration" type = "hidden" value = "${users.requestTime}"/>
+                <form th:action="@{/accepted}" th:object="${user}" method="post">
+                    <input id = "userName" name = "userName" type = "hidden" value = "${user.student.userName}"/>
+                    <input id = "fullName" name = "fullName" type = "hidden" value = "${user.student.fullName}"/>
+                    <input id = "course" name = "course" type = "hidden" value = "${user.appointment.course.name}"/>
+                    <input id = "date" name = "date" type = "hidden" value = "${user.appointment.date}"/>
+                    <input id = "duration" name = "duration" type = "hidden" value = "${user.requestTime}"/>
                     <button type="submit" class="btn btn-outline-dark">Accept</button>
                 </form>
-                <form th:action="@{/home-TA}">
-                    <input id = "indexReject" name = "indexReject" type = "hidden" th:value = "${index.index}"/>
-                    <button onclick="myFunction()" class="btn btn-outline-dark">Reject</button>
+                <form th:action="@{/rejected}" th:object="${user}" method="post">
+                    <input id = "userNameX" name = "userNameX" type = "hidden" value = "${user.student.userName}"/>
+                    <input id = "fullNameX" name = "fullNameX" type = "hidden" value = "${user.student.fullName}"/>
+                    <input id = "courseX" name = "courseX" type = "hidden" value = "${user.appointment.course.name}"/>
+                    <input id = "dateX" name = "dateX" type = "hidden" value = "${user.appointment.date}"/>
+                    <input id = "durationX" name = "durationX" type = "hidden" value = "${user.requestTime}"/>
+                    <button onclick="myFunction()" type="submit" class="btn btn-outline-dark">Reject</button>
                 </form>
             </td>
             <td><input type="button" class="btn btn-danger" value="Delete Row" onclick="SomeDeleteRowFunction()"></td>
