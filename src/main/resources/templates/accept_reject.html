@@ -14,10 +14,10 @@
 </head>
 
 <body>
-<nav th:replace="fragments/navbar_TA :: navbar"></nav>
+<nav th:replace="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? ~{fragments/navbar_TA :: navbar}"></nav>
 <div style="padding:2em">
     <div>
-        <form th:action="@{/home-TA}">
+        <form th:action="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? @{/home-TA}">
             <button type="submit" class="btn btn-danger">Back</button>
         </form>
     </div>
@@ -37,24 +37,6 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td> teststudent </td>
-            <td> Test Student </td>
-            <td> Software Engineering </td>
-            <td> 5-10-2021</td>
-            <td> 30 min </td>
-            <td> Pending </td>
-            <td> True </td>
-            <td>
-                <form th:action="@{/see-appointment}">
-                    <button type="submit" class="btn btn-outline-dark">Accept</button>
-                </form>
-                <form th:action="@{/home}">
-                    <button onclick="myFunction()" class="btn btn-outline-dark">Reject</button>
-                </form>
-            </td>
-            <td><input type="button" class="btn btn-danger" value="Delete Row" onclick="SomeDeleteRowFunction()"></td>
-        </tr>
         <tr th:each="users :${userList}">
             <td th:text="${users.student.userName}"> </td>
             <td th:text="${users.student.fullName}"> </td>
@@ -86,7 +68,6 @@
         </tbody>
     </table>
 </div>
-
 <script>
 function myFunction() {
   alert("Rejected!");

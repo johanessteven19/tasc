@@ -34,7 +34,7 @@ public class UserListCoursesController {
         model.addAttribute("courseList", courseList);
         model.addAttribute("userCourseList",userCourseList);
 
-        return "userList_Courses";
+        return "user_list_courses";
     }
 
     @PostMapping("/userlist-courses/assign")

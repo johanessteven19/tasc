@@ -15,10 +15,10 @@
 
     </head>
     <body>
-    <nav th:replace="fragments/navbar_admin :: navbar"></nav>
+    <nav th:replace="${currentUser.getRole().toString() == 'ROLE_ADMIN'} ? ~{fragments/navbar_admin :: navbar}"></nav>
     <div style="padding:2em">
         <div>
-            <form th:action="@{/home-admin}">
+            <form th:action="${currentUser.getRole().toString() == 'ROLE_ADMIN'} ? @{/home-admin}">
                 <button type="submit" class="btn btn-danger">Back</button>
             </form>
         </div>

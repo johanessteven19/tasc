@@ -30,7 +30,7 @@
                 <a class="nav-link" href="/userlist-courses">Join Course</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/see-appointment">Appointment</a>
+                <a class="nav-link" href="/see-appointment-student">Appointment</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="#">Create Appointment</a>
@@ -39,6 +39,7 @@
                 <a class="nav-link" href="#">Reminder</a>
             </li>
         </ul>
+        <p style="margin-right: 20px">Hi, <span th:text = "${currentUser.getUserName()}"></span><p>
         <form th:action="@{/}">
             <p><input type="submit" class="form-inline my-2 my-lg-0 btn btn-dark" value="Logout" ></p>
         </form>

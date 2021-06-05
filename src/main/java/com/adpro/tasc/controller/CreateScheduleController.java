@@ -57,13 +57,15 @@ public class CreateScheduleController {
 
     model.addAttribute("days",days);
     model.addAttribute("slots",schedule.getAvailableSlots());
-
+    model.addAttribute("currentUser", currentUser);
 
     return "display_schedule";
   }
 
   @GetMapping(value="/add-slot")
-  public String addSlotForm(Model model) {
+  public String addSlotForm(Model model, Principal principal) {
+    User currentUser = userDAO.getUser(principal.getName());
+    model.addAttribute("currentUser", currentUser);
     model.addAttribute("days",daysArr);
 
     return "create_slot";

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
+
 @Controller
 public class HelloController {
     @Autowired
@@ -62,5 +64,29 @@ public class HelloController {
     @GetMapping("/waiting")
     public String waitingPage() {
         return "waiting";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/nav-admin")
+    public String adminNavPage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
+        return "fragments/navbar_admin";
+    }
+
+    @PreAuthorize("hasRole('TEACHING_ASSISTANT')")
+    @GetMapping("/nav-TA")
+    public String TANavPage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
+        return "fragments/navbar_TA";
+    }
+
+    @PreAuthorize("hasRole('STUDENT')")
+    @GetMapping("/nav-student")
+    public String StudentNavPage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
+        return "fragments/navbar_student";
     }
 }
