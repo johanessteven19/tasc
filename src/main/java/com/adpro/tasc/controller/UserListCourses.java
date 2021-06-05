@@ -4,7 +4,6 @@ import com.adpro.tasc.appointment.db.dao.CourseDAO;
 import com.adpro.tasc.appointment.db.model.Course;
 import com.adpro.tasc.user.db.dao.UserDAO;
 import com.adpro.tasc.user.db.model.AcademicUser;
-import com.adpro.tasc.user.db.model.Role;
 import com.adpro.tasc.user.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -32,11 +29,6 @@ public class UserListCourses {
         User currentUser = userDAO.getUser(principal.getName());
         List<Course> courseList = courseDAO.getAllCourse();
         List<Course> userCourseList = courseDAO.getUserCourseList((AcademicUser) currentUser);
-
-        System.out.println(courseList.get(0).getName());
-        System.out.println(userCourseList.get(0).getName());
-        System.out.println(userCourseList.get(0).equals(courseList.get(0)));
-        System.out.println(userCourseList.contains(courseList.get(0)));
 
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("courseList", courseList);
