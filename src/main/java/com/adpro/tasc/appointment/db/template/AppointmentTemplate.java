@@ -98,8 +98,8 @@ public class AppointmentTemplate implements AppointmentDAO {
 
         Appointment appointment = request.getAppointment();
         template.update(sql,
-                request.getStudent(), request.getTa(), request.getRequestTime(),
-                appointment.getDate(), appointment.getDuration(), appointment.getCourse());
+                request.getStudent().getUserName(), request.getTa().getUserName(), request.getRequestTime(),
+                appointment.getDate(), appointment.getDuration(), appointment.getCourse().getName());
     }
 
     @Override
