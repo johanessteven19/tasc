@@ -23,13 +23,6 @@ public class HelloController {
         return "index";
     }
 
-    @GetMapping("/home")
-    public String homePage(Model model, Principal principal) {
-        User currentUser = userDAO.getUser(principal.getName());
-        model.addAttribute("currentUser", currentUser);
-        return "home";
-    }
-
     @GetMapping("/register")
     public String registerPage() {
         return "register";
@@ -48,7 +41,7 @@ public class HelloController {
     public String adminPage(Model model, Principal principal) {
         User currentUser = userDAO.getUser(principal.getName());
         model.addAttribute("currentUser", currentUser);
-        return "homeAdmin";
+        return "home";
     }
 
     @PreAuthorize("hasRole('TEACHING_ASSISTANT')")
@@ -56,7 +49,7 @@ public class HelloController {
     public String TAPage(Model model, Principal principal) {
         User currentUser = userDAO.getUser(principal.getName());
         model.addAttribute("currentUser", currentUser);
-        return "homeTA";
+        return "home";
     }
 
     @PreAuthorize("hasRole('STUDENT')")
@@ -64,7 +57,7 @@ public class HelloController {
     public String StudentPage(Model model, Principal principal) {
         User currentUser = userDAO.getUser(principal.getName());
         model.addAttribute("currentUser", currentUser);
-        return "homeStudent";
+        return "home";
     }
 
     @PreAuthorize("hasRole('UNASSIGNED')")
