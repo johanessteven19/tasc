@@ -8,6 +8,7 @@ import com.adpro.tasc.user.db.dao.UserDAO;
 import com.adpro.tasc.user.db.model.AcademicUser;
 import com.adpro.tasc.user.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import java.time.YearMonth;
 import java.util.*;
 
 @Controller
+@PreAuthorize("hasRole('STUDENT')")
 public class BookAppointmentController {
   @Autowired
   AppointmentDAO appointmentDAO;
@@ -183,57 +185,63 @@ public class BookAppointmentController {
           @RequestParam("slotStartTime") long slotStartTime,
           @RequestParam("slotFinishTime") long slotFinishTime,
           @RequestParam("bookDateWeekOffset") int bookDateWeekOffset,
-          @RequestParam("startHourForm") int startHour,
-          @RequestParam("endHourForm") int endHour,
-          @RequestParam("startMinuteForm") int startMinute,
-          @RequestParam("endMinuteForm") int endMinute,
+          @RequestParam("startTimeForm") String startTime,
+          @RequestParam("endTimeForm") String endTime,
           @RequestParam("targetBookDate") long targetBookMillis,
           @RequestParam("taUserName") String taUserName,
           @RequestParam("courseName") String courseName
   ) {
-    boolean valid =true;
 
-    long targetBookEpochStart = java.time.Duration.ofMinutes(startMinute).toMillis() +
-            java.time.Duration.ofHours(startHour).toMillis();
-    long targetBookEpochEnd = java.time.Duration.ofMinutes(endMinute).toMillis() +
-            java.time.Duration.ofHours(endHour).toMillis();
+    try {
 
-    if (
-            !(
-                targetBookEpochStart < targetBookEpochEnd &&
-                targetBookEpochStart >= slotStartTime &&
-                targetBookEpochStart < slotFinishTime &&
-                targetBookEpochEnd <= slotFinishTime &&
-                targetBookEpochEnd > slotStartTime
-            ) ||
-            !(
-                startHour >= 0 && startHour < 24 &&
-                startMinute >= 0 && startMinute < 60 &&
-                endHour >= 0 && endHour < 24 &&
-                endMinute >= 0 && endMinute < 60
-            )
+      String[] splittedStartTime = startTime.split("\\.");
+      String[] splittedEndTime = endTime.split("\\.");
 
-    ) {
-      valid = false;
-    }
+      if (splittedStartTime.length != 2 || splittedEndTime.length != 2) {
+        throw new Exception("");
+      }
 
-    if (!valid) {
-      System.out.println("invalid");
-      String referer = request.getHeader("Referer").replaceAll("false","true");
-      System.out.println(referer);
-      return "redirect:"+referer;
-    } else {
+      int startHour = Integer.parseInt(splittedStartTime[0]);
+      int startMinute = Integer.parseInt(splittedStartTime[1]);
+      int endHour = Integer.parseInt(splittedEndTime[0]);
+      int endMinute = Integer.parseInt(splittedEndTime[1]);
+
+      long targetBookEpochStart = java.time.Duration.ofMinutes(startMinute).toMillis() +
+              java.time.Duration.ofHours(startHour).toMillis();
+      long targetBookEpochEnd = java.time.Duration.ofMinutes(endMinute).toMillis() +
+              java.time.Duration.ofHours(endHour).toMillis();
+
+      if (
+              !(
+                      targetBookEpochStart < targetBookEpochEnd &&
+                              targetBookEpochStart >= slotStartTime &&
+                              targetBookEpochStart < slotFinishTime &&
+                              targetBookEpochEnd <= slotFinishTime &&
+                              targetBookEpochEnd > slotStartTime
+              ) ||
+                      !(
+                              startHour >= 0 && startHour < 24 &&
+                                      startMinute >= 0 && startMinute < 60 &&
+                                      endHour >= 0 && endHour < 24 &&
+                                      endMinute >= 0 && endMinute < 60
+                      )
+
+      ) {
+        throw new Exception("");
+      }
+
+
       System.out.println("valid");
       Calendar calendarBookDate = Calendar.getInstance();
       calendarBookDate.setTimeInMillis(targetBookMillis);
 
       int targetBookDate = calendarBookDate.get(Calendar.DATE);
-      int targetBookMonth = calendarBookDate.get(Calendar.MONTH)+1;
+      int targetBookMonth = calendarBookDate.get(Calendar.MONTH);
       int targetBookYear = calendarBookDate.get(Calendar.YEAR);
       long duration = targetBookEpochEnd - targetBookEpochStart;
 
-      calendarBookDate.set(targetBookYear,targetBookMonth,targetBookDate,startHour,startMinute);
-      calendarBookDate.add(Calendar.DATE,bookDateWeekOffset*7);
+      calendarBookDate.set(targetBookYear, targetBookMonth, targetBookDate, startHour, startMinute);
+      calendarBookDate.add(Calendar.DATE, bookDateWeekOffset * 7);
       long targetBookEpochDate = calendarBookDate.getTimeInMillis();
 
       Appointment appointment = new Appointment();
@@ -252,6 +260,12 @@ public class BookAppointmentController {
       appointmentDAO.createAppointment(appointmentRequest);
 
       return "redirect:/see-appointment-student";
+
+    } catch (Exception e) {
+      System.out.println("invalid");
+      String referer = request.getHeader("Referer").replaceAll("false", "true");
+      System.out.println(referer);
+      return "redirect:" + referer;
     }
   }
 }

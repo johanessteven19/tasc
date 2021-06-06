@@ -18,7 +18,8 @@
 <nav th:replace="${currentUser.getRole().toString() == 'ROLE_STUDENT'} ? ~{fragments/navbar_student :: navbar}"></nav>
 <div style="padding:2em;" >
     <div>
-        <form th:action="${currentUser.getRole().toString() == 'ROLE_STUDENT'} ? @{/book-appointment/pick-ta}">
+        <form th:action="@{/book-appointment/pick-ta}">
+            <input id = "courseNameBackTrack" name = "courseName" type = "hidden" th:value = "${courseName}"/>
             <button type="submit" class="btn btn-danger">Back</button>
         </form>
     </div>
@@ -26,10 +27,10 @@
         <h2>Book an appointment</h2>
     </div>
     <div>
-        <div style="border-width: 1px; border-radius: 10px; border-color:grey; border-style: solid;padding:3em">
-            <h5>
+        <div style="border-width: 1px; border-radius: 10px; border-color:grey; border-style: solid;padding:2em; margin: 1em 20vw">
+            <h4>
                 For slot:
-            </h5>
+            </h4>
             <div>
                 <h6>TA:</h6>
                 <p th:text="${taUserName}"></p>
@@ -43,48 +44,63 @@
                 <p th:text="${day}"></p>
             </div>
             <div>
-                <h6>Start time:</h6>
-                <p th:text="${(startTime / (1000 * 60 * 60))%24}+'.'+${(startTime / 60000) % 60}"></p>
+                <h6>Time:</h6>
+                <p th:text="${(startTime / (1000 * 60 * 60))%24}+'.'+${(startTime / 60000) % 60}+
+                '-'+${(finishTime / (1000 * 60 * 60))%24}+'.'+${(finishTime / 60000) % 60}"></p>
             </div>
-            <div>
-                <h6>Finish time:</h6>
-                <p th:text="${(finishTime / (1000 * 60 * 60))%24}+'.'+${(finishTime / 60000) % 60}"></p>
+<!--            <div style="flex-direction: row; display: flex">-->
+<!--                <div style="margin-right: 0.5em">-->
+<!--                    <h6>Start time:</h6>-->
+<!--                    <p th:text="${(startTime / (1000 * 60 * 60))%24}+'.'+${(startTime / 60000) % 60}"></p>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <h6>Finish time:</h6>-->
+<!--                    <p th:text="${(finishTime / (1000 * 60 * 60))%24}+'.'+${(finishTime / 60000) % 60}"></p>-->
+<!--                </div>-->
             </div>
         </div>
-        <div>
+        <div style="padding: 0.5em 3em; text-align: center">
            <h5>Enter values within above time slot range:</h5>
             <form th:action="@{/book-appointment/validate-book}" id="bookAppointment" method="post">
                 <div th:if="${error == 'true'}"  class="alert alert-danger" role="alert">
                     Invalid start and end time!
                 </div>
 
-                <div>
-                    <label for="bookDates">Date:</label>
-                    <select id="bookDates" name="bookDateWeekOffset">
-                        <option th:each="date,iStat: ${targetBookDates}" th:text="${date}" th:value="${iStat.index}"></option>
-                    </select>
+<!--                <div>-->
+<!--                    <label for="bookDates">Date:</label>-->
+<!--                    <select id="bookDates" name="bookDateWeekOffset">-->
+<!--                        <option th:each="date,iStat: ${targetBookDates}" th:text="${date}" th:value="${iStat.index}"></option>-->
+<!--                    </select>-->
+<!--                </div>-->
+                <div class="form-group" style="flex-direction: row; display: flex;justify-content: center; align-items: center">
+                    <div style="margin-right: 1em">
+                        <h6>Pick a date:</h6>
+                    </div>
+                    <div>
+                        <select id="bookDates" name="bookDateWeekOffset" class="form-control">
+                            <option th:each="date,iStat: ${targetBookDates}" th:text="${date}" th:value="${iStat.index}"></option>
+                        </select>
+                    </div>
                 </div>
 
-                <h6>Start time:</h6>
-                <div>
-                    <label for="startHour">Hours:</label>
-                    <input id = "startHour" name = "startHourForm" type = "number" min="0" max="23" value="0"/>
+                <br/>
+                <div style="flex-direction: row; display: flex;  justify-content: center; align-items: center">
+                    <div>
+                        <h6>Start time:</h6>
+                    </div>
+                    <div style="padding: 0em 0.5em">
+                        <input class="form-control" id = "startTime" name = "startTimeForm" type = "text" placeholder="11.59"/>
+                    </div>
                 </div>
 
-                <div>
-                    <label for="startMinute">Minute:</label>
-                    <input id = "startMinute" name = "startMinuteForm" type = "number" min="0" max="59" value="0"/>
-                </div>
-
-                <h6>End time:</h6>
-                <div>
-                    <label for="endHour">Hours:</label>
-                    <input id = "endHour" name = "endHourForm" type = "number" min="0" max="23" value="0"/>
-                </div>
-
-                <div>
-                    <label for="endMinute">Minute:</label>
-                    <input id = "endMinute" name = "endMinuteForm" type = "number" min="0" max="59" value="0"/>
+                <br/>
+                <div style="flex-direction: row; display: flex;  justify-content: center; align-items: center">
+                    <div>
+                        <h6>End time:</h6>
+                    </div>
+                    <div style="padding: 0em 0.5em">
+                        <input class="form-control" id = "endTime" name = "endTimeForm" type = "text" placeholder="13.05"/>
+                    </div>
                 </div>
 
                 <p th:value="${error}"></p>

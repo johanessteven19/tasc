@@ -74,34 +74,60 @@ public class CreateScheduleController {
   @PostMapping(value="/add-slot/post")
   public String createSlot(
           @RequestParam("day") int day,
-          @RequestParam("startHour") int startHour,
-          @RequestParam("startMinute") int startMinute,
-          @RequestParam("endHour") int endHour,
-          @RequestParam("endMinute") int endMinute,
+          @RequestParam("startTime") String startTime,
+          @RequestParam("endTime") String endTime,
           Principal principal
           )
   {
-    System.out.println(day+" "+startHour+ " " + startMinute);
+    try {
+      String[] splittedStartTime = startTime.split("\\.");
+      String[] splittedEndTime = endTime.split("\\.");
 
-    long epochStart = java.time.Duration.ofMinutes(startMinute).toMillis() +
-            java.time.Duration.ofHours(startHour).toMillis();
+      if (splittedStartTime.length != 2 || splittedEndTime.length != 2) {
+        throw new Exception("");
+      }
 
-    long epochEnd = java.time.Duration.ofMinutes(endMinute).toMillis() +
-            java.time.Duration.ofHours(endHour).toMillis();
+      int startHour = Integer.parseInt(splittedStartTime[0]);
+      int startMinute = Integer.parseInt(splittedStartTime[1]);
+      int endHour = Integer.parseInt(splittedEndTime[0]);
+      int endMinute = Integer.parseInt(splittedEndTime[1]);
 
-    Slot slot1 = new Slot();
-    slot1.setDay(Slot.Day.valueOf(daysArr[day]));
-    slot1.setStartTime(epochStart);
-    slot1.setFinishTime(epochEnd);
+      long epochStart = java.time.Duration.ofMinutes(startMinute).toMillis() +
+              java.time.Duration.ofHours(startHour).toMillis();
 
-    User currentUser = userDAO.getUser(principal.getName());
-    Schedule schedule = scheduleDAO.getUserSchedule((AcademicUser) currentUser);
-    slot1.setSchedule(schedule.getId());
+      long epochEnd = java.time.Duration.ofMinutes(endMinute).toMillis() +
+              java.time.Duration.ofHours(endHour).toMillis();
+
+      if (
+          !(
+            startHour >= 0 && startHour < 24 &&
+            startMinute >= 0 && startMinute < 60 &&
+            endHour >= 0 && endHour < 24 &&
+            endMinute >= 0 && endMinute < 60 &&
+            epochStart < epochEnd
+          )
+      ) {
+        throw new Exception("");
+      }
+
+      Slot slot1 = new Slot();
+      slot1.setDay(Slot.Day.valueOf(daysArr[day]));
+      slot1.setStartTime(epochStart);
+      slot1.setFinishTime(epochEnd);
+
+      User currentUser = userDAO.getUser(principal.getName());
+      Schedule schedule = scheduleDAO.getUserSchedule((AcademicUser) currentUser);
+      slot1.setSchedule(schedule.getId());
 
 //    slots.add(slot1);
 
-    slotDAO.addSlot(slot1);
+      slotDAO.addSlot(slot1);
 
-    return "redirect:/create-schedule";
+      return "redirect:/create-schedule";
+    } catch (Exception e) {
+      return "redirect:/add-slot";
+    }
+
+
   }
 }
