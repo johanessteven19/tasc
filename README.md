@@ -5,8 +5,8 @@
 
 ### **PIPELINE STATUS:**
 
-[![build status](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/badges/master/pipeline.svg)](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/-/commits/)
-[![coverage report](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/badges/master/coverage.svg)](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/-/commits/)
+[![pipeline status](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/badges/master/pipeline.svg)](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/-/commits/master)
+[![coverage report](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/badges/master/coverage.svg)](https://gitlab.cs.ui.ac.id/AdvProg/KKI-2021/1906315821/tasc-raja-singa/-/commits/master)
 
 ### **_Application that we are building:_**
 
