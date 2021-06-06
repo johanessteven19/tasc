@@ -10,7 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.adpro.tasc.user.db.model.Role;
+
+import java.security.Principal;
 
 @Controller
 public class HelloController {
@@ -20,11 +21,6 @@ public class HelloController {
     @GetMapping("/")
     public String indexPage() {
         return "index";
-    }
-
-    @GetMapping("/home")
-    public String homePage() {
-        return "home";
     }
 
     @GetMapping("/register")
@@ -37,25 +33,62 @@ public class HelloController {
                                   @RequestParam("fullname") String fullName,
                                   @RequestParam("password") String password) {
         userDAO.createUser(new User(userName, fullName, "{noop}"+password, Role.ROLE_UNASSIGNED));
-
-        return "redirect:/";
+        return "redirect:/waiting";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/home-admin")
-    public String adminPage() {
-        return "homeAdmin";
+    public String adminPage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
+        return "home";
     }
 
     @PreAuthorize("hasRole('TEACHING_ASSISTANT')")
     @GetMapping("/home-TA")
-    public String TAPage() {
-        return "homeTA";
+    public String TAPage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
+        return "home";
     }
 
     @PreAuthorize("hasRole('STUDENT')")
     @GetMapping("/home-student")
-    public String StudentPage() {
-        return "homeStudent";
+    public String StudentPage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
+        return "home";
+    }
+
+    @PreAuthorize("hasRole('UNASSIGNED')")
+    @GetMapping("/waiting")
+    public String waitingPage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
+        return "waiting";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/nav-admin")
+    public String adminNavPage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
+        return "fragments/navbar_admin";
+    }
+
+    @PreAuthorize("hasRole('TEACHING_ASSISTANT')")
+    @GetMapping("/nav-TA")
+    public String TANavPage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
+        return "fragments/navbar_TA";
+    }
+
+    @PreAuthorize("hasRole('STUDENT')")
+    @GetMapping("/nav-student")
+    public String StudentNavPage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
+        return "fragments/navbar_student";
     }
 }

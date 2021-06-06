@@ -28,6 +28,24 @@ public class AppointmentTemplate implements AppointmentDAO {
         this.template = template;
     }
 
+    private AppointmentRequest updateQuery(AppointmentRequest request) {
+        User student = userDB.getUser(request.getStudent().getUserName());
+        request.setStudent(student);
+
+        User ta = userDB.getUser(request.getTa().getUserName());
+        request.setTa(ta);
+
+        return request;
+    }
+
+    private List<AppointmentRequest> updateQuery(List<AppointmentRequest> request) {
+        for(int i = 0; i < request.size(); i++) {
+            request.set(i, updateQuery(request.get(i)));
+        }
+
+        return request;
+    }
+
     @Override
     public List<AppointmentRequest> getAllAppointment() {
         String sql = """
@@ -35,7 +53,7 @@ public class AppointmentTemplate implements AppointmentDAO {
                 from appointment_request
                 """;
 
-        return template.query(sql, new AppointmentMapper(userDB));
+        return updateQuery(template.query(sql, new AppointmentMapper()));
     }
 
     @Override
@@ -46,7 +64,7 @@ public class AppointmentTemplate implements AppointmentDAO {
                 where course=?
                 """;
 
-        return template.query(sql, new AppointmentMapper(userDB), course.getName());
+        return updateQuery(template.query(sql, new AppointmentMapper(), course.getName()));
     }
 
     @Override
@@ -57,7 +75,7 @@ public class AppointmentTemplate implements AppointmentDAO {
                 where student=?
                 """;
 
-        List<AppointmentRequest> requests = template.query(sql, new AppointmentMapper(userDB), user.getUserName());
+        List<AppointmentRequest> requests = template.query(sql, new AppointmentMapper(), user.getUserName());
         if(requests.isEmpty()) {
             sql = """
             select *
@@ -65,10 +83,10 @@ public class AppointmentTemplate implements AppointmentDAO {
             where ta=?
             """;
 
-            requests = template.query(sql, new AppointmentMapper(userDB), user.getUserName());
+            requests = template.query(sql, new AppointmentMapper(), user.getUserName());
         }
 
-        return requests;
+        return updateQuery(requests);
     }
 
     @Override
@@ -80,8 +98,8 @@ public class AppointmentTemplate implements AppointmentDAO {
 
         Appointment appointment = request.getAppointment();
         template.update(sql,
-                request.getStudent(), request.getTa(), request.getRequestTime(),
-                appointment.getDate(), appointment.getDuration(), appointment.getCourse());
+                request.getStudent().getUserName(), request.getTa().getUserName(), request.getRequestTime(),
+                appointment.getDate(), appointment.getDuration(), appointment.getCourse().getName());
     }
 
     @Override
@@ -93,5 +111,16 @@ public class AppointmentTemplate implements AppointmentDAO {
                 """;
 
         template.update(sql, status.toString(), request.getId());
+    }
+
+    @Override
+    public void updateAdminHasPermission(AppointmentRequest request, boolean permission) {
+        String sql = """
+                update appointment_request
+                set admin_permission=?
+                where id=?
+                """;
+
+        template.update(sql, permission, request.getId());
     }
 }

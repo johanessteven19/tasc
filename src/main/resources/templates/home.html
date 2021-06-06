@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Admin Page</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -14,113 +14,52 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 </head>
 <style>
-body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: linear-gradient(to right, #b92b27, #1565c0)
-}
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+    }
+
+    .box {
+        width: 750px;
+        padding: 40px;
+        border-width: 1px;
+        border-radius: 10px;
+        background: #191919;
+        text-align: center;
+        transition: 0.25s;
+        margin-top: 100px
+    }
+
+    .box h1 {
+        color: white;
+        font-weight: 500
+    }
+
+    .centerBox{
+        align-items: center;
+        display:flex;
+        justify-content: center;
+    }
+
 </style>
 <body>
-<h1 class="text-center text-white font-weight-bold" style="padding: 30px">All Pages!</h1>
-<!--<h3>Create Courses</h3>-->
-<!--<form th:action="@{/create-course}">-->
-<!--    <p><input type="submit" class="btn btn-outline-dark" value="Create Courses" ></p>-->
-<!--</form>-->
-
-
-<!--<h3>Create Schedule</h3>-->
-<!--<form th:action="@{/create-schedule}">-->
-<!--    <p><input type="submit" class="btn btn-outline-dark" value="Create Schedule" ></p>-->
-<!--</form>-->
-
-<!--<h3>Roles</h3>-->
-<!--<form th:action="@{/add-roles}">-->
-<!--    <p><input type="submit" class="btn btn-outline-dark" value="Set Roles" ></p>-->
-<!--</form>-->
-
-<!--<h3>See Available Appointment</h3>-->
-<!--<form th:action="@{/see-appointment}">-->
-<!--    <p><input type="submit" class="btn btn-outline-dark" value="See Appointment" ></p>-->
-<!--</form>-->
-
-<!--<h3>See Request Appointment</h3>-->
-<!--<form th:action="@{/accept_reject}">-->
-<!--    <p><input type="submit" class="btn btn-outline-dark" value="See Request Appointment" ></p>-->
-<!--</form>-->
-
-<!--<h3>Admin Page</h3>-->
-<!--<form th:action="@{/home-admin}">-->
-<!--    <p><input type="submit" value="See Admin Page" ></p>-->
-<!--</form>-->
-
-<!--<h3>TA Page</h3>-->
-<!--<form th:action="@{/home-TA}">-->
-<!--    <p><input type="submit" value="See TA Page" ></p>-->
-<!--</form>-->
-
-<!--<h3>Student Page</h3>-->
-<!--<form th:action="@{/home-student}">-->
-<!--    <p><input type="submit" value="See Student Page" ></p>-->
-<!--</form>-->
-
-<div class="card-group" style="padding: 30px">
-    <div class="card text-center text-white bg-dark mb-3">
-        <h5 class="card-header">Roles</h5>
-        <div class="card-body">
-            <a class="btn btn-light" href="/add-roles">Set Roles</a>
-        </div>
-    </div>
-    <div class="card text-center text-white bg-dark mb-3">
-        <h5 class="card-header">Courses</h5>
-        <div class="card-body">
-            <a class="btn btn-light" href="/create-course">Create Courses</a>
-        </div>
-    </div>
-    <div class="card text-center text-white bg-dark mb-3">
-        <h5 class="card-header">Schedule</h5>
-        <div class="card-body">
-            <a class="btn btn-light" href="/create-schedule">Create Schedule</a>
-        </div>
-    </div>
-    <div class="card text-center text-white bg-dark mb-3">
-        <h5 class="card-header">Appointment</h5>
-        <div class="card-body">
-            <a class="btn btn-light" href="/see-appointment">See Appointment</a>
-        </div>
-    </div>
-    <div class="card text-center text-white bg-dark mb-3">
-        <h5 class="card-header">Appointment Request</h5>
-        <div class="card-body">
-            <a class="btn btn-light" href="/accept_reject">Accept/Reject</a>
-        </div>
+<div th:switch="${currentUser.getRole().toString()}">
+    <th:block th:case="ROLE_ADMIN">
+        <nav th:replace="fragments/navbar_admin :: navbar"></nav>
+    </th:block>
+    <th:block th:case="ROLE_STUDENT">
+        <nav th:replace="fragments/navbar_student :: navbar"></nav>
+    </th:block>
+    <th:block th:case="ROLE_TEACHING_ASSISTANT">
+        <nav  th:replace="fragments/navbar_TA :: navbar"></nav>
+    </th:block>
+</div>
+<div class="container centerBox">
+    <div class="box">
+        <h1>Welcome, <span th:text = "${currentUser.getFullName()}"></span>!</h1>
     </div>
 </div>
-
-<div class="card-group" style="padding: 30px">
-    <div class="card text-center text-white bg-dark mb-3">
-        <h5 class="card-header">Admin</h5>
-        <div class="card-body">
-            <a class="btn btn-light" href="/home-admin">Admin Page</a>
-        </div>
-    </div>
-    <div class="card text-center text-white bg-dark mb-3">
-        <h5 class="card-header">TA</h5>
-        <div class="card-body">
-            <a class="btn btn-light" href="/home-TA">TA Page</a>
-        </div>
-    </div>
-    <div class="card text-center text-white bg-dark mb-3">
-        <h5 class="card-header">Student</h5>
-        <div class="card-body">
-            <a class="btn btn-light" href="/home-student">Student Page</a>
-        </div>
-    </div>
-</div>
-
-<h3 class="text-white font-weight-bold" style="margin-left: 30px">Logout</h3>
-<form th:action="@{/}">
-    <p><input type="submit" class="btn btn-dark" style="margin-left: 35px" value="Logout" ></p>
-</form>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

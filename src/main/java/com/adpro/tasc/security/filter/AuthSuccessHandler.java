@@ -55,6 +55,7 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
         roleTargetUrlMap.put(Role.ROLE_ADMIN, "/home-admin");
         roleTargetUrlMap.put(Role.ROLE_STUDENT, "/home-student");
         roleTargetUrlMap.put(Role.ROLE_TEACHING_ASSISTANT, "/home-TA");
+        roleTargetUrlMap.put(Role.ROLE_UNASSIGNED, "/waiting");
 
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (final GrantedAuthority grantedAuthority : authorities) {

@@ -12,12 +12,11 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 </head>
-
 <body>
-<nav th:replace="fragments/navbar_TA :: navbar"></nav>
+<nav th:replace="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? ~{fragments/navbar_TA :: navbar}"></nav>
 <div style="padding:2em">
     <div>
-        <form th:action="@{/home-TA}">
+        <form th:action="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? @{/home-TA}">
             <button type="submit" class="btn btn-danger">Back</button>
         </form>
     </div>
@@ -25,77 +24,56 @@
     <table class="table table-striped" style="width:100%">
         <thead class="thead-dark">
         <tr>
-            <th>Full Name</th>
+            <th>Student</th>
             <th>Course</th>
             <th>Date</th>
             <th>Duration</th>
             <th>Status</th>
             <th>Permission</th>
             <th>Accept/Reject</th>
-            <th>Delete</th>
+            <th>Admin Has Permission</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td> Test Student </td>
-            <td> Software Engineering </td>
-            <td> 5-10-2021</td>
-            <td> 30 min </td>
-            <td> Pending </td>
-            <td> True </td>
+        <tr th:each="appointmentReq :${appointmentRequests}">
+            <td th:text="${appointmentReq.student.fullName}"> </td>
+            <td th:text="${appointmentReq.appointment.course.name}"></td>
+            <td id="date" th:text="${#dates.format(appointmentReq.appointment.date, 'EEE, d MMM yyyy HH:mm')}"></td>
+            <td th:text="${((appointmentReq.appointment.duration/1000)/60)} + ' min'">
+            <td th:text="${appointmentReq.status}"></td>
+            <td th:text="${appointmentReq.adminHasPermission}"></td>
             <td>
-                <form th:action="@{/see-appointment}">
+                <form th:action="@{/accepted}" method="post">
+                    <input id = "id" name = "id" type = "hidden" th:value = "${appointmentReq.id}"/>
                     <button type="submit" class="btn btn-outline-dark">Accept</button>
                 </form>
-                <form th:action="@{/home}">
-                    <button onclick="myFunction()" class="btn btn-outline-dark">Reject</button>
+                <form th:action="@{/rejected}" method="post">
+                    <input id = "idX" name = "idX" type = "hidden" th:value = "${appointmentReq.id}"/>
+                    <button onclick="myFunction()" type="submit" class="btn btn-outline-dark">Reject</button>
                 </form>
             </td>
-            <td><input type="button" class="btn btn-danger" value="Delete Row" onclick="SomeDeleteRowFunction()"></td>
-        </tr>
-        <tr th:each="users, index :${userList}">
-            <td th:text="${users.student.fullName}"> </td>
-            <td th:text="${users.appointment.course.name}"></td>
-            <td th:text="${users.appointment.date}"></td>
-            <td th:text="${users.requestTime}"></td>
-            <td th:text="${users.status}"></td>
-            <td th:text="${users.adminHasPermission}"></td>
             <td>
-                <form th:action="@{/accepted}" th:object="${users}" method="post">
-                    <input id = "indexAcc" name = "indexAcc" type = "hidden" th:value = "${index.index}"/>
-                    <input id = "fullName" name = "fullName" type = "hidden" value = "${users.student.fullName}"/>
-                    <input id = "course" name = "course" type = "hidden" value = "${users.appointment.course.name}"/>
-                    <input id = "date" name = "date" type = "hidden" value = "${users.appointment.date}"/>
-                    <input id = "duration" name = "duration" type = "hidden" value = "${users.requestTime}"/>
-                    <button type="submit" class="btn btn-outline-dark">Accept</button>
+                <form th:action="@{/permission-accepted}" method="post">
+                    <input id = "idA" name = "idA" type = "hidden" th:value = "${appointmentReq.id}"/>
+                    <button type="submit" class="btn btn-outline-dark">True</button>
                 </form>
-                <form th:action="@{/home-TA}">
-                    <input id = "indexReject" name = "indexReject" type = "hidden" th:value = "${index.index}"/>
-                    <button onclick="myFunction()" class="btn btn-outline-dark">Reject</button>
+                <form th:action="@{/permission-rejected}" method="post">
+                    <input id = "idB" name = "idB" type = "hidden" th:value = "${appointmentReq.id}"/>
+                    <button onclick="myFunction1()" type="submit" class="btn btn-outline-dark">False</button>
                 </form>
             </td>
-            <td><input type="button" class="btn btn-danger" value="Delete Row" onclick="SomeDeleteRowFunction()"></td>
         </tr>
         </tbody>
     </table>
 </div>
-<!--<br>-->
-<!--<form th:action="@{/home-TA}">-->
-<!--    <button type="submit" class="btn btn-outline-dark">Return</button>-->
-<!--</form>-->
-
 <script>
 function myFunction() {
-  alert("Rejected!");
+  alert("The appointment has been rejected!");
 }
-
-function SomeDeleteRowFunction() {
-      // event.target will be the input element.
-      var td = event.target.parentNode;
-      var tr = td.parentNode; // the row to be removed
-      tr.parentNode.removeChild(tr);
+function myFunction1() {
+    alert("Admin has been rejected to see the appointment!");
 }
 </script>
-
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

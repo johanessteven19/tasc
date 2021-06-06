@@ -16,7 +16,7 @@
 
 <body>
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/home-admin">TA</a>
+    <a class="navbar-brand" href="/home-TA">TA</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -27,18 +27,22 @@
                 <a class="nav-link" href="/home-TA">Home<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/see-appointment">Appointment</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/accept_reject">Appointment Request</a>
+                <a class="nav-link" href="/userlist-courses">Join Course</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="/create-schedule">Schedule</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#">Reminder</a>
+                <a class="nav-link" href="/see-appointment-TA">Appointment</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/accept_reject">Appointment Request</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/reminder">Reminder</a>
             </li>
         </ul>
+        <p style="margin-right: 20px">Hi, <span th:text = "${currentUser.getFullName()}"></span>!<p>
         <form th:action="@{/}">
             <p><input type="submit" class="form-inline my-2 my-lg-0 btn btn-dark" value="Logout" ></p>
         </form>

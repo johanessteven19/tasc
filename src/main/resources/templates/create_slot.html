@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create Slot</title>
@@ -15,10 +15,10 @@
 
 </head>
 <body>
-<nav th:replace="fragments/navbar_TA :: navbar"></nav>
-<div style="padding:2em; text-align: center">
+<nav th:replace="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? ~{fragments/navbar_TA :: navbar}"></nav>
+<div style="padding:2em 4em;">
     <div>
-        <form th:action="@{/create-schedule}">
+        <form th:action="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? @{/create-schedule}">
             <button type="submit" class="btn btn-danger">Back</button>
         </form>
     </div>
@@ -26,40 +26,63 @@
         <h2>Add a new available slot to your schedule</h2>
     </div>
     <div>
-        <form method="POST" >
-            <div>
-                <label for="day">Day:</label>
-                <select id="day" name="day">
-                    <option th:each="day,iStat: ${days}" th:text="${day}" th:value="${iStat.index}"></option>
-                </select>
+        <form th:action="@{/add-slot/post}" method="POST" >
+            <div class="form-group" style="flex-direction: row; display: flex">
+                <div style="margin-right: 1em">
+                    <h5>Pick a day:</h5>
+                </div>
+                <div>
+                    <select id="day" name="day" class="form-control">
+                        <option th:each="day,iStat: ${days}" th:text="${day}" th:value="${iStat.index}"></option>
+                    </select>
+                </div>
             </div>
 
-            <h4>Start time:</h4>
-            <div>
-                <label for="startHour">Hours:</label>
-                <input id = "startHour" name = "startHour" type = "number"/>
+            <div class="form-group" style="flex-direction: row; display: flex;">
+                <div>
+                    <h5>Start time:</h5>
+                </div>
+                <div style="padding: 0em 0.5em">
+                    <input class="form-control" id = "startTime" name = "startTime" type = "text" placeholder="11.59"/>
+                </div>
             </div>
 
-            <div>
-                <label for="startMinute">Minute:</label>
-                <input id = "startMinute" name = "startMinute" type = "number"/>
+            <br/>
+            <div class="form-group" style="flex-direction: row; display: flex">
+                <div>
+                    <h5>End time:</h5>
+                </div>
+                <div style="padding: 0em 0.5em">
+                    <input class="form-control" id = "endTime" name = "endTime" type = "text" placeholder="13.05"/>
+                </div>
             </div>
 
-            <h4>End time:</h4>
-            <div>
-                <label for="endHour">Hours:</label>
-                <input id = "endHour" name = "endHour" type = "number"/>
-            </div>
+<!--            <h4>Start time:</h4>-->
+<!--            <div>-->
+<!--                <label for="startHour">Hours:</label>-->
+<!--                <input id = "startHour" name = "startHour" type = "number" min="0" max="23" value="0"/>-->
+<!--            </div>-->
 
-            <div>
-                <label for="endMinute">Minute:</label>
-                <input id = "endMinute" name = "endMinute" type = "number"/>
-            </div>
+<!--            <div>-->
+<!--                <label for="startMinute">Minute:</label>-->
+<!--                <input id = "startMinute" name = "startMinute" type = "number" min="0" max="59" value="0"/>-->
+<!--            </div>-->
+
+<!--            <h4>End time:</h4>-->
+<!--            <div>-->
+<!--                <label for="endHour">Hours:</label>-->
+<!--                <input id = "endHour" name = "endHour" type = "number" min="0" max="23" value="0"/>-->
+<!--            </div>-->
+
+<!--            <div>-->
+<!--                <label for="endMinute">Minute:</label>-->
+<!--                <input id = "endMinute" name = "endMinute" type = "number" min="0" max="59" value="0"/>-->
+<!--            </div>-->
             <button type="submit" class="btn btn-success" >Submit</button>
 
         </form>
     </div>
 </div>
-
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

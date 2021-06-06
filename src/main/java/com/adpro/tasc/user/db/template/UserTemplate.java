@@ -5,6 +5,7 @@ import com.adpro.tasc.appointment.db.dao.ScheduleDAO;
 import com.adpro.tasc.appointment.db.model.Course;
 import com.adpro.tasc.user.db.dao.UserDAO;
 import com.adpro.tasc.user.db.mapper.UserMapper;
+import com.adpro.tasc.user.db.model.AcademicUser;
 import com.adpro.tasc.user.db.model.Role;
 import com.adpro.tasc.user.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,27 @@ public class UserTemplate implements UserDAO {
         this.template = template;
     }
 
+    private User updateByRole(User user) {
+        if(!Role.ROLE_ADMIN.equals(user.getRole())) {
+            AcademicUser academicUser = new AcademicUser(user);
+
+            academicUser.setCourses(courseDB.getUserCourseList(academicUser));
+            academicUser.setSchedule(scheduleDB.getUserSchedule(academicUser));
+
+            return academicUser;
+        }
+
+        return user;
+    }
+
+    private List<User> updateByRole(List<User> users) {
+        for(int i = 0; i < users.size(); i++) {
+            users.set(i, updateByRole(users.get(i)));
+        }
+
+        return users;
+    }
+
     @Override
     public User getUser(String username) {
         String sql = """
@@ -42,7 +64,7 @@ public class UserTemplate implements UserDAO {
             where username = ?
         """;
 
-        return template.queryForObject(sql, new UserMapper(courseDB, scheduleDB), username);
+        return updateByRole(template.queryForObject(sql, new UserMapper(), username));
     }
 
     @Override
@@ -52,7 +74,7 @@ public class UserTemplate implements UserDAO {
                 from "user"
                 """;
 
-        return template.query(sql, new UserMapper(courseDB, scheduleDB));
+        return updateByRole(template.query(sql, new UserMapper()));
     }
 
     @Override
@@ -64,8 +86,8 @@ public class UserTemplate implements UserDAO {
                 where u.role=? and c.course=?
                 """;
 
-        return template.query(sql, new UserMapper(courseDB, scheduleDB),
-                Role.ROLE_TEACHING_ASSISTANT.toString(), course.getName());
+        return updateByRole(template.query(sql, new UserMapper(),
+                Role.ROLE_TEACHING_ASSISTANT.toString(), course.getName()));
     }
 
     @Override
@@ -76,7 +98,7 @@ public class UserTemplate implements UserDAO {
                 """;
 
         template.update(sql,
-                user.getUserName().toString(), user.getFullName().toString(), user.getPassword().toString(), user.getRole().toString());
+                user.getUserName(), user.getFullName(), user.getPassword(), user.getRole().toString());
     }
 
     @Override

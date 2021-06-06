@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Display Schedule</title>
@@ -15,10 +15,10 @@
 
 </head>
 <body>
-<nav th:replace="fragments/navbar_TA :: navbar"></nav>
+<nav th:replace="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? ~{fragments/navbar_TA :: navbar}"></nav>
     <div style="padding:2em;" >
         <div>
-            <form th:action="@{/home}">
+            <form th:action="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? @{/home-TA}">
                 <button type="submit" class="btn btn-danger">Back</button>
             </form>
         </div>
@@ -36,7 +36,7 @@
                 <tbody>
                 <tr th:each="slot: ${slots}">
                     <td th:text="${slot.day.toString()}"></td>
-                    <td th:text="${(slot.startTime / (1000 * 60 * 60))%24}+'.'+${(slot.startTime / 60000) % 60}+' - '+${(slot.finishTime / (1000 * 60 * 60))%24}+'.'+${(slot.finishTime / 60000) % 60}"></td>
+                    <td th:text="${#dates.format(slot.startTime-25200000, 'HH:mm')}+' - '+${#dates.format(slot.finishTime-25200000,'HH:mm')}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -47,5 +47,6 @@
             </form>
         </div>
     </div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
