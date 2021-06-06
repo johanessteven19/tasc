@@ -39,7 +39,7 @@
             <tbody>
             <tr th:each="slot: ${slots}">
                 <td th:text="${slot.day.toString()}"></td>
-                <td th:text="${(slot.startTime / (1000 * 60 * 60))%24}+'.'+${(slot.startTime / 60000) % 60}+' - '+${(slot.finishTime / (1000 * 60 * 60))%24}+'.'+${(slot.finishTime / 60000) % 60}"></td>
+                <td th:text="${#dates.format(slot.startTime-25200000, 'HH:mm')}+' - '+${#dates.format(slot.finishTime-25200000,'HH:mm')}"></td>
                 <td>
                     <form th:action="@{/book-appointment/book}">
                         <input id = "startTime" name = "startTime" type = "hidden" th:value = "${slot.startTime}"/>

@@ -30,6 +30,7 @@ public class UserListCoursesController {
         List<Course> courseList = courseDAO.getAllCourse();
         List<Course> userCourseList = courseDAO.getUserCourseList((AcademicUser) currentUser);
 
+
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("courseList", courseList);
         model.addAttribute("userCourseList",userCourseList);
