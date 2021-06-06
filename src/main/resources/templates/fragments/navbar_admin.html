@@ -35,11 +35,8 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/see-appointment-admin">See Appointment</a>
             </li>
-<!--            <li class="nav-item active">-->
-<!--                <a class="nav-link" href="/userlist-courses">See User Courses</a>-->
-<!--            </li>-->
         </ul>
-        <p style="margin-right: 20px">Hi, <span th:text = "${currentUser.getFullName()}"></span><p>
+        <p style="margin-right: 20px">Hi, <span th:text = "${currentUser.getFullName()}"></span>!<p>
         <form th:action="@{/}">
             <p><input type="submit" class="btn btn-dark" value="Logout" ></p>
         </form>

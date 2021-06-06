@@ -70,7 +70,6 @@ public class BookAppointmentController {
           Principal principal,
           @RequestParam("taUserName") String taUserName,
           @RequestParam("courseName") String courseName
-//          @RequestParam("bookTime") long bookTime
   ) {
     User currentUser = userDAO.getUser(principal.getName());
     List<String> days = Arrays.asList(daysArr);
@@ -108,8 +107,6 @@ public class BookAppointmentController {
           @RequestParam("courseName") String courseName,
           @RequestParam("bookTime") long bookTime,
           @RequestParam("error") String error
-//          @RequestParam("weekOffset") int weekOffset,
-
   ) {
     User currentUser = userDAO.getUser(principal.getName());
     System.out.println(error);

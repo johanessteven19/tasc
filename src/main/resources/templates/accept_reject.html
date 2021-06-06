@@ -12,7 +12,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 </head>
-
 <body>
 <nav th:replace="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? ~{fragments/navbar_TA :: navbar}"></nav>
 <div style="padding:2em">
@@ -60,7 +59,7 @@
                 </form>
                 <form th:action="@{/permission-rejected}" method="post">
                     <input id = "idB" name = "idB" type = "hidden" th:value = "${appointmentReq.id}"/>
-                    <button onclick="myFunction()" type="submit" class="btn btn-outline-dark">False</button>
+                    <button onclick="myFunction1()" type="submit" class="btn btn-outline-dark">False</button>
                 </form>
             </td>
         </tr>
@@ -69,9 +68,12 @@
 </div>
 <script>
 function myFunction() {
-  alert("Rejected!");
+  alert("The appointment has been rejected!");
+}
+function myFunction1() {
+    alert("Admin has been rejected to see the appointment!");
 }
 </script>
-
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

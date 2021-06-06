@@ -14,51 +14,42 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 </head>
 <style>
-body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: linear-gradient(to right, #b92b27, #1565c0)
-}
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+    }
+
+    .box {
+        width: 750px;
+        padding: 40px;
+        border-width: 1px;
+        border-radius: 10px;
+        background: #191919;
+        text-align: center;
+        transition: 0.25s;
+        margin-top: 100px
+    }
+
+    .box h1 {
+        color: white;
+        font-weight: 500
+    }
+
+    .centerBox{
+        align-items: center;
+        display:flex;
+        justify-content: center;
+    }
+
 </style>
 <body>
-<h1 class="text-center text-white font-weight-bold" style="padding: 30px">Hello TAs!</h1>
-<div class="card-group" style="padding: 30px">
-    <div class="card text-center text-white bg-dark mb-3">
-        <h5 class="card-header">Courses</h5>
-        <div class="card-body">
-            <a class="btn btn-light" href="/userlist-courses">Join Courses</a>
-        </div>
-    </div>
-    <div class="card text-center text-white bg-dark mb-3">
-        <h5 class="card-header">Schedule</h5>
-        <div class="card-body">
-            <a class="btn btn-light" href="/create-schedule">Create Schedule</a>
-        </div>
-    </div>
-    <div class="card text-center text-white bg-dark mb-3">
-        <h5 class="card-header">Appointment</h5>
-        <div class="card-body">
-            <a class="btn btn-light" href="/see-appointment-TA">See Appointment</a>
-        </div>
-    </div>
-    <div class="card text-center text-white bg-dark mb-3">
-        <h5 class="card-header">Appointment Request</h5>
-        <div class="card-body">
-            <a class="btn btn-light" href="/accept_reject">Accept/Reject</a>
-        </div>
-    </div>
-    <div class="card text-center text-white bg-dark mb-3">
-        <h5 class="card-header">Reminder</h5>
-        <div class="card-body">
-            <a class="btn btn-light" href="/reminder">Reminder</a>
-        </div>
+<nav th:replace="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? ~{fragments/navbar_TA :: navbar}"></nav>
+<div class="container centerBox">
+    <div class="box">
+        <h1>Welcome, <span th:text = "${currentUser.getFullName()}"></span>!</h1>
     </div>
 </div>
-<h3 class="text-white font-weight-bold" style="margin-left: 30px">Logout</h3>
-<form th:action="@{/}">
-    <p><input type="submit" class="btn btn-dark" style="margin-left: 35px" value="Logout" ></p>
-</form>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
-
 </html>

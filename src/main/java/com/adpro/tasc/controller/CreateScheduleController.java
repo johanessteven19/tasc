@@ -35,7 +35,6 @@ public class CreateScheduleController {
 
   private String[] daysArr = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY","FRIDAY","SATURDAY","SUNDAY"};
   private List<Slot> slots = new ArrayList<>();
-//  private final SlotRepository slots;
 
   @GetMapping(value="/create-schedule")
   public String displaySchedule(Model model, Principal principal) {

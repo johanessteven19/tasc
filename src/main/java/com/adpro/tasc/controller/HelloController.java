@@ -38,31 +38,38 @@ public class HelloController {
                                   @RequestParam("fullname") String fullName,
                                   @RequestParam("password") String password) {
         userDAO.createUser(new User(userName, fullName, "{noop}"+password, Role.ROLE_UNASSIGNED));
-
         return "redirect:/";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/home-admin")
-    public String adminPage() {
+    public String adminPage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
         return "homeAdmin";
     }
 
     @PreAuthorize("hasRole('TEACHING_ASSISTANT')")
     @GetMapping("/home-TA")
-    public String TAPage() {
+    public String TAPage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
         return "homeTA";
     }
 
     @PreAuthorize("hasRole('STUDENT')")
     @GetMapping("/home-student")
-    public String StudentPage() {
+    public String StudentPage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
         return "homeStudent";
     }
 
     @PreAuthorize("hasRole('UNASSIGNED')")
     @GetMapping("/waiting")
-    public String waitingPage() {
+    public String waitingPage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
         return "waiting";
     }
 

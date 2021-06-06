@@ -13,9 +13,7 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 </head>
 <body>
-
 <nav th:replace="${currentUser.getRole().toString() == 'ROLE_STUDENT'} ? ~{fragments/navbar_student :: navbar} : ~{fragments/navbar_TA :: navbar}"></nav>
-
 <div style="padding:2em">
     <div>
         <form th:action="${currentUser.getRole().toString() == 'ROLE_STUDENT'} ? @{/home-student} : @{/home-TA}">
@@ -55,8 +53,8 @@
                     <td th:text="${course.name}"> </td>
                     <td>
                         <form th:action="@{/userlist-courses/leave}" method="post">
-                            <input id = "userName" name = "userName" type = "hidden" th:value = "${currentUser.userName}"/>
-                            <input id = "courseName" name = "courseName" type = "hidden" th:value = "${course.name}"/>
+                            <input id = "userNameA" name = "userNameA" type = "hidden" th:value = "${currentUser.userName}"/>
+                            <input id = "courseNameA" name = "courseNameA" type = "hidden" th:value = "${course.name}"/>
                             <button type="submit" class="btn btn-danger" th:value= "${course.name}"> Leave </button>
                         </form>
                     </td>
@@ -64,8 +62,7 @@
             </tbody>
         </table>
     </div>
-
-
 </div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
