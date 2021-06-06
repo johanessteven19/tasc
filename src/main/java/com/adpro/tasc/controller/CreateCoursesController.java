@@ -36,4 +36,11 @@ public class CreateCoursesController {
         courseDAO.createCourse(newCourse);
         return "redirect:/create-course";
     }
+
+    @PostMapping(value="/create-course/delete")
+    public String deleteCourse(@RequestParam("name") String name) {
+        Course course = courseDAO.getCourseByName(name);
+        courseDAO.deleteCourse(course);
+        return "redirect:/create-course";
+    }
 }

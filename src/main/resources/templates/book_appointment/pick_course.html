@@ -28,9 +28,24 @@
             </h2>
         </div>
         <div>
-            <div th:each="day: ${days}">
-
-            </div>
+            <h5>Choose a course to book:</h5>
+            <table class="table table-striped" style="width:100%">
+                <thead class="thead-dark">
+                <th> Course Name </th>
+                <th> Pick</th>
+                </thead>
+                <tbody>
+                <tr th:each="course :${courseList}">
+                    <td th:text="${course.name}"> </td>
+                    <td>
+                        <form th:action="@{/book-appointment/pick-ta}">
+                            <input id = "courseName" name = "courseName" type = "hidden" th:value = "${course.name}"/>
+                            <button type="submit" class="btn btn-success" th:value= "${course.name}"> Pick </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 

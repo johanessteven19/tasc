@@ -37,11 +37,18 @@
                 <thead>
                 <tr>
                     <th>Course Name</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="course: ${courses}">
                     <td th:text="${course.name}"></td>
+                    <td>
+                        <form th:action="@{/create-course/delete}" method="POST">
+                            <input id = "nameX" name = "name" type = "hidden" th:value = "${course.name}"/>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>

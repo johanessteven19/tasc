@@ -37,23 +37,23 @@
             <h4>Start time:</h4>
             <div>
                 <label for="startHour">Hours:</label>
-                <input id = "startHour" name = "startHour" type = "number"/>
+                <input id = "startHour" name = "startHour" type = "number" min="0" max="23" value="0"/>
             </div>
 
             <div>
                 <label for="startMinute">Minute:</label>
-                <input id = "startMinute" name = "startMinute" type = "number"/>
+                <input id = "startMinute" name = "startMinute" type = "number" min="0" max="59" value="0"/>
             </div>
 
             <h4>End time:</h4>
             <div>
                 <label for="endHour">Hours:</label>
-                <input id = "endHour" name = "endHour" type = "number"/>
+                <input id = "endHour" name = "endHour" type = "number" min="0" max="23" value="0"/>
             </div>
 
             <div>
                 <label for="endMinute">Minute:</label>
-                <input id = "endMinute" name = "endMinute" type = "number"/>
+                <input id = "endMinute" name = "endMinute" type = "number" min="0" max="59" value="0"/>
             </div>
             <button type="submit" class="btn btn-success" >Submit</button>
 
