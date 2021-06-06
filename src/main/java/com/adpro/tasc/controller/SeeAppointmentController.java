@@ -1,7 +1,9 @@
 package com.adpro.tasc.controller;
 
 import com.adpro.tasc.appointment.db.dao.AppointmentDAO;
+import com.adpro.tasc.appointment.db.model.AppointmentRequest;
 import com.adpro.tasc.user.db.dao.UserDAO;
+import com.adpro.tasc.user.db.model.AcademicUser;
 import com.adpro.tasc.user.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,19 +23,27 @@ public class SeeAppointmentController {
     @Autowired
     private AppointmentDAO appointmentDAO;
 
-    @GetMapping("/see-appointment")
-    public String seeAppointment(Model model, Principal principal) {
+    @GetMapping("/see-appointment-admin")
+    public String seeAppointmentAdmin(Model model, Principal principal) {
         User currentUser = userDAO.getUser(principal.getName());
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("newAppointment", appointmentDAO.getAllAppointment());
-        return "see_appointment";
+        return "see_appointment_admin";
+    }
+
+    @GetMapping("/see-appointment-TA")
+    public String seeAppointmentTA(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("newAppointment", appointmentDAO.getAppointmentByUser(currentUser));
+        return "see_appointment_TA";
     }
 
     @GetMapping("/see-appointment-student")
     public String seeAppointmentStudent(Model model, Principal principal) {
         User currentUser = userDAO.getUser(principal.getName());
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("newAppointment", appointmentDAO.getAllAppointment());
+        model.addAttribute("newAppointment", appointmentDAO.getAppointmentByUser(currentUser));
         return "see_appointment_student";
     }
 
@@ -41,37 +51,39 @@ public class SeeAppointmentController {
     public String acceptPage(Model model, Principal principal) {
         User currentUser = userDAO.getUser(principal.getName());
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("userList", appointmentDAO.getAllAppointment());
+        model.addAttribute("appointmentRequests", appointmentDAO.getAppointmentByUser(currentUser));
         return "accept_reject";
     }
 
     @PostMapping("/accepted")
-    public String accPage(Model model, @RequestParam("userName") String userName,
-                          @RequestParam("fullName") String fullName,
-                          @RequestParam("course") String course,
-                          @RequestParam("date") String date,
-                          @RequestParam("duration") String duration) {
-//        AcademicUser currentUser1 = new AcademicUser(userDAO.getUser(userName));
-//        List<AppointmentRequest> user1 = appointmentDAO.getAppointmentByUser(currentUser1);
-//        AppointmentRequest acc = new AppointmentRequest(appointmentDAO.getAppointmentByUser(user1));
-//
-//        appointmentDAO.updateStatus(acc, AppointmentRequest.Status.ACCEPTED);
-//        model.addAttribute("user", acc);
-        return "redirect:/see-appointment";
+    public String accPage(@RequestParam("id") int id) {
+        AppointmentRequest acc = new AppointmentRequest();
+        acc.setId(id);
+        appointmentDAO.updateStatus(acc, AppointmentRequest.Status.ACCEPTED);
+        return "redirect:/see-appointment-TA";
     }
 
     @PostMapping("/rejected")
-    public String rejPage(Model model, @RequestParam("userNameX") String userName,
-                          @RequestParam("fullNameX") String fullName,
-                          @RequestParam("courseX") String course,
-                          @RequestParam("dateX") String date,
-                          @RequestParam("durationX") String duration) {
-//        AcademicUser currentUser2 = new AcademicUser(userDAO.getUser(userName));
-//        List<AppointmentRequest> user2 = appointmentDAO.getAppointmentByUser(currentUser2);
-//        AppointmentRequest rej = new AppointmentRequest(appointmentDAO.getAppointmentByUser(user2));
-//
-//        appointmentDAO.updateStatus(rej, AppointmentRequest.Status.ACCEPTED);
-//        model.addAttribute("user", rej);
+    public String rejPage(@RequestParam("idX") int id) {
+        AppointmentRequest rej = new AppointmentRequest();
+        rej.setId(id);
+        appointmentDAO.updateStatus(rej, AppointmentRequest.Status.REJECTED);
+        return "redirect:/see-appointment-TA";
+    }
+
+    @PostMapping("/permission-accepted")
+    public String accPermissionPage(@RequestParam("idA") int id) {
+        AppointmentRequest acc = new AppointmentRequest();
+        acc.setId(id);
+        appointmentDAO.updateAdminHasPermission(acc,true);
+        return "redirect:/accept_reject";
+    }
+
+    @PostMapping("/permission-rejected")
+    public String rejPermissionPage(@RequestParam("idB") int id) {
+        AppointmentRequest rej = new AppointmentRequest();
+        rej.setId(id);
+        appointmentDAO.updateAdminHasPermission(rej,false);
         return "redirect:/accept_reject";
     }
 }

@@ -14,25 +14,25 @@
 </head>
 
 <body>
-<nav th:replace="${currentUser.getRole().toString() == 'ROLE_STUDENT'} ? ~{fragments/navbar_student :: navbar}"></nav>
+<nav th:replace="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? ~{fragments/navbar_TA :: navbar}"></nav>
 <div style="padding:2em">
   <div>
-    <form th:action="${currentUser.getRole().toString() == 'ROLE_STUDENT'} ? @{/home-student}">
+    <form th:action="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? @{/home-TA}">
       <button type="submit" class="btn btn-danger">Back</button>
     </form>
   </div>
   <h3>See Appointment</h3>
   <table class="table table-striped" style="width:100%">
     <thead class="thead-dark">
-    <th>Teaching Assitant</th>
-    <th>Course</th>
-    <th>Date</th>
-    <th>Duration</th>
-    <th>Status</th>
+    <th> Student </th>
+    <th> Course </th>
+    <th> Date </th>
+    <th> Duration </th>
+    <th> Status </th>
     </thead>
     <tbody>
     <tr th:each="appoint :${newAppointment}">
-      <td th:text="${appoint.ta.fullName}"> </td>
+      <td th:text="${appoint.student.fullName}"> </td>
       <td th:text="${appoint.appointment.course.name}"></td>
       <td id="date" th:text="${#dates.format(appoint.appointment.date, 'EEE, d MMM yyyy HH:mm')}"></td>
       <td th:text="${((appoint.appointment.duration/1000)/60)} + ' min'">

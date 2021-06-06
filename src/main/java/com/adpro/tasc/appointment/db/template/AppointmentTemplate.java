@@ -112,4 +112,15 @@ public class AppointmentTemplate implements AppointmentDAO {
 
         template.update(sql, status.toString(), request.getId());
     }
+
+    @Override
+    public void updateAdminHasPermission(AppointmentRequest request, boolean permission) {
+        String sql = """
+                update appointment_request
+                set admin_permission=?
+                where id=?
+                """;
+
+        template.update(sql, permission, request.getId());
+    }
 }

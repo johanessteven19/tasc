@@ -15,10 +15,10 @@
 
 </head>
 <body>
-<nav th:replace="fragments/navbar_TA :: navbar"></nav>
+<nav th:replace="${currentUser.getRole().toString() == 'ROLE_STUDENT'} ? ~{fragments/navbar_student :: navbar}"></nav>
 <div style="padding:2em;" >
     <div>
-        <form th:action="@{/book-appointment/pick-ta}">
+        <form th:action="${currentUser.getRole().toString() == 'ROLE_STUDENT'} ? @{/book-appointment/pick-ta}">
             <button type="submit" class="btn btn-danger">Back</button>
         </form>
     </div>
