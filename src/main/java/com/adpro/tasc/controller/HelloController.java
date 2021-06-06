@@ -24,7 +24,9 @@ public class HelloController {
     }
 
     @GetMapping("/home")
-    public String homePage() {
+    public String homePage(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
         return "home";
     }
 
@@ -38,7 +40,7 @@ public class HelloController {
                                   @RequestParam("fullname") String fullName,
                                   @RequestParam("password") String password) {
         userDAO.createUser(new User(userName, fullName, "{noop}"+password, Role.ROLE_UNASSIGNED));
-        return "redirect:/";
+        return "redirect:/waiting";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
