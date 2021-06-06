@@ -30,8 +30,6 @@ public class UserListCoursesController {
         List<Course> courseList = courseDAO.getAllCourse();
         List<Course> userCourseList = courseDAO.getUserCourseList((AcademicUser) currentUser);
 
-        System.out.println(currentUser.getRole());
-
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("courseList", courseList);
         model.addAttribute("userCourseList",userCourseList);
@@ -56,7 +54,7 @@ public class UserListCoursesController {
     }
 
     @PostMapping("/userlist-courses/leave")
-    public String leaveCourse (@RequestParam("userName") String userName, @RequestParam("courseName") String courseName) {
+    public String leaveCourse (@RequestParam("userNameA") String userName, @RequestParam("courseNameA") String courseName) {
         AcademicUser currentUser = (AcademicUser) userDAO.getUser(userName);
         List<Course> userCourseList = courseDAO.getUserCourseList(currentUser);
 
