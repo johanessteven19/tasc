@@ -44,12 +44,13 @@ public class BookAppointmentController {
     List<Course> courseList = currentUser.getCourses();
 
     model.addAttribute("courseList", courseList);
-
+    model.addAttribute("currentUser", currentUser);
     return "book_appointment/pick_course";
   }
 
   @GetMapping("/book-appointment/pick-ta")
-  public String pickTA(Model model, Principal prinicipal, @RequestParam("courseName") String courseName) {
+  public String pickTA(Model model, Principal principal, @RequestParam("courseName") String courseName) {
+    User currentUser = userDAO.getUser(principal.getName());
     Course course = courseDAO.getCourseByName(courseName);
     List<User> taList = userDAO.getTAbyCourse(course);
 
@@ -57,7 +58,7 @@ public class BookAppointmentController {
 
     // Backtrack values
     model.addAttribute("courseName",courseName);
-
+    model.addAttribute("currentUser", currentUser);
     return "book_appointment/pick_ta";
   }
 
@@ -69,6 +70,7 @@ public class BookAppointmentController {
           @RequestParam("courseName") String courseName
 //          @RequestParam("bookTime") long bookTime
   ) {
+    User currentUser = userDAO.getUser(principal.getName());
     List<String> days = Arrays.asList(daysArr);
     AcademicUser ta = (AcademicUser) userDAO.getUser(taUserName);
     Schedule taSchedule = scheduleDAO.getUserSchedule(ta);
@@ -88,6 +90,7 @@ public class BookAppointmentController {
     //Backtrack values
     model.addAttribute("taUserName", taUserName);
     model.addAttribute("courseName", courseName);
+    model.addAttribute("currentUser", currentUser);
 
     return "book_appointment/see_ta_schedule";
   }
@@ -106,6 +109,7 @@ public class BookAppointmentController {
 //          @RequestParam("weekOffset") int weekOffset,
 
   ) {
+    User currentUser = userDAO.getUser(principal.getName());
     System.out.println(error);
     System.out.println(startTime + " " + finishTime + " " + day + " " + bookTime);
     Calendar currentCalendar = Calendar.getInstance();
@@ -167,6 +171,7 @@ public class BookAppointmentController {
     model.addAttribute("targetBookDate",targetBookCalendar.getTimeInMillis());
     model.addAttribute("targetBookDates", targetBookDates);
     model.addAttribute("error",error);
+    model.addAttribute("currentUser", currentUser);
 
     return "book_appointment/book_appointment";
   }
@@ -246,7 +251,7 @@ public class BookAppointmentController {
 
       appointmentDAO.createAppointment(appointmentRequest);
 
-      return "redirect:/see-appointment";
+      return "redirect:/see-appointment-student";
     }
   }
 }

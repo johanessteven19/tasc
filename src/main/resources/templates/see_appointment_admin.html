@@ -14,42 +14,34 @@
 </head>
 
 <body>
-<nav th:replace="${currentUser.getRole().toString() == 'ROLE_ADMIN'} ? ~{fragments/navbar_admin :: navbar} : ~{fragments/navbar_TA :: navbar}"></nav>
+<nav th:replace="${currentUser.getRole().toString() == 'ROLE_ADMIN'} ? ~{fragments/navbar_admin :: navbar}"></nav>
 <div style="padding:2em">
     <div>
-        <form th:action="${currentUser.getRole().toString() == 'ROLE_ADMIN'} ? @{/home-admin} : @{/home-TA}">
+        <form th:action="${currentUser.getRole().toString() == 'ROLE_ADMIN'} ? @{/home-admin}">
             <button type="submit" class="btn btn-danger">Back</button>
         </form>
     </div>
     <h3>See Appointment</h3>
     <table class="table table-striped" style="width:100%">
         <thead class="thead-dark">
-        <th> Student Name </th>
+        <th> Student </th>
+        <th> Teaching Assistant </th>
         <th> Course </th>
         <th> Date </th>
         <th> Duration </th>
         <th> Status </th>
-        <th> Delete </th>
         </thead>
         <tbody>
-        <tr th:each="appoint :${newAppointment}">
+        <tr th:if = "${appoint.adminHasPermission}" th:each="appoint :${newAppointment}">
             <td th:text="${appoint.student.fullName}"> </td>
+            <td th:text="${appoint.ta.fullName}"> </td>
             <td th:text="${appoint.appointment.course.name}"></td>
-            <td th:text="${appoint.appointment.date}"></td>
-            <td th:text="${(appoint.appointment.duration / (1000 * 60 * 60))%24}+'.'+${(appoint.appointment.duration / 60000) % 60}"></td>
+            <td id="date" th:text="${#dates.format(appoint.appointment.date, 'EEE, d MMM yyyy HH:mm')}"></td>
+            <td th:text="${((appoint.appointment.duration/1000)/60)} + ' min'">
             <td th:text="${appoint.status}"></td>
-            <td><input type="button" class="btn btn-danger" value="Delete Row" onclick="SomeDeleteRowFunction()"></td>
         </tr>
         </tbody>
     </table>
 </div>
-<script>
-    function SomeDeleteRowFunction() {
-      // event.target will be the input element.
-      var td = event.target.parentNode;
-      var tr = td.parentNode; // the row to be removed
-      tr.parentNode.removeChild(tr);
-    }
-</script>
 </body>
 </html>

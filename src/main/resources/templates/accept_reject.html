@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:HH="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Request Appointment</title>
@@ -25,45 +25,44 @@
     <table class="table table-striped" style="width:100%">
         <thead class="thead-dark">
         <tr>
-<!--            <th>User Name</th>-->
-            <th>Full Name</th>
+            <th>Student</th>
             <th>Course</th>
             <th>Date</th>
             <th>Duration</th>
             <th>Status</th>
             <th>Permission</th>
             <th>Accept/Reject</th>
-            <th>Delete</th>
+            <th>Admin Has Permission</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="users :${userList}">
-<!--            <td th:text="${users.student.userName}"> </td>-->
-            <td th:text="${users.student.fullName}"> </td>
-            <td th:text="${users.appointment.course.name}"></td>
-            <td th:text="${users.appointment.date}"></td>
-            <td th:text="${(users.appointment.duration / (1000 * 60 * 60))%24}+'.'+${(users.appointment.duration / 60000) % 60}"></td>
-            <td th:text="${users.status}"></td>
-            <td th:text="${users.adminHasPermission}"></td>
+        <tr th:each="appointmentReq :${appointmentRequests}">
+            <td th:text="${appointmentReq.student.fullName}"> </td>
+            <td th:text="${appointmentReq.appointment.course.name}"></td>
+            <td id="date" th:text="${#dates.format(appointmentReq.appointment.date, 'EEE, d MMM yyyy HH:mm')}"></td>
+            <td th:text="${((appointmentReq.appointment.duration/1000)/60)} + ' min'">
+            <td th:text="${appointmentReq.status}"></td>
+            <td th:text="${appointmentReq.adminHasPermission}"></td>
             <td>
-                <form th:action="@{/accepted}" th:object="${user}" method="post">
-<!--                    <input id = "userName" name = "userName" type = "hidden" value = "${user.student.userName}"/>-->
-                    <input id = "fullName" name = "fullName" type = "hidden" value = "${user.student.fullName}"/>
-                    <input id = "course" name = "course" type = "hidden" value = "${user.appointment.course.name}"/>
-                    <input id = "date" name = "date" type = "hidden" value = "${user.appointment.date}"/>
-                    <input id = "duration" name = "duration" type = "hidden" value = "${user.requestTime}"/>
+                <form th:action="@{/accepted}" method="post">
+                    <input id = "id" name = "id" type = "hidden" th:value = "${appointmentReq.id}"/>
                     <button type="submit" class="btn btn-outline-dark">Accept</button>
                 </form>
-                <form th:action="@{/rejected}" th:object="${user}" method="post">
-<!--                    <input id = "userNameX" name = "userNameX" type = "hidden" value = "${user.student.userName}"/>-->
-                    <input id = "fullNameX" name = "fullNameX" type = "hidden" value = "${user.student.fullName}"/>
-                    <input id = "courseX" name = "courseX" type = "hidden" value = "${user.appointment.course.name}"/>
-                    <input id = "dateX" name = "dateX" type = "hidden" value = "${user.appointment.date}"/>
-                    <input id = "durationX" name = "durationX" type = "hidden" value = "${user.requestTime}"/>
+                <form th:action="@{/rejected}" method="post">
+                    <input id = "idX" name = "idX" type = "hidden" th:value = "${appointmentReq.id}"/>
                     <button onclick="myFunction()" type="submit" class="btn btn-outline-dark">Reject</button>
                 </form>
             </td>
-            <td><input type="button" class="btn btn-danger" value="Delete Row" onclick="SomeDeleteRowFunction()"></td>
+            <td>
+                <form th:action="@{/permission-accepted}" method="post">
+                    <input id = "idA" name = "idA" type = "hidden" th:value = "${appointmentReq.id}"/>
+                    <button type="submit" class="btn btn-outline-dark">True</button>
+                </form>
+                <form th:action="@{/permission-rejected}" method="post">
+                    <input id = "idB" name = "idB" type = "hidden" th:value = "${appointmentReq.id}"/>
+                    <button onclick="myFunction()" type="submit" class="btn btn-outline-dark">False</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -71,13 +70,6 @@
 <script>
 function myFunction() {
   alert("Rejected!");
-}
-
-function SomeDeleteRowFunction() {
-      // event.target will be the input element.
-      var td = event.target.parentNode;
-      var tr = td.parentNode; // the row to be removed
-      tr.parentNode.removeChild(tr);
 }
 </script>
 

@@ -14,4 +14,5 @@ public interface AppointmentDAO {
     void createAppointment(AppointmentRequest request);
 
     void updateStatus(AppointmentRequest request, AppointmentRequest.Status status);
+    void updateAdminHasPermission(AppointmentRequest request, boolean permission);
 }
