@@ -18,8 +18,9 @@
 <nav th:replace="${currentUser.getRole().toString() == 'ROLE_STUDENT'} ? ~{fragments/navbar_student :: navbar}"></nav>
 <div style="padding:2em;" >
     <div>
-        <form th:action="@{/book-appointment/pick-ta}">
+        <form th:action="@{/book-appointment/see-ta-schedule}">
             <input id = "courseNameBackTrack" name = "courseName" type = "hidden" th:value = "${courseName}"/>
+            <input id = "taUserNameBackTrack" name = "taUserName" type = "hidden" th:value = "${taUserName}"/>
             <button type="submit" class="btn btn-danger">Back</button>
         </form>
     </div>
@@ -45,8 +46,7 @@
             </div>
             <div>
                 <h6>Time:</h6>
-                <p th:text="${(startTime / (1000 * 60 * 60))%24}+'.'+${(startTime / 60000) % 60}+
-                '-'+${(finishTime / (1000 * 60 * 60))%24}+'.'+${(finishTime / 60000) % 60}"></p>
+                <p th:text="${#dates.format(startTime-25200000, 'HH:mm')}+' - '+${#dates.format(finishTime-25200000,'HH:mm')}"></p>
             </div>
 <!--            <div style="flex-direction: row; display: flex">-->
 <!--                <div style="margin-right: 0.5em">-->
@@ -65,7 +65,6 @@
                 <div th:if="${error == 'true'}"  class="alert alert-danger" role="alert">
                     Invalid start and end time!
                 </div>
-
 <!--                <div>-->
 <!--                    <label for="bookDates">Date:</label>-->
 <!--                    <select id="bookDates" name="bookDateWeekOffset">-->

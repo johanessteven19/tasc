@@ -100,8 +100,8 @@ public class BookAppointmentController {
   public String bookAppointment(
           Model model,
           Principal principal,
-          @RequestParam("startTime") int startTime,
-          @RequestParam("finishTime") int finishTime,
+          @RequestParam("startTime") long startTime,
+          @RequestParam("finishTime") long finishTime,
           @RequestParam("day") String day,
           @RequestParam("taUserName") String taUserName,
           @RequestParam("courseName") String courseName,
