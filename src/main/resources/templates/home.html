@@ -44,19 +44,17 @@
 
 </style>
 <body>
-<!--<div>-->
-<!--<nav th:if="${currentUser.getRole().toString() == 'ROLE_ADMIN' fragments/navbar_admin :: navbar}"></nav>-->
-<!--<nav th:if="${currentUser.getRole().toString() == 'ROLE_STUDENT' ? ~{fragments/navbar_student :: navbar}}"></nav>-->
-<!--<nav th:if="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT' ? ~{fragments/navbar_TA :: navbar}}"></nav>-->
-<!--</div>-->
 <div th:switch="${currentUser.getRole().toString()}">
-    <nav th:case="'ROLE_ADMIN'" th:replace="fragments/navbar_admin :: navbar"></nav>
-    <nav th:case="'ROLE_STUDENT'" th:replace="fragments/navbar_student :: navbar"></nav>
-    <nav th:case="'ROLE_TEACHING_ASSISTANT'" th:replace="fragments/navbar_TA :: navbar"></nav>
+    <th:block th:case="ROLE_ADMIN">
+        <nav th:replace="fragments/navbar_admin :: navbar"></nav>
+    </th:block>
+    <th:block th:case="ROLE_STUDENT">
+        <nav th:replace="fragments/navbar_student :: navbar"></nav>
+    </th:block>
+    <th:block th:case="ROLE_TEACHING_ASSISTANT">
+        <nav  th:replace="fragments/navbar_TA :: navbar"></nav>
+    </th:block>
 </div>
-<!--    <span th:if="${currentUser.getRole().toString() == 'ROLE_ADMIN'} ? ~{fragments/navbar_admin :: navbar}"></span>-->
-<!--    <span th:if="${currentUser.getRole().toString() == 'ROLE_STUDENT'} ? ~{fragments/navbar_student :: navbar}"></span>-->
-<!--    <span th:if="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? ~{fragments/navbar_TA :: navbar}"></span>-->
 <div class="container centerBox">
     <div class="box">
         <h1>Welcome, <span th:text = "${currentUser.getFullName()}"></span>!</h1>
