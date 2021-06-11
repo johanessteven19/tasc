@@ -1,41 +1,46 @@
 package com.adpro.tasc.controller;
 
+import com.adpro.tasc.appointment.db.dao.CourseDAO;
 import com.adpro.tasc.appointment.db.model.Course;
 import com.adpro.tasc.user.db.dao.UserDAO;
+import com.adpro.tasc.user.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.security.Principal;
 
 @Controller
 public class CreateCoursesController {
-  @Autowired
-  UserDAO userDAO;
-  List<Course> courses = new ArrayList<>();
+    @Autowired
+    UserDAO userDAO;
 
-  @GetMapping(value="/create-course")
-  public String createCourseForm(Model model) {
-    System.out.println();
-    model.addAttribute("courses",courses);
-    return "create_course";
-  }
+    @Autowired
+    CourseDAO courseDAO;
 
-  @PostMapping(value="/create-course")
-  public String createCourse(
-          @RequestParam("name") String name
-  ) {
-    System.out.println(name);
-    Course newCourse = new Course();
-    newCourse.setName(name);
+    @GetMapping(value="/create-course")
+    public String createCourseForm(Model model, Principal principal) {
+        User currentUser = userDAO.getUser(principal.getName());
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("courses", courseDAO.getAllCourse());
+        return "create_course";
+    }
 
-    courses.add(newCourse);
+    @PostMapping(value="/create-course/post")
+    public String createCourse(@RequestParam("name") String name) {
+        Course newCourse = new Course();
+        newCourse.setName(name);
+        courseDAO.createCourse(newCourse);
+        return "redirect:/create-course";
+    }
 
-    return "redirect:/create-course";
-  }
+    @PostMapping(value="/create-course/delete")
+    public String deleteCourse(@RequestParam("name") String name) {
+        Course course = courseDAO.getCourseByName(name);
+        courseDAO.deleteCourse(course);
+        return "redirect:/create-course";
+    }
 }

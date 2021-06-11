@@ -31,6 +31,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'junit:junit:4.13.1'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
@@ -49,6 +50,10 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation('org.springframework.boot:spring-boot-starter-security')
+
+    testImplementation 'org.springframework.security:spring-security-test:4.2.3.RELEASE'
+
 }
 
 test {

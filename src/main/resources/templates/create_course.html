@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>Create course</title>
@@ -15,9 +15,10 @@
 
     </head>
 <body>
+<nav th:replace="${currentUser.getRole().toString() == 'ROLE_ADMIN'} ? ~{fragments/navbar_admin :: navbar}"></nav>
     <div style="padding:2em">
         <div>
-            <form th:action="@{/home}">
+            <form th:action="${currentUser.getRole().toString() == 'ROLE_ADMIN'} ? @{/home-admin}">
                 <button type="submit" class="btn btn-danger">Back</button>
             </form>
         </div>
@@ -25,7 +26,7 @@
             <h2>Create Course</h2>
         </div>
         <div>
-            <form method="POST">
+            <form th:action="@{/create-course/post}" method="POST">
                 <label for="name">Course Name:</label>
                 <input id="name" name="name" type="text"/>
                 <button type="submit" class="btn btn-success">Submit</button>
@@ -36,11 +37,18 @@
                 <thead>
                 <tr>
                     <th>Course Name</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="course: ${courses}">
                     <td th:text="${course.name}"></td>
+                    <td>
+                        <form th:action="@{/create-course/delete}" method="POST">
+                            <input id = "nameX" name = "name" type = "hidden" th:value = "${course.name}"/>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
