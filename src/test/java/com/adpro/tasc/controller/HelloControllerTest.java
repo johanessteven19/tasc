@@ -69,4 +69,160 @@ public class HelloControllerTest {
                 .andDo(print()).andExpect(status().isOk());
     }
 
+    @Test
+    public void loginWithNoRoleTest() throws Exception {
+        this.mockMvc
+                .perform(get("/home-TA").with(user("none").password("{noop}123").roles("UNASSIGNED")))
+                .andDo(print()).andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void loginWithNoRole2() throws Exception {
+        this.mockMvc
+                .perform(get("/waiting").with(user("none").password("{noop}123").roles("UNASSIGNED")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void navAdminTest() throws Exception {
+        this.mockMvc
+                .perform(get("/nav-admin").with(user("admin").password("{noop}123").roles("ADMIN")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void navStudentTest() throws Exception {
+        this.mockMvc
+                .perform(get("/nav-student").with(user("student").password("{noop}123").roles("STUDENT")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void navTATest() throws Exception {
+        this.mockMvc
+                .perform(get("/nav-TA").with(user("ta").password("{noop}123").roles("TEACHING_ASSISTANT")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void addRolesTest() throws Exception {
+        this.mockMvc
+                .perform(get("/add-roles").with(user("admin").password("{noop}123").roles("ADMIN")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void createCoursesTest() throws Exception {
+        this.mockMvc
+                .perform(get("/create-course").with(user("admin").password("{noop}123").roles("ADMIN")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void reminderTest() throws Exception {
+        this.mockMvc
+                .perform(get("/reminder").with(user("student").password("{noop}123").roles("STUDENT")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void courseListTest() throws Exception {
+        this.mockMvc
+                .perform(get("/userlist-courses").with(user("student").password("{noop}123").roles("STUDENT")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void seeAppointmentAdminTest() throws Exception {
+        this.mockMvc
+                .perform(get("/see-appointment-admin").with(user("admin").password("{noop}123").roles("ADMIN")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void seeAppointmentTATest() throws Exception {
+        this.mockMvc
+                .perform(get("/see-appointment-TA").with(user("ta").password("{noop}123").roles("TEACHING_ASSISTANT")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void seeAppointmentStudentTest() throws Exception {
+        this.mockMvc
+                .perform(get("/see-appointment-student").with(user("student").password("{noop}123").roles("STUDENT")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void acceptRejectTest() throws Exception {
+        this.mockMvc
+                .perform(get("/accept_reject").with(user("ta").password("{noop}123").roles("TEACHING_ASSISTANT")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void createScheduleTest() throws Exception {
+        this.mockMvc
+                .perform(get("/create-schedule").with(user("ta").password("{noop}123").roles("TEACHING_ASSISTANT")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void addSlotTest() throws Exception {
+        this.mockMvc
+                .perform(get("/add-slot").with(user("ta").password("{noop}123").roles("TEACHING_ASSISTANT")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void bookAppointmentTest() throws Exception {
+        this.mockMvc
+                .perform(get("/book-appointment/home").with(user("student").password("{noop}123").roles("STUDENT")))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void bookAppointmentPickTATest() throws Exception {
+        this.mockMvc
+                .perform(get("/book-appointment/pick-ta").with(user("student").password("{noop}123").roles("STUDENT"))
+                        .param("courseName","Software Engineering"))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void bookAppointmentSeeTAScheduleTest() throws Exception {
+        this.mockMvc
+                .perform(get("/book-appointment/see-ta-schedule").with(user("student").password("{noop}123").roles("STUDENT"))
+                        .param("taUserName","ta")
+                        .param("courseName","Software Engineering"))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void bookAppointmentBookTest() throws Exception {
+        this.mockMvc
+                .perform(get("/book-appointment/book").with(user("student").password("{noop}123").roles("STUDENT"))
+                        .param("startTime","0")
+                        .param("finishTime","3600000")
+                        .param("day","MONDAY")
+                        .param("taUserName","ta")
+                        .param("courseName","Software Engineering")
+                        .param("bookTime",String.valueOf(System.currentTimeMillis()))
+                        .param("error","false"))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+
+
+
+
+//    @Test
+//    public void courseListJoinTest() throws Exception {
+//        this.mockMvc
+//                .perform(post("/userlist-courses/assign").with(user("student").password("{noop}123").roles("STUDENT"))
+//                        .param("userName","student")
+//                        .param("courseName","Software Engineering"))
+//                .andDo(print()).andExpect(status().isOk());
+//    }
+
 }
