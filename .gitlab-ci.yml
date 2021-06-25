@@ -15,7 +15,7 @@ build:
     stage: build
     script:
         - gradle clean
-        - gradle build
+        - gradle assemble
     cache:
         key: $CI_COMMIT_REF_NAME
         policy: push
