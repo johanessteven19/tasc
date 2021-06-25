@@ -54,6 +54,9 @@ dependencies {
 
     testImplementation 'org.springframework.security:spring-security-test:4.2.3.RELEASE'
 
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'io.micrometer:micrometer-registry-prometheus'
+
 }
 
 test {
