@@ -32,8 +32,7 @@ test:
         POSTGRES_USER: $DATABASE_USERNAME
         POSTGRES_PASSWORD: $DATABASE_PASSWORD
     script:
-        - gradle check
-          -Dspring.profiles.active=ci
+        - gradle check -args='--spring.profiles.active=ci'
         - gradle jacocoTestReport
         - gradle jacocoTestCoverageVerification
         - gradle jacocoMergeTest
