@@ -22,6 +22,37 @@ build:
             - build
             - .gradle
 
+# test:
+#     stage: test
+#     services:
+#         - name: postgres:13.2-alpine
+#           alias: postgres
+#     variables:
+#         POSTGRES_DB: ci
+#         POSTGRES_USER: ci_user
+#         POSTGRES_PASSWORD: ci_password
+#         SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ci
+#         SPRING_DATASOURCE_USERNAME: ci_user
+#         SPRING_DATASOURCE_PASSWORD: ci_password
+#         SPRING_PROFILES_ACTIVE: ci
+#     script:
+#         - gradle check
+#         - gradle jacocoTestReport
+#         - gradle jacocoTestCoverageVerification
+#         - gradle jacocoMergeTest
+#         - grep Total build/reports/jacoco/test/html/index.html
+#     cache:
+#         key: $CI_COMMIT_REF_NAME
+#         policy: pull-push
+#         paths:
+#             - build
+#             - .gradle
+#     artifacts:
+#         when: always
+#         reports:
+#             junit: build/test-results/test/TEST-*.xml
+#     when: on_success
+
 staging:
     stage: deploy
     image: ruby:2.7.3-buster
@@ -44,12 +75,12 @@ production:
     only:
         - master
 
-sonarCheck:
-    stage: sonar
-    needs:
-        - job: test
-    script:
-        - gradle sonarqube -Dsonar.login=$SONAR_TOKEN
+# sonarCheck:
+#     stage: sonar
+#     needs:
+#         - job: test
+#     script:
+#         - gradle sonarqube -Dsonar.login=$SONAR_TOKEN
 
 cache:
     key: "$CI_COMMIT_REF_NAME"
