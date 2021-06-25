@@ -14,8 +14,7 @@ variables:
 build:
     stage: build
     script:
-        - gradle clean
-        - gradle assemble
+        - gradle --build-cache assemble
     cache:
         key: $CI_COMMIT_REF_NAME
         policy: push
