@@ -34,7 +34,7 @@ test:
         SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ci
         SPRING_DATASOURCE_USERNAME: ci_user
         SPRING_DATASOURCE_PASSWORD: ci_password
-      script:
+    script:
         - gradle check
           -Dspring.profiles.active=ci
         - gradle jacocoTestReport
