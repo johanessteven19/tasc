@@ -1,91 +1,86 @@
 stages:
-  - build
-  - test
-  - deploy
-  - sonar
+    - build
+    - test
+    - deploy
+    - sonar
 
 image: gradle:6.8.3-jdk15
 before_script:
-  - export GRADLE_USER_HOME=`pwd`/.gradle
+    - export GRADLE_USER_HOME=`pwd`/.gradle
 
 variables:
-  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
 build:
-  stage: build
-  script:
-    - gradle assemble
-  cache:
-    key: $CI_COMMIT_REF_NAME
-    policy: push
-    paths:
-      - build
-      - .gradle
+    stage: build
+    script:
+        - gradle assemble
+    cache:
+        key: $CI_COMMIT_REF_NAME
+        policy: push
+        paths:
+            - build
+            - .gradle
 
 test:
-  stage: test
-  services:
-    - name: postgres:13.2-alpine
-      alias: postgres
-  variables:
-    POSTGRES_DB: $DATABASE_DB
-    POSTGRES_USER: $DATABASE_USERNAME
-    POSTGRES_PASSWORD: $DATABASE_PASSWORD
-    SPRING_DATASOURCE_URL: jdbc:$DATABASE_URL
-    SPRING_DATASOURCE_USERNAME: $DATABASE_USERNAME
-    SPRING_DATASOURCE_PASSWORD: $DATABASE_PASSWORD
-  script:
-    - gradle check
-      -Dspring.profiles.active=ci
-    - gradle jacocoTestReport
-    - gradle jacocoTestCoverageVerification
-    - gradle jacocoMergeTest
-    - grep Total build/reports/jacoco/test/html/index.html
-  cache:
-    key: $CI_COMMIT_REF_NAME
-    policy: pull-push
-    paths:
-      - build
-      - .gradle
-  artifacts:
-    when: always
-    reports:
-      junit: build/test-results/test/TEST-*.xml
-  when: on_success
+    stage: test
+    services:
+        - name: postgres:13.2-alpine
+          alias: postgres
+    variables:
+        POSTGRES_DB: $DATABASE_DB
+        POSTGRES_USER: $DATABASE_USERNAME
+        POSTGRES_PASSWORD: $DATABASE_PASSWORD
+    script:
+        - gradle check
+          -Dspring.profiles.active=ci
+        - gradle jacocoTestReport
+        - gradle jacocoTestCoverageVerification
+        - gradle jacocoMergeTest
+        - grep Total build/reports/jacoco/test/html/index.html
+    cache:
+        key: $CI_COMMIT_REF_NAME
+        policy: pull-push
+        paths:
+            - build
+            - .gradle
+    artifacts:
+        when: always
+        reports:
+            junit: build/test-results/test/TEST-*.xml
+    when: on_success
 
 staging:
-  stage: deploy
-  image: ruby:2.7.3-buster
-  before_script:
-    - gem install dpl
-  script:
-    - dpl --provider=heroku --app=$HEROKU_APP_NAME_DEV --api-key=$HEROKU_API_KEY
-  cache: {}
-  only:
-    - dev
+    stage: deploy
+    image: ruby:2.7.3-buster
+    before_script:
+        - gem install dpl
+    script:
+        - dpl --provider=heroku --app=$HEROKU_APP_NAME_DEV --api-key=$HEROKU_API_KEY
+    cache: {}
+    only:
+        - dev
 
 production:
-  stage: deploy
-  image: ruby:2.7.3-buster
-  before_script:
-    - gem install dpl
-  script:
-    - dpl --provider=heroku --app=$HEROKU_APPNAME_PROD --api-key=$HEROKU_API_KEY
-  cache: {}
-  only:
-    - master
+    stage: deploy
+    image: ruby:2.7.3-buster
+    before_script:
+        - gem install dpl
+    script:
+        - dpl --provider=heroku --app=$HEROKU_APPNAME_PROD --api-key=$HEROKU_API_KEY
+    cache: {}
+    only:
+        - master
 
 sonarCheck:
-  stage: sonar
-  needs:
-    - job: test
-  script:
-    - gradle sonarqube -Dsonar.login=$SONAR_TOKEN
-
+    stage: sonar
+    needs:
+        - job: test
+    script:
+        - gradle sonarqube -Dsonar.login=$SONAR_TOKEN
 
 cache:
-  key: "$CI_COMMIT_REF_NAME"
-  paths:
-    - $GRADLE_USER_HOME/wrapper
-    - $GRADLE_USER_HOME/caches
-
+    key: "$CI_COMMIT_REF_NAME"
+    paths:
+        - $GRADLE_USER_HOME/wrapper
+        - $GRADLE_USER_HOME/caches
