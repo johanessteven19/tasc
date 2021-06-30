@@ -15,8 +15,8 @@ public class AppointmentMapper implements RowMapper<AppointmentRequest> {
         AppointmentRequest request = new AppointmentRequest();
 
         request.setId(rs.getInt("id"));
-        request.setStudent(new User(rs.getString("student"), null, null, null));
-        request.setTa(new User(rs.getString("ta"), null, null, null));
+        request.setStudent(new User(rs.getString("student"), null, null, null, 0));
+        request.setTa(new User(rs.getString("ta"), null, null, null, 0));
         request.setRequestTime(rs.getLong("request_time"));
         request.setStatus(AppointmentRequest.Status.valueOf(rs.getString("status")));
         request.setAdminHasPermission(rs.getBoolean("admin_permission"));

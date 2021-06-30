@@ -11,9 +11,16 @@ import java.sql.SQLException;
     public Course mapRow(ResultSet rs, int rowNum) throws SQLException {
 <span class="nc" id="L12">        Course course = new Course();</span>
 
-<span class="nc" id="L14">        course.setName(rs.getString(&quot;course.name&quot;));</span>
+        String name;
+        try {
+<span class="nc" id="L16">            name = rs.getString(&quot;name&quot;);</span>
+<span class="nc" id="L17">        } catch (SQLException e) {</span>
+<span class="nc" id="L18">            name = rs.getString(&quot;course&quot;);</span>
+<span class="nc" id="L19">        }</span>
 
-<span class="nc" id="L16">        return course;</span>
+<span class="nc" id="L21">        course.setName(name);</span>
+
+<span class="nc" id="L23">        return course;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

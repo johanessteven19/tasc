@@ -10,12 +10,12 @@ import java.util.List;
 @Getter
 <span class="nc" id="L11">@Setter</span>
 public class AcademicUser extends User {
-    public AcademicUser(String userName, String fullName, String password, Role role) {
-<span class="nc" id="L14">        super(userName, fullName, password, role);</span>
+    public AcademicUser(String userName, String fullName, String password, Role role, int sid) {
+<span class="nc" id="L14">        super(userName, fullName, password, role, sid);</span>
 <span class="nc" id="L15">    }</span>
 
     public AcademicUser(User user) {
-<span class="nc" id="L18">        super(user.getUserName(), user.getFullName(), user.getPassword(), user.getRole());</span>
+<span class="nc" id="L18">        super(user.getUserName(), user.getFullName(), user.getPassword(), user.getRole(), user.getSid());</span>
 <span class="nc" id="L19">    }</span>
 
 <span class="nc" id="L21">    private List&lt;Course&gt; courses;</span>

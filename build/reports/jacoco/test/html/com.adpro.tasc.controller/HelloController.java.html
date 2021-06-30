@@ -1,36 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HelloController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TASC</a> &gt; <a href="index.source.html" class="el_package">com.adpro.tasc.controller</a> &gt; <span class="el_source">HelloController.java</span></div><h1>HelloController.java</h1><pre class="source lang-java linenums">package com.adpro.tasc.controller;
 
 import com.adpro.tasc.user.db.dao.UserDAO;
+import com.adpro.tasc.user.db.model.Role;
 import com.adpro.tasc.user.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
+import java.security.Principal;
 
 @Controller
-@RequestMapping(&quot;/hello&quot;)
-<span class="fc" id="L16">public class HelloController {</span>
-    private UserDAO userDB;
-
+<span class="nc" id="L16">public class HelloController {</span>
     @Autowired
-    public void setUserDB(UserDAO userDB) {
-<span class="fc" id="L21">        this.userDB = userDB;</span>
-<span class="fc" id="L22">    }</span>
+    private UserDAO userDAO;
 
-    @GetMapping
-    @ResponseBody
-    public List&lt;User&gt; getHello() {
-<span class="nc" id="L27">        return userDB.getAllUser();</span>
+    @GetMapping(&quot;/&quot;)
+    public String indexPage() {
+<span class="nc" id="L22">        return &quot;index&quot;;</span>
     }
 
-    @GetMapping(params = &quot;name&quot;)
-    @ResponseBody
-    public String getHelloName(@RequestParam String name) {
-<span class="nc" id="L33">        return &quot;Hello &quot; + name + &quot;!&quot;;</span>
+    @GetMapping(&quot;/register&quot;)
+    public String registerPage() {
+<span class="nc" id="L27">        return &quot;register&quot;;</span>
+    }
+
+    @PostMapping(value = &quot;/register/new&quot;)
+    public String registerStudent(Model model, @RequestParam(&quot;username&quot;) String userName,
+                                  @RequestParam(&quot;fullname&quot;) String fullName,
+                                  @RequestParam(&quot;password&quot;) String password) {
+<span class="nc" id="L34">        userDAO.createUser(new User(userName, fullName, &quot;{noop}&quot;+password, Role.ROLE_STUDENT, 0));</span>
+<span class="nc" id="L35">        return &quot;redirect:/&quot;;</span>
+    }
+
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    @GetMapping(&quot;/home-admin&quot;)
+    public String adminPage(Model model, Principal principal) {
+<span class="nc" id="L41">        User currentUser = userDAO.getUser(principal.getName());</span>
+<span class="nc" id="L42">        model.addAttribute(&quot;currentUser&quot;, currentUser);</span>
+<span class="nc" id="L43">        return &quot;home&quot;;</span>
+    }
+
+    @PreAuthorize(&quot;hasRole('TEACHING_ASSISTANT')&quot;)
+    @GetMapping(&quot;/home-TA&quot;)
+    public String TAPage(Model model, Principal principal) {
+<span class="nc" id="L49">        User currentUser = userDAO.getUser(principal.getName());</span>
+<span class="nc" id="L50">        model.addAttribute(&quot;currentUser&quot;, currentUser);</span>
+<span class="nc" id="L51">        return &quot;home&quot;;</span>
+    }
+
+    @PreAuthorize(&quot;hasRole('STUDENT')&quot;)
+    @GetMapping(&quot;/home-student&quot;)
+    public String StudentPage(Model model, Principal principal) {
+<span class="nc" id="L57">        User currentUser = userDAO.getUser(principal.getName());</span>
+<span class="nc" id="L58">        model.addAttribute(&quot;currentUser&quot;, currentUser);</span>
+<span class="nc" id="L59">        return &quot;home&quot;;</span>
+    }
+
+    @PreAuthorize(&quot;hasRole('UNASSIGNED')&quot;)
+    @GetMapping(&quot;/waiting&quot;)
+    public String waitingPage(Model model, Principal principal) {
+<span class="nc" id="L65">        User currentUser = userDAO.getUser(principal.getName());</span>
+<span class="nc" id="L66">        model.addAttribute(&quot;currentUser&quot;, currentUser);</span>
+<span class="nc" id="L67">        return &quot;waiting&quot;;</span>
+    }
+
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    @GetMapping(&quot;/nav-admin&quot;)
+    public String adminNavPage(Model model, Principal principal) {
+<span class="nc" id="L73">        User currentUser = userDAO.getUser(principal.getName());</span>
+<span class="nc" id="L74">        model.addAttribute(&quot;currentUser&quot;, currentUser);</span>
+<span class="nc" id="L75">        return &quot;fragments/navbar_admin&quot;;</span>
+    }
+
+    @PreAuthorize(&quot;hasRole('TEACHING_ASSISTANT')&quot;)
+    @GetMapping(&quot;/nav-TA&quot;)
+    public String TANavPage(Model model, Principal principal) {
+<span class="nc" id="L81">        User currentUser = userDAO.getUser(principal.getName());</span>
+<span class="nc" id="L82">        model.addAttribute(&quot;currentUser&quot;, currentUser);</span>
+<span class="nc" id="L83">        return &quot;fragments/navbar_TA&quot;;</span>
+    }
+
+    @PreAuthorize(&quot;hasRole('STUDENT')&quot;)
+    @GetMapping(&quot;/nav-student&quot;)
+    public String StudentNavPage(Model model, Principal principal) {
+<span class="nc" id="L89">        User currentUser = userDAO.getUser(principal.getName());</span>
+<span class="nc" id="L90">        model.addAttribute(&quot;currentUser&quot;, currentUser);</span>
+<span class="nc" id="L91">        return &quot;fragments/navbar_student&quot;;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

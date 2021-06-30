@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.adpro.tasc.user.db.UserTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2021-05-09T15:29:53" hostname="Ahmads-MacBook-Pro.local" time="0.021">
+<testsuite name="com.adpro.tasc.user.db.UserTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-06-30T13:48:54" hostname="LAPTOP-Q0NSB7L4" time="0.033">
   <properties/>
-  <testcase name="testUserNameExists()" classname="com.adpro.tasc.user.db.UserTest" time="0.008"/>
-  <testcase name="testChangeUserNameWorks()" classname="com.adpro.tasc.user.db.UserTest" time="0.001"/>
-  <testcase name="testFullNameExists()" classname="com.adpro.tasc.user.db.UserTest" time="0.001"/>
-  <testcase name="testChangeRoleWorks()" classname="com.adpro.tasc.user.db.UserTest" time="0.001"/>
-  <testcase name="testChangePasswordWorks()" classname="com.adpro.tasc.user.db.UserTest" time="0.001"/>
-  <testcase name="testRoleExists()" classname="com.adpro.tasc.user.db.UserTest" time="0.002"/>
-  <testcase name="testChangeFullNameWorks()" classname="com.adpro.tasc.user.db.UserTest" time="0.001"/>
-  <testcase name="testPasswordExists()" classname="com.adpro.tasc.user.db.UserTest" time="0.001"/>
+  <testcase name="testSidAssigned()" classname="com.adpro.tasc.user.db.UserTest" time="0.033"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

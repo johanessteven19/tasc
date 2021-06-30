@@ -5,32 +5,45 @@ import com.adpro.tasc.user.db.model.AcademicUser;
 import com.adpro.tasc.user.db.model.Role;
 import com.adpro.tasc.user.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.security.Principal;
 
 @Controller
-<span class="fc" id="L13">public class AddRolesController {</span>
-
+@PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+<span class="nc" id="L19">public class AddRolesController {</span>
     @Autowired
     private UserDAO userDAO;
 
-    @GetMapping(value = &quot;/add-roles&quot;)
-    public String addRoles(Model model) {
-<span class="nc" id="L20">        model.addAttribute(&quot;userList&quot;, userDAO.getAllUser());</span>
-<span class="nc" id="L21">        return &quot;add_roles&quot;;</span>
+    @GetMapping(&quot;/add-roles&quot;)
+    public String addRoles(Model model, Principal principal) {
+<span class="nc" id="L25">        User currentUser = userDAO.getUser(principal.getName());</span>
+<span class="nc" id="L26">        model.addAttribute(&quot;currentUser&quot;, currentUser);</span>
+<span class="nc" id="L27">        model.addAttribute(&quot;userList&quot;, userDAO.getAllUser());</span>
+<span class="nc" id="L28">        return &quot;add_roles&quot;;</span>
     }
 
     @PostMapping(value = &quot;/add-roles/student&quot;)
-    public String registerStudent(Model model, @RequestParam (&quot;userName&quot;) String userName, @RequestParam(&quot;fullName&quot;) String fullName, @RequestParam(&quot;password&quot;) String password) {
-<span class="nc" id="L26">        model.addAttribute(&quot;user&quot;, new User(userName, fullName, password, Role.STUDENT));</span>
-<span class="nc" id="L27">        return &quot;redirect:/add_roles&quot;;</span>
+    public String registerStudent(Model model, @RequestParam (&quot;userName&quot;) String userName) {
+<span class="nc" id="L33">        AcademicUser student = new AcademicUser(userDAO.getUser(userName));</span>
+<span class="nc" id="L34">        student.setRole(Role.ROLE_STUDENT);</span>
+<span class="nc" id="L35">        userDAO.updateUser(userName, student);</span>
+<span class="nc" id="L36">        model.addAttribute(&quot;user&quot;, student);</span>
+<span class="nc" id="L37">        return &quot;redirect:/add-roles&quot;;</span>
     }
 
     @PostMapping(value = &quot;/add-roles/ta&quot;)
-    public String registerTA(Model model, @RequestParam (&quot;userNameTA&quot;) String userName, @RequestParam(&quot;fullNameTA&quot;) String fullName, @RequestParam(&quot;passwordTA&quot;) String password) {
-<span class="nc" id="L32">        model.addAttribute(&quot;user&quot;, new AcademicUser(userName, fullName, password, Role.TEACHING_ASSISTANT));</span>
-<span class="nc" id="L33">        return &quot;redirect:/add-roles&quot;;</span>
+    public String registerTA(Model model, @RequestParam (&quot;userNameTA&quot;) String userName) {
+<span class="nc" id="L42">        AcademicUser ta = new AcademicUser(userDAO.getUser(userName));</span>
+<span class="nc" id="L43">        ta.setRole(Role.ROLE_TEACHING_ASSISTANT);</span>
+<span class="nc" id="L44">        userDAO.updateUser(userName, ta);</span>
+<span class="nc" id="L45">        model.addAttribute(&quot;user&quot;, ta);</span>
+<span class="nc" id="L46">        return &quot;redirect:/add-roles&quot;;</span>
     }
 
 }

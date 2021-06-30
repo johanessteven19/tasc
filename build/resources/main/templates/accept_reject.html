@@ -12,71 +12,68 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 </head>
-
 <body>
-<h3>Accept Reject Appointments</h3>
-<table class="table table-striped" style="width:100%">
-    <thead>
-    <tr>
-        <th>Full Name</th>
-        <th>Course</th>
-        <th>Date</th>
-        <th>Duration</th>
-        <th>Status</th>
-        <th>Permission</th>
-        <th>Accept/Reject</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td> Test Student </td>
-        <td> Software Engineering </td>
-        <td> 5-10-2021</td>
-        <td> 30 min </td>
-        <td> Pending </td>
-        <td> True </td>
-        <td>
-            <form th:action="@{/see-appointment}">
-                <button type="submit" class="btn btn-outline-dark">Accept</button>
-            </form>
-            <form th:action="@{/home}">
-                <button onclick="myFunction()" class="btn btn-outline-dark">Reject</button>
-            </form>
-        </td>
-    </tr>
-    <tr th:each="users :${userList}">
-        <td th:text="${users.student.fullName}"> </td>
-        <td th:text="${users.appointment.course.name}"></td>
-        <td th:text="${users.appointment.date}"></td>
-        <td th:text="${users.requestTime}"></td>
-        <td th:text="${users.status}"></td>
-        <td th:text="${users.adminHasPermission}"></td>
-        <!-- Assign role button here-->
-        <td>
-            <form th:action="@{/accepted}" th:object="${users}" method="post">
-                <input id = "fullName" name = "fullName" type = "hidden" value = "${users.student.fullName}"/>
-                <input id = "course" name = "course" type = "hidden" value = "${users.appointment.course.name}"/>
-                <input id = "date" name = "date" type = "hidden" value = "${users.appointment.date}"/>
-                <input id = "duration" name = "duration" type = "hidden" value = "${users.requestTime}"/>
-                <button type="submit" class="btn btn-outline-dark">Accept</button>
-            </form>
-            <form th:action="@{/home}">
-                <button onclick="myFunction()" class="btn btn-outline-dark">Reject</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<br>
-<form th:action="@{/home}">
-    <button type="submit" class="btn btn-outline-dark">Return</button>
-</form>
-
+<nav th:replace="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? ~{fragments/navbar_TA :: navbar}"></nav>
+<div style="padding:2em">
+    <div>
+        <form th:action="${currentUser.getRole().toString() == 'ROLE_TEACHING_ASSISTANT'} ? @{/home-TA}">
+            <button type="submit" class="btn btn-danger">Back</button>
+        </form>
+    </div>
+    <h3>Accept Reject Appointments</h3>
+    <table class="table table-striped" style="width:100%">
+        <thead class="thead-dark">
+        <tr>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Date</th>
+            <th>Duration</th>
+            <th>Status</th>
+            <th>Permission</th>
+            <th>Accept/Reject</th>
+            <th>Admin Has Permission</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="appointmentReq :${appointmentRequests}">
+            <td th:text="${appointmentReq.student.fullName}"> </td>
+            <td th:text="${appointmentReq.appointment.course.name}"></td>
+            <td id="date" th:text="${#dates.format(appointmentReq.appointment.date, 'EEE, d MMM yyyy HH:mm')}"></td>
+            <td th:text="${((appointmentReq.appointment.duration/1000)/60)} + ' min'">
+            <td th:text="${appointmentReq.status}"></td>
+            <td th:text="${appointmentReq.adminHasPermission}"></td>
+            <td>
+                <form th:action="@{/accepted}" method="post">
+                    <input id = "id" name = "id" type = "hidden" th:value = "${appointmentReq.id}"/>
+                    <button type="submit" class="btn btn-outline-dark">Accept</button>
+                </form>
+                <form th:action="@{/rejected}" method="post">
+                    <input id = "idX" name = "idX" type = "hidden" th:value = "${appointmentReq.id}"/>
+                    <button onclick="myFunction()" type="submit" class="btn btn-outline-dark">Reject</button>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/permission-accepted}" method="post">
+                    <input id = "idA" name = "idA" type = "hidden" th:value = "${appointmentReq.id}"/>
+                    <button type="submit" class="btn btn-outline-dark">True</button>
+                </form>
+                <form th:action="@{/permission-rejected}" method="post">
+                    <input id = "idB" name = "idB" type = "hidden" th:value = "${appointmentReq.id}"/>
+                    <button onclick="myFunction1()" type="submit" class="btn btn-outline-dark">False</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <script>
 function myFunction() {
-  alert("Rejected!");
+  alert("The appointment has been rejected!");
+}
+function myFunction1() {
+    alert("Admin has been rejected to see the appointment!");
 }
 </script>
-
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

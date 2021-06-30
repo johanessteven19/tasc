@@ -31,8 +31,8 @@ public class HelloController {
     public String registerStudent(Model model, @RequestParam("username") String userName,
                                   @RequestParam("fullname") String fullName,
                                   @RequestParam("password") String password) {
-        userDAO.createUser(new User(userName, fullName, "{noop}"+password, Role.ROLE_UNASSIGNED));
-        return "redirect:/waiting";
+        userDAO.createUser(new User(userName, fullName, "{noop}"+password, Role.ROLE_STUDENT, 0));
+        return "redirect:/";
     }
 
     @PreAuthorize("hasRole('ADMIN')")

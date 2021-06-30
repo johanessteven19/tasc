@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>Add Roles</title>
@@ -14,52 +14,51 @@
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 
     </head>
-
     <body>
+    <nav th:replace="${currentUser.getRole().toString() == 'ROLE_ADMIN'} ? ~{fragments/navbar_admin :: navbar}"></nav>
+    <div style="padding:2em">
+        <div>
+            <form th:action="${currentUser.getRole().toString() == 'ROLE_ADMIN'} ? @{/home-admin}">
+                <button type="submit" class="btn btn-danger">Back</button>
+            </form>
+        </div>
+        <h3>Add Roles to User</h3>
 
-    <h3>Add Roles to User</h3>
-
-    <div sec:authorize="!isAuthenticated()">
-        <a href="/index"> Login </a>
+        <div>
+            <table id="userList" class="table table-striped" style="width:100%">
+                <thead class="thead-dark">
+                <tr>
+                    <th>User</th>
+                    <th>Full Name</th>
+                    <th>Role</th>
+                    <th>Select Role</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user :${userList}">
+                    <td th:text="${user.userName}"> </td>
+                    <td th:text="${user.fullName}"></td>
+                    <td th:text="${user.role}"></td>
+                    <!-- Assign role button here-->
+                    <td>
+                        <form th:action="@{/add-roles/student}" th:object="${user}" method="post">
+                            <input id = "userName" name = "userName" type = "hidden" th:value = "${user.userName}"/>
+                            <input id = "fullName" name = "fullName" type = "hidden" th:value = "${user.fullName}"/>
+                            <input id = "password" name = "password" type = "hidden" th:value = "${user.password}"/>
+                            <button type="submit" class="btn btn-outline-dark" value="STUDENT">Student</button>
+                        </form>
+                        <form th:action="@{/add-roles/ta}" th:object="${user}" method="post">
+                            <input id = "userNameTA" name = "userNameTA" type = "hidden" th:value = "${user.userName}"/>
+                            <input id = "fullNameTA" name = "fullNameTA" type = "hidden" th:value = "${user.fullName}"/>
+                            <input id = "passwordTA" name = "passwordTA" type = "hidden" th:value = "${user.password}"/>
+                        <button type="submit" class="btn btn-outline-dark" value="TEACHING_ASSISTANT">Teaching Assistant</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
-
-        <table id="userList" class="table table-striped" style="width:100%">
-            <thead>
-            <tr>
-                <th>User</th>
-                <th>Full Name</th>
-                <th>Role</th>
-                <th>Select Role</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="user :${userList}">
-                <td th:text="${user.userName}"> </td>
-                <td th:text="${user.fullName}"></td>
-                <td th:text="${user.role}"></td>
-                <!-- Assign role button here-->
-                <td>
-                    <form th:action="@{/add-roles/student}" th:object="${user}" method="post">
-                        <input id = "userName" name = "userName" type = "hidden" value = "${user.userName}"/>
-                        <input id = "fullName" name = "fullName" type = "hidden" value = "${user.fullName}"/>
-                        <input id = "password" name = "password" type = "hidden" value = "${user.password}"/>
-                        <button type="submit" class="btn btn-outline-dark" value="STUDENT">Student</button>
-                    </form>
-                    <form th:action="@{/add-roles/ta}" th:object="${user}" method="post">
-                        <input id = "userNameTA" name = "userNameTA" type = "hidden" value = "${user.userName}"/>
-                        <input id = "fullNameTA" name = "fullNameTA" type = "hidden" value = "${user.fullName}"/>
-                        <input id = "passwordTA" name = "passwordTA" type = "hidden" value = "${user.password}"/>
-                    <button type="submit" class="btn btn-outline-dark" value="TEACHING_ASSISTANT">Teaching Assistant</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 

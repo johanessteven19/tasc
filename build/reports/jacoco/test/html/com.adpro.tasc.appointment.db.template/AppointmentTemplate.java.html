@@ -14,85 +14,114 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-<span class="fc" id="L17">public class AppointmentTemplate implements AppointmentDAO {</span>
+<span class="nc" id="L17">public class AppointmentTemplate implements AppointmentDAO {</span>
     private JdbcTemplate template;
     private UserDAO userDB;
 
     @Autowired
     public void setUserDB(UserDAO userDB) {
-<span class="fc" id="L23">        this.userDB = userDB;</span>
-<span class="fc" id="L24">    }</span>
+<span class="nc" id="L23">        this.userDB = userDB;</span>
+<span class="nc" id="L24">    }</span>
 
     @Autowired
     public void setTemplate(JdbcTemplate template) {
-<span class="fc" id="L28">        this.template = template;</span>
-<span class="fc" id="L29">    }</span>
+<span class="nc" id="L28">        this.template = template;</span>
+<span class="nc" id="L29">    }</span>
+
+    private AppointmentRequest updateQuery(AppointmentRequest request) {
+<span class="nc" id="L32">        User student = userDB.getUser(request.getStudent().getUserName());</span>
+<span class="nc" id="L33">        request.setStudent(student);</span>
+
+<span class="nc" id="L35">        User ta = userDB.getUser(request.getTa().getUserName());</span>
+<span class="nc" id="L36">        request.setTa(ta);</span>
+
+<span class="nc" id="L38">        return request;</span>
+    }
+
+    private List&lt;AppointmentRequest&gt; updateQuery(List&lt;AppointmentRequest&gt; request) {
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        for(int i = 0; i &lt; request.size(); i++) {</span>
+<span class="nc" id="L43">            request.set(i, updateQuery(request.get(i)));</span>
+        }
+
+<span class="nc" id="L46">        return request;</span>
+    }
 
     @Override
     public List&lt;AppointmentRequest&gt; getAllAppointment() {
-<span class="nc" id="L33">        String sql = &quot;&quot;&quot;</span>
+<span class="nc" id="L51">        String sql = &quot;&quot;&quot;</span>
                 select *
                 from appointment_request
                 &quot;&quot;&quot;;
 
-<span class="nc" id="L38">        return template.query(sql, new AppointmentMapper(userDB));</span>
+<span class="nc" id="L56">        return updateQuery(template.query(sql, new AppointmentMapper()));</span>
     }
 
     @Override
     public List&lt;AppointmentRequest&gt; getAppointmentByCourse(Course course) {
-<span class="nc" id="L43">        String sql = &quot;&quot;&quot;</span>
+<span class="nc" id="L61">        String sql = &quot;&quot;&quot;</span>
                 select *
                 from appointment_request
                 where course=?
                 &quot;&quot;&quot;;
 
-<span class="nc" id="L49">        return template.query(sql, new AppointmentMapper(userDB), course.getName());</span>
+<span class="nc" id="L67">        return updateQuery(template.query(sql, new AppointmentMapper(), course.getName()));</span>
     }
 
     @Override
     public List&lt;AppointmentRequest&gt; getAppointmentByUser(User user) {
-<span class="nc" id="L54">        String sql = &quot;&quot;&quot;</span>
+<span class="nc" id="L72">        String sql = &quot;&quot;&quot;</span>
                 select *
                 from appointment_request
                 where student=?
                 &quot;&quot;&quot;;
 
-<span class="nc" id="L60">        List&lt;AppointmentRequest&gt; requests = template.query(sql, new AppointmentMapper(userDB));</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">        if(requests.isEmpty()) {</span>
-<span class="nc" id="L62">            sql = &quot;&quot;&quot;</span>
+<span class="nc" id="L78">        List&lt;AppointmentRequest&gt; requests = template.query(sql, new AppointmentMapper(), user.getUserName());</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if(requests.isEmpty()) {</span>
+<span class="nc" id="L80">            sql = &quot;&quot;&quot;</span>
             select *
             from appointment_request
             where ta=?
             &quot;&quot;&quot;;
 
-<span class="nc" id="L68">            requests = template.query(sql, new AppointmentMapper(userDB));</span>
+<span class="nc" id="L86">            requests = template.query(sql, new AppointmentMapper(), user.getUserName());</span>
         }
 
-<span class="nc" id="L71">        return requests;</span>
+<span class="nc" id="L89">        return updateQuery(requests);</span>
     }
 
     @Override
     public void createAppointment(AppointmentRequest request) {
-<span class="nc" id="L76">        String sql = &quot;&quot;&quot;</span>
+<span class="nc" id="L94">        String sql = &quot;&quot;&quot;</span>
                 insert into appointment_request (student, ta, request_time, date, duration, course) 
                 values (?, ?, ?, ?, ?, ?)
                 &quot;&quot;&quot;;
 
-<span class="nc" id="L81">        Appointment appointment = request.getAppointment();</span>
-<span class="nc" id="L82">        template.update(sql,</span>
-<span class="nc" id="L83">                request.getStudent(), request.getTa(), request.getRequestTime(),</span>
-<span class="nc" id="L84">                appointment.getDate(), appointment.getDuration(), appointment.getCourse());</span>
-<span class="nc" id="L85">    }</span>
+<span class="nc" id="L99">        Appointment appointment = request.getAppointment();</span>
+<span class="nc" id="L100">        template.update(sql,</span>
+<span class="nc" id="L101">                request.getStudent().getUserName(), request.getTa().getUserName(), request.getRequestTime(),</span>
+<span class="nc" id="L102">                appointment.getDate(), appointment.getDuration(), appointment.getCourse().getName());</span>
+<span class="nc" id="L103">    }</span>
 
     @Override
     public void updateStatus(AppointmentRequest request, AppointmentRequest.Status status) {
-<span class="nc" id="L89">        String sql = &quot;&quot;&quot;</span>
+<span class="nc" id="L107">        String sql = &quot;&quot;&quot;</span>
                 update appointment_request
                 set status=?
                 where id=?
                 &quot;&quot;&quot;;
 
-<span class="nc" id="L95">        template.update(sql, status.toString(), request.getId());</span>
-<span class="nc" id="L96">    }</span>
+<span class="nc" id="L113">        template.update(sql, status.toString(), request.getId());</span>
+<span class="nc" id="L114">    }</span>
+
+    @Override
+    public void updateAdminHasPermission(AppointmentRequest request, boolean permission) {
+<span class="nc" id="L118">        String sql = &quot;&quot;&quot;</span>
+                update appointment_request
+                set admin_permission=?
+                where id=?
+                &quot;&quot;&quot;;
+
+<span class="nc" id="L124">        template.update(sql, permission, request.getId());</span>
+<span class="nc" id="L125">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

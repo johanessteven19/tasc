@@ -1,73 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScheduleTemplate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TASC</a> &gt; <a href="index.source.html" class="el_package">com.adpro.tasc.appointment.db.template</a> &gt; <span class="el_source">ScheduleTemplate.java</span></div><h1>ScheduleTemplate.java</h1><pre class="source lang-java linenums">package com.adpro.tasc.appointment.db.template;
 
 import com.adpro.tasc.appointment.db.dao.ScheduleDAO;
+import com.adpro.tasc.appointment.db.dao.SlotDAO;
 import com.adpro.tasc.appointment.db.mapper.ScheduleMapper;
-import com.adpro.tasc.appointment.db.mapper.SlotMapper;
 import com.adpro.tasc.appointment.db.model.Schedule;
 import com.adpro.tasc.appointment.db.model.Slot;
-import com.adpro.tasc.user.db.dao.UserDAO;
 import com.adpro.tasc.user.db.model.AcademicUser;
+import com.adpro.tasc.user.db.model.Role;
+import com.adpro.tasc.user.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-<span class="fc" id="L17">public class ScheduleTemplate implements ScheduleDAO {</span>
+<span class="nc" id="L19">public class ScheduleTemplate implements ScheduleDAO {</span>
     private JdbcTemplate template;
-    private UserDAO userDB;
+    private SlotDAO slotDB;
 
     @Autowired
-    public void setUserDB(UserDAO userDB) {
-<span class="fc" id="L23">        this.userDB = userDB;</span>
-<span class="fc" id="L24">    }</span>
+    public void setSlotDB(SlotDAO slotDB) {
+<span class="nc" id="L25">        this.slotDB = slotDB;</span>
+<span class="nc" id="L26">    }</span>
 
     @Autowired
     public void setTemplate(JdbcTemplate template) {
-<span class="fc" id="L28">        this.template = template;</span>
-<span class="fc" id="L29">    }</span>
+<span class="nc" id="L30">        this.template = template;</span>
+<span class="nc" id="L31">    }</span>
 
     @Override
     public Schedule getUserSchedule(AcademicUser user) {
-<span class="nc" id="L33">        String sql = &quot;&quot;&quot;</span>
+<span class="nc" id="L35">        String sql = &quot;&quot;&quot;</span>
                 select *
                 from schedule
                 where schedule.user=?
                 &quot;&quot;&quot;;
+        try {
+<span class="nc" id="L41">            Schedule schedule = template.queryForObject(sql, new ScheduleMapper(), user.getUserName());</span>
 
-<span class="nc" id="L39">        Schedule schedule = template.queryForObject(sql, new ScheduleMapper(userDB), user.getUserName());</span>
+<span class="nc" id="L43">            schedule.setUser(user);</span>
 
-<span class="nc" id="L41">        sql = &quot;&quot;&quot;</span>
-            select *
-            from slot
-            where schedule=?
-            &quot;&quot;&quot;;
-<span class="nc" id="L46">        List&lt;Slot&gt; slots = template.query(sql, new SlotMapper(), schedule.getId());</span>
-<span class="nc" id="L47">        schedule.setAvailableSlots(slots);</span>
+<span class="nc" id="L45">            List&lt;Slot&gt; slots = slotDB.getAll(schedule);</span>
+<span class="nc" id="L46">            schedule.setAvailableSlots(slots);</span>
 
-<span class="nc" id="L49">        return schedule;</span>
+<span class="nc" id="L48">            return schedule;</span>
+<span class="nc" id="L49">        } catch (EmptyResultDataAccessException e) {</span>
+<span class="nc" id="L50">            return null;</span>
+        }
     }
 
     @Override
-    public void addUserScheduleSlot(Slot slot) {
-<span class="nc" id="L54">        String sql = &quot;&quot;&quot;</span>
-                insert into slot (schedule, start_time, finish_time, day)
-                values (?, ?, ?, ?)
+    public Schedule getUserScheduleByDay(AcademicUser user, Slot.Day day) {
+<span class="nc" id="L56">        String sql = &quot;&quot;&quot;</span>
+                select *
+                from schedule
+                where schedule.user=?
                 &quot;&quot;&quot;;
+        try {
+<span class="nc" id="L62">            Schedule schedule = template.queryForObject(sql, new ScheduleMapper(), user.getUserName());</span>
 
-<span class="nc" id="L59">        template.update(sql,</span>
-<span class="nc" id="L60">                slot.getSchedule(), slot.getStartTime(), slot.getFinishTime(), slot.getDay().toString());</span>
-<span class="nc" id="L61">    }</span>
+<span class="nc" id="L64">            schedule.setUser(user);</span>
+
+<span class="nc" id="L66">            List&lt;Slot&gt; slots = slotDB.getByDay(schedule, day);</span>
+<span class="nc" id="L67">            schedule.setAvailableSlots(slots);</span>
+
+<span class="nc" id="L69">            return schedule;</span>
+<span class="nc" id="L70">        } catch (EmptyResultDataAccessException e) {</span>
+<span class="nc" id="L71">            return null;</span>
+        }
+    }
+
+    private void validateUser(User user) {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if(!Role.ROLE_TEACHING_ASSISTANT.equals(user.getRole())) {</span>
+<span class="nc" id="L77">            throw new IllegalArgumentException(&quot;User must be Teaching Assistant&quot;);</span>
+        }
+<span class="nc" id="L79">    }</span>
 
     @Override
-    public void deleteUserScheduleSlot(Slot slot) {
-<span class="nc" id="L65">        String sql = &quot;&quot;&quot;</span>
-                delete from slot
+    public void createSchedule(Schedule schedule) {
+<span class="nc" id="L83">        validateUser(schedule.getUser());</span>
+
+<span class="nc" id="L85">        String sql = &quot;&quot;&quot;</span>
+                insert into schedule (&quot;user&quot;)
+                values (?)
+                &quot;&quot;&quot;;
+
+<span class="nc" id="L90">        template.update(sql, schedule.getUser().getUserName());</span>
+<span class="nc" id="L91">    }</span>
+
+    @Override
+    public void deleteSchedule(int id) {
+<span class="nc" id="L95">        String sql = &quot;&quot;&quot;</span>
+                delete from schedule
                 where id=?
                 &quot;&quot;&quot;;
 
-<span class="nc" id="L70">        template.update(sql, slot.getId());</span>
-<span class="nc" id="L71">    }</span>
+<span class="nc" id="L100">        template.update(sql, id);</span>
+<span class="nc" id="L101">    }</span>
+
+    @Override
+    public void deleteSchedule(User user) {
+<span class="nc" id="L105">        validateUser(user);</span>
+
+<span class="nc" id="L107">        String sql = &quot;&quot;&quot;</span>
+                delete from schedule
+                where &quot;user&quot;=?
+                &quot;&quot;&quot;;
+
+<span class="nc" id="L112">        template.update(sql, user.getUserName());</span>
+<span class="nc" id="L113">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
