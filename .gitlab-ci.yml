@@ -75,12 +75,12 @@ production:
     only:
         - master
 
-# sonarCheck:
-#     stage: sonar
-#     needs:
-#         - job: test
-#     script:
-#         - gradle sonarqube -Dsonar.login=$SONAR_TOKEN
+ sonarCheck:
+     stage: sonar
+     needs:
+         - job: test
+     script:
+         - gradle sonarqube -Dsonar.login=$SONAR_TOKEN
 
 cache:
     key: "$CI_COMMIT_REF_NAME"
